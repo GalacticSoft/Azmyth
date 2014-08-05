@@ -12,6 +12,8 @@ namespace InfiniteGrid
 {
     public partial class Form1 : Form
     {
+
+        //Create Quad Tree for testing.
         QuadTree<Item> items = new QuadTree<Item>(new RectangleF(int.MinValue, int.MinValue, int.MaxValue, int.MaxValue));
 
         public Form1()
