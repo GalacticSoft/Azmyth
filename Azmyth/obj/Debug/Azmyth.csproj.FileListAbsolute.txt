@@ -1,0 +1,4 @@
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth\bin\Debug\Azmyth.dll
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth\bin\Debug\Azmyth.pdb
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth\obj\Debug\Azmyth.dll
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth\obj\Debug\Azmyth.pdb

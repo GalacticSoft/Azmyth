@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8D4A9DB6-092E-4068-AB32-F715A1E13CDE}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Azmyth.Editor</RootNamespace>
+    <AssemblyName>Azmyth.Editor</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.Ribbon35">
+      <HintPath>.\System.Windows.Forms.Ribbon35.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controls\AssetPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\AssetPanel.designer.cs">
+      <DependentUpon>AssetPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmEditorMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEditorMain.designer.cs">
+      <DependentUpon>frmEditorMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\GridControl\CellEventArgs.cs" />
+    <Compile Include="Controls\GridControl\GridControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\GridControl\GridControl.Designer.cs">
+      <DependentUpon>GridControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\GridControl\GridViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\GridControl\GridViewer.Designer.cs">
+      <DependentUpon>GridViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\GridControl\MapGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\GridControl\MapGrid.Designer.cs">
+      <DependentUpon>MapGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MapViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MapViewer.designer.cs">
+      <DependentUpon>MapViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Grid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Grid.Designer.cs">
+      <DependentUpon>Grid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Controls\PropertyGridExtension.cs" />
+    <Compile Include="Controls\SplitPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SplitPanel.designer.cs">
+      <DependentUpon>SplitPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Terrain.cs" />
+    <Compile Include="Controls\ToolStripSlider\ToolStripSlider.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <EmbeddedResource Include="Controls\AssetPanel.resx">
+      <DependentUpon>AssetPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEditorMain.resx">
+      <DependentUpon>frmEditorMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\GridControl\GridControl.resx">
+      <DependentUpon>GridControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\GridControl\GridViewer.resx">
+      <DependentUpon>GridViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\GridControl\MapGrid.resx">
+      <DependentUpon>MapGrid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\MapViewer.resx">
+      <DependentUpon>MapViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Grid.resx">
+      <DependentUpon>Grid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="Controls\SplitPanel.resx">
+      <DependentUpon>SplitPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Azmyth.Game\Azmyth.Game.csproj">
+      <Project>{3a7174f3-137b-4dd8-b9b3-34c9835314bf}</Project>
+      <Name>Azmyth.Game</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Azmyth\Azmyth.csproj">
+      <Project>{97fa754d-e522-4288-b313-1a982939eeea}</Project>
+      <Name>Azmyth</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\igmTag.png" />
+    <Content Include="Images\imgAlert.png" />
+    <Content Include="Images\imgBroadcast.png" />
+    <Content Include="Images\imgBubble.png" />
+    <Content Include="Images\imgCalendar.png" />
+    <Content Include="Images\imgCheck.png" />
+    <Content Include="Images\imgClock.png" />
+    <EmbeddedResource Include="Images\imgClose.png" />
+    <Content Include="Images\imgCollapse.png" />
+    <Content Include="Images\imgCritical.png" />
+    <Content Include="Images\imgDocument.png" />
+    <Content Include="Images\imgDown.png" />
+    <Content Include="Images\imgEdit.png" />
+    <Content Include="Images\imgEnvelope.png" />
+    <Content Include="Images\imgFolder.png" />
+    <Content Include="Images\imgHeart.png" />
+    <Content Include="Images\imgHome.png" />
+    <Content Include="Images\imgInfo.png" />
+    <Content Include="Images\imgLeft.png" />
+    <Content Include="Images\imgLock.png" />
+    <Content Include="Images\imgMagnify.png" />
+    <None Include="Images\imgMinimize.png" />
+    <Content Include="Images\imgMobile.png" />
+    <None Include="Images\imgPlus.png" />
+    <None Include="Images\imgNewMap.png" />
+    <Content Include="Images\imgQuestion.png" />
+    <Content Include="Images\imgRefresh.png" />
+    <Content Include="Images\imgRight.png" />
+    <Content Include="Images\imgShop.png" />
+    <None Include="Images\imgStar.png" />
+    <Content Include="Images\imgThingy.png" />
+    <None Include="Images\imgTools.png" />
+    <Content Include="Images\imgUp.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
