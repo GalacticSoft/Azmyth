@@ -14,15 +14,15 @@ namespace InfiniteGrid
     {
         //Create Quad Tree for testing.
         //TODO: need to change to int.min and int.max but values don't currently work.
-        QuadTree<Item> items = new QuadTree<Item>(new RectangleF(-200, -200, int.MaxValue, int.MaxValue));
+        QuadTree<Item> items = new QuadTree<Item>(new RectangleF(0, 0, int.MaxValue, int.MaxValue));
         Debug m_debug = new Debug();
 
         public Form1()
         {
             InitializeComponent();
 
-            for (int x = 0; x < 200; x++)
-                for (int y = 0; y < 200; y++ )
+            for (int x = 0; x < 500; x++)
+                for (int y = 0; y < 500; y++ )
                     items.Insert(new Item(new Rectangle(x, y, 1, 1)) { Value = false, Color=Utility.RandomColor });
 
             grid1.QuadTree = items;
@@ -49,6 +49,11 @@ namespace InfiniteGrid
         private void grid1_SelectionChanged(object sender, CellEventArgs e)
         {
             m_debug["selection"] = e.Cells;
+        }
+
+        private void grid1_HoverChanged_1(object sender, CellEventArgs e)
+        {
+
         }
     }
 
