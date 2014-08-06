@@ -17,6 +17,7 @@ namespace InfiniteGrid
         QuadTree<Item> items = new QuadTree<Item>(new RectangleF(0, 0, int.MaxValue, int.MaxValue));
         Debug m_debug = new Debug();
 
+
         public Form1()
         {
             InitializeComponent();
@@ -26,7 +27,7 @@ namespace InfiniteGrid
                     items.Insert(new Item(new Rectangle(x, y, 1, 1)) { Value = false, Color=Utility.RandomColor });
 
             grid1.QuadTree = items;
-            quadView1.QuadTree = items;
+           // quadView1.QuadTree = items;
 
             m_debug.Show();
         }
@@ -51,7 +52,12 @@ namespace InfiniteGrid
             m_debug["selection"] = e.Cells;
         }
 
-        private void grid1_HoverChanged_1(object sender, CellEventArgs e)
+        private void grid1_HoverChanged_2(object sender, CellEventArgs e)
+        {
+
+        }
+
+        private void grid1_SelectionChanged_1(object sender, CellEventArgs e)
         {
 
         }
@@ -63,9 +69,9 @@ namespace InfiniteGrid
         private Rectangle m_rectangle;
         public bool Value = true;
     
-        public Item(Rectangle rectangle)
+        public Item(Rectangle rectanlge)
         {
-            m_rectangle = rectangle;
+            m_rectangle = rectanlge;
         }
 
         public Rectangle Rectangle

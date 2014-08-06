@@ -9,12 +9,12 @@ C:\Users\codergirl\Desktop\GalacticSoft\InfiniteGrid\InfiniteGrid\obj\Debug\Infi
 C:\Users\codergirl\Desktop\GalacticSoft\InfiniteGrid\InfiniteGrid\obj\Debug\InfiniteGrid.Grid.resources
 C:\Users\codergirl\Desktop\GalacticSoft\InfiniteGrid\InfiniteGrid\obj\Debug\InfiniteGrid.csprojResolveAssemblyReference.cache
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\InfiniteGrid\bin\Debug\InfiniteGrid.exe.config
-C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\InfiniteGrid\bin\Debug\InfiniteGrid.exe
-C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\InfiniteGrid\bin\Debug\InfiniteGrid.pdb
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\InfiniteGrid\obj\Debug\InfiniteGrid.exe
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\InfiniteGrid\obj\Debug\InfiniteGrid.pdb
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\InfiniteGrid\obj\Debug\InfiniteGrid.csprojResolveAssemblyReference.cache
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\InfiniteGrid\obj\Debug\InfiniteGrid.Form1.resources
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\InfiniteGrid\obj\Debug\InfiniteGrid.Grid.resources
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\InfiniteGrid\obj\Debug\InfiniteGrid.Properties.Resources.resources
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\InfiniteGrid\obj\Debug\InfiniteGrid.csproj.GenerateResource.Cache
-C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\InfiniteGrid\obj\Debug\InfiniteGrid.exe
-C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\InfiniteGrid\obj\Debug\InfiniteGrid.pdb
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\InfiniteGrid\bin\Debug\InfiniteGrid.exe
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\InfiniteGrid\bin\Debug\InfiniteGrid.pdb

@@ -54,7 +54,7 @@ namespace InfiniteGrid
         public event CellEvent ViewportChanging;
         public event CellEvent SelectionChanged;
 
-        private QuadTree<Item>  m_quadTree = null;
+        private QuadTree<Item> m_quadTree;
 
         [Browsable(false)]
         public Rectangle Selection
@@ -67,20 +67,6 @@ namespace InfiniteGrid
                 int selectedHeight = m_selection.Height / m_cellSize;
 
                 return new Rectangle(selectedX, selectedY, selectedWidth, selectedHeight);
-            }
-        }
-
-        [Browsable(false)]
-        public QuadTree<Item> QuadTree 
-        { 
-            get 
-            {
-                return m_quadTree;
-            }
-            set 
-            {
-                m_quadTree = value; 
-                Invalidate();
             }
         }
 
@@ -108,6 +94,16 @@ namespace InfiniteGrid
         [Browsable(true), Category("Appearance")]
         public Color GridColor { get; set; }
 
+
+        public QuadTree<Item> QuadTree
+        {
+            get { return m_quadTree; }
+            set
+            {
+                m_quadTree = value;
+                Invalidate();
+            }
+        }
         public Grid()
         {
             GridColor = Color.Black;
@@ -292,7 +288,7 @@ namespace InfiniteGrid
                 // TODO: Improved pointer tracking
                 // The pointer tracking seems to be off by the distance between  
                 // the original click and the distance from the cells origin
-                
+
                 m_selectDeltaX = p.X - m_lastSelectMousePosition.X;
                 m_selectDeltaY = p.Y - m_lastSelectMousePosition.Y;
 
