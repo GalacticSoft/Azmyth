@@ -56,12 +56,15 @@
     <Compile Include="Grid.Designer.cs">
       <DependentUpon>Grid.cs</DependentUpon>
     </Compile>
-    <Compile Include="GridRenderer.cs" />
     <Compile Include="IHasRect.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuadTree.cs" />
     <Compile Include="QuadTreeNode.cs" />
+    <Compile Include="QuadTreeRenderer.cs" />
+    <Compile Include="QuadView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Vector.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
