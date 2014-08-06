@@ -50,7 +50,6 @@ namespace InfiniteGrid
         {
             m_debug["selection"] = e.Cells;
         }
-
     }
 
     public class Item : IHasRect
