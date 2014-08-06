@@ -27,8 +27,12 @@ namespace InfiniteGrid
             textBox.Dock = DockStyle.Fill;
             textBox.Multiline = true;
             textBox.ReadOnly = true;
+            textBox.ScrollBars = ScrollBars.Both;
+            textBox.WordWrap = false;
 
             this.AutoSize = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.Text = "Debug";
 
             Controls.Add(textBox);
 
@@ -37,12 +41,18 @@ namespace InfiniteGrid
             ResumeLayout();
         }
 
-        void HandleCollectionChangedEvent(object sender, Debug.DebugEventArgs e)
+        void HandleCollectionChangedEvent(object sender, EventArgs e)
         {
             StringBuilder s = new StringBuilder();
             foreach (KeyValuePair<string, object> item in debug)
             {
-                s.AppendFormat("{0} = {1}\n", item.Key, item.Value.ToString());
+                string valueString = "null";
+                if (item.Value != null)
+                {
+                    valueString = item.Value.ToString();
+                }
+                s.AppendFormat("{0} = {1}", item.Key, valueString);
+                s.AppendLine();
             }
             textBox.Text = s.ToString();
         }
@@ -53,31 +63,11 @@ namespace InfiniteGrid
         protected Dictionary<string, object> items = new Dictionary<string, object>();
         protected DebugForm form;
 
-        public class DebugEventArgs : EventArgs
+        public event EventHandler RaiseCollectionChangedEvent;
+
+        protected virtual void OnRaiseCollectionChangedEvent(EventArgs e)
         {
-            private KeyValuePair<string, object> item;
-
-            public DebugEventArgs(KeyValuePair<string, object> item)
-            {
-                this.item = item;
-            }
-
-            public DebugEventArgs(string key, object value)
-            {
-                this.item = new KeyValuePair<string, object>(key, value);
-            }
-
-            public KeyValuePair<string, object> Item
-            {
-                get { return item; }
-            }
-        }
-
-        public event EventHandler<DebugEventArgs> RaiseCollectionChangedEvent;
-
-        protected virtual void OnRaiseCollectionChangedEvent(DebugEventArgs e)
-        {
-            EventHandler<DebugEventArgs> handler = RaiseCollectionChangedEvent;
+            EventHandler handler = RaiseCollectionChangedEvent;
 
             if (handler != null)
             {
@@ -88,6 +78,10 @@ namespace InfiniteGrid
         public void Add(string key, object value)
         {
             items.Add(key, value);
+            if (RaiseCollectionChangedEvent != null)
+            {
+                RaiseCollectionChangedEvent(this, null);
+            }
         }
 
         public bool ContainsKey(string key)
@@ -103,6 +97,10 @@ namespace InfiniteGrid
         public bool Remove(string key)
         {
             return items.Remove(key);
+            if (RaiseCollectionChangedEvent != null)
+            {
+                RaiseCollectionChangedEvent(this, null);
+            }
         }
 
         public bool TryGetValue(string key, out object value)
@@ -121,18 +119,29 @@ namespace InfiniteGrid
             set 
             { 
                 items[key] = value;
-                RaiseCollectionChangedEvent(this, new DebugEventArgs(key, value));
+                if (RaiseCollectionChangedEvent != null)
+                {
+                    RaiseCollectionChangedEvent(this, null);
+                }
             }
         }
 
         public void Add(KeyValuePair<string, object> item)
         {
             items.Add(item.Key, item.Value);
+            if (RaiseCollectionChangedEvent != null)
+            {
+                RaiseCollectionChangedEvent(this, null);
+            }
         }
 
         public void Clear()
         {
             items.Clear();
+            if (RaiseCollectionChangedEvent != null)
+            {
+                RaiseCollectionChangedEvent(this, null);
+            }
         }
 
         public bool Contains(KeyValuePair<string, object> item)
@@ -157,7 +166,12 @@ namespace InfiniteGrid
 
         public bool Remove(KeyValuePair<string, object> item)
         {
-            return items.Remove(item.Key);
+            bool result = items.Remove(item.Key);
+            if (RaiseCollectionChangedEvent != null)
+            {
+                RaiseCollectionChangedEvent(this, null);
+            }
+            return result;
         }
 
         public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
