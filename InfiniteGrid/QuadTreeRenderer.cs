@@ -1,71 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
-using Azmyth.Math;
-using System.Windows;
-using System.Windows.Forms;
 
 namespace InfiniteGrid
-{
-    public class GridRenderer
-    {
-        int m_cellSize = 16;
-        int m_cellOffsetX = 0;
-        int m_cellOffsetY = 0;
-        int m_offsetX = 0;
-        int m_offsetY = 0;
-
-        int m_originOffsetX = 0;
-
-        Vector m_Origin = Vector.Origin;
- 
-        public void Render(Graphics graphics, int offsetX, int offsetY)
-        {
-            int width = (int)graphics.ClipBounds.Width;
-            int height = (int)graphics.ClipBounds.Height;
-
-            int rows = height / m_cellSize;
-            int cols = width / m_cellSize;
-
-            for(int index = 0; index <= rows; index++)
-            {
-                int yPos = ((index) * m_cellSize) + (Math.Abs(offsetY) % m_cellSize);
-
-                graphics.DrawLine(Pens.Black, 
-                    new Point(0, yPos), 
-                    new Point(width, yPos));
-            }
-
-            for (int index = 0; index <= cols; index++)
-            {
-                int xPos = ((index) * m_cellSize) - (offsetX % m_cellSize);
-
-                graphics.DrawLine(Pens.Black,
-                    new Point(xPos, 0),
-                    new Point(xPos, width));
-            }
-
-            m_originOffsetX = (offsetX);
-            graphics.DrawString((offsetX).ToString() + " : " + m_originOffsetX.ToString(), new Font("Arial", 10), Brushes.Black,
-                new Point(m_originOffsetX * -1, 0));
-
-      
-        }
-    }
-
-
-
-/*using QuadTreeLib;
-
-namespace QuadTreeDemoApp
 {
     /// <summary>
     /// Class draws a QuadTree
     /// </summary>
-    class QuadTreeRenderer 
+    class QuadTreeRenderer
     {
         /// <summary>
         /// Create the renderer, give the QuadTree to render.
@@ -75,7 +17,7 @@ namespace QuadTreeDemoApp
         {
             m_quadTree = quadTree;
         }
-        
+
         QuadTree<Item> m_quadTree;
 
         /// <summary>
@@ -83,7 +25,7 @@ namespace QuadTreeDemoApp
         /// rendered with a consistant colour.
         /// </summary>
         Dictionary<QuadTreeNode<Item>, Color> m_dictionary = new Dictionary<QuadTreeNode<Item>, Color>();
-        
+
         /// <summary>
         /// Get the colour for a QuadTreeNode from the hash table or else create a new colour
         /// </summary>
@@ -123,19 +65,40 @@ namespace QuadTreeDemoApp
                 // Draw the border
                 Color color = GetColor(node);
                 graphics.DrawRectangle(Pens.Black, Rectangle.Round(node.Bounds));
-            
+
                 // draw the inside of the border in a distinct colour
                 using (Pen p = new Pen(color))
                 {
                     Rectangle inside = Rectangle.Round(node.Bounds);
                     inside.Inflate(-1, -1);
-                    graphics.DrawRectangle(p, inside);
+                    if (graphics.ClipBounds.Contains(inside))
+                    {
+                        graphics.DrawRectangle(p, inside);
+                    }
+                    
                 }
 
             });
 
         }
     }
-}*/
 
+
+    public static class Utility
+    {
+        static Random m_rand = new Random(DateTime.Now.Millisecond);
+        
+        public static Color RandomColor
+        {
+            get
+            {
+                return Color.FromArgb(
+                    255,
+                    m_rand.Next(255),
+                    m_rand.Next(255),
+                    m_rand.Next(255));
+
+            }
+        }
+    }
 }
