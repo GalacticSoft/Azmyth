@@ -130,7 +130,21 @@ namespace InfiniteGrid
             Rectangle client = ClientRectangle;
 
             client.Inflate(200, 200);
-            
+            if (m_quadTree != null)
+            {
+                if (m_quadTree.Count > 0)
+                {
+                    Rectangle rect = Viewport;
+
+                    rect.Inflate(5, 5);
+                    
+                    foreach (Item i in m_quadTree.Query(rect))
+                    {
+                        graphics.FillRectangle(new SolidBrush(i.Color), (i.Rectangle.X * m_cellSize) + m_offsetX, (i.Rectangle.Y * m_cellSize) + m_offsetY, m_cellSize, m_cellSize);
+                    }
+                }
+            }
+
             using(Pen gridPen = new Pen(GridColor, 1))
             {
                 //calcuate the dots based on offset.
@@ -167,20 +181,7 @@ namespace InfiniteGrid
                 }
             }
 
-            if (m_quadTree != null)
-            {
-                if (m_quadTree.Count > 0)
-                {
-                    Rectangle rect = Viewport;
 
-                    rect.Inflate(m_cellSize, m_cellSize);
-
-                    foreach (Item i in m_quadTree.Query(rect))
-                    {
-                        graphics.FillRectangle(Brushes.Black, (i.Rectangle.X * m_cellSize) + m_offsetX, (i.Rectangle.Y * m_cellSize) + m_offsetY, m_cellSize, m_cellSize);
-                    }
-                }
-            }
 
             if (client.Contains(selection))
             {

@@ -21,13 +21,9 @@ namespace InfiniteGrid
         {
             InitializeComponent();
 
-            items.Insert(new Item(new Rectangle(0, 0, 1, 1)) { Value = false });
-            items.Insert(new Item(new Rectangle(1, 1, 1, 1)) { Value = false });
-            items.Insert(new Item(new Rectangle(-1, -1, 1, 1)) { Value = false });
-            items.Insert(new Item(new Rectangle(-1, -21, 1, 1)) { Value = false });
-            items.Insert(new Item(new Rectangle(10, 15, 1, 1)) { Value = false });
-            items.Insert(new Item(new Rectangle(-1, -5, 1, 1)) { Value = false });
-            items.Insert(new Item(new Rectangle(-3, -4, 1, 1)) { Value = false });
+            for (int x = 0; x < 200; x++)
+                for (int y = 0; y < 200; y++ )
+                    items.Insert(new Item(new Rectangle(x, y, 1, 1)) { Value = false, Color=Utility.RandomColor });
 
             grid1.QuadTree = items;
             quadView1.QuadTree = items;
@@ -54,6 +50,7 @@ namespace InfiniteGrid
         {
             m_debug["selection"] = e.Cells;
         }
+
     }
 
     public class Item : IHasRect
