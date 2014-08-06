@@ -47,38 +47,41 @@ namespace InfiniteGrid
         /// <param name="graphics"></param>
         internal void Render(Graphics graphics)
         {
-            m_quadTree.ForEach(delegate(QuadTreeNode<Item> node)
+            if (m_quadTree != null)
             {
-
-                // draw the contents of this quad
-                if (node.Contents != null)
+                m_quadTree.ForEach(delegate(QuadTreeNode<Item> node)
                 {
-                    foreach (Item item in node.Contents)
+
+                    // draw the contents of this quad
+                    if (node.Contents != null)
                     {
-                        using (Brush b = new SolidBrush(item.Color))
-                            graphics.FillEllipse(b, Rectangle.Round(item.Rectangle));
+                        foreach (Item item in node.Contents)
+                        {
+                            using (Brush b = new SolidBrush(item.Color))
+                                graphics.FillEllipse(b, Rectangle.Round(item.Rectangle));
+                        }
                     }
-                }
 
-                // draw this quad
+                    // draw this quad
 
-                // Draw the border
-                Color color = GetColor(node);
-                graphics.DrawRectangle(Pens.Black, Rectangle.Round(node.Bounds));
+                    // Draw the border
+                    Color color = GetColor(node);
+                    graphics.DrawRectangle(Pens.Black, Rectangle.Round(node.Bounds));
 
-                // draw the inside of the border in a distinct colour
-                using (Pen p = new Pen(color))
-                {
-                    Rectangle inside = Rectangle.Round(node.Bounds);
-                    inside.Inflate(-1, -1);
-                    if (graphics.ClipBounds.Contains(inside))
+                    // draw the inside of the border in a distinct colour
+                    using (Pen p = new Pen(color))
                     {
-                        graphics.DrawRectangle(p, inside);
-                    }
-                    
-                }
+                        Rectangle inside = Rectangle.Round(node.Bounds);
+                        inside.Inflate(-1, -1);
+                        if (graphics.ClipBounds.Contains(inside))
+                        {
+                            graphics.DrawRectangle(p, inside);
+                        }
 
-            });
+                    }
+
+                });
+            }
 
         }
     }

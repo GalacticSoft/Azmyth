@@ -56,6 +56,10 @@
             this.grid1.ShowSelection = true;
             this.grid1.Size = new System.Drawing.Size(888, 463);
             this.grid1.TabIndex = 0;
+            this.grid1.HoverChanged += new InfiniteGrid.CellEvent(this.grid1_HoverChanged);
+            this.grid1.ViewportChanged += new InfiniteGrid.CellEvent(this.grid1_ViewportChanged);
+            this.grid1.ViewportChanging += new InfiniteGrid.CellEvent(this.grid1_ViewportChanging);
+            this.grid1.SelectionChanged += new InfiniteGrid.CellEvent(this.grid1_SelectionChanged);
             // 
             // Form1
             // 

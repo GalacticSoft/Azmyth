@@ -42,7 +42,8 @@ namespace InfiniteGrid
             StringBuilder s = new StringBuilder();
             foreach (KeyValuePair<string, object> item in debug)
             {
-                s.AppendFormat("{0} = {1}\n", item.Key, item.Value.ToString());
+                s.AppendFormat("{0} = {1}",  item.Key, item.Value.ToString());
+                s.AppendLine();
             }
             textBox.Text = s.ToString();
         }
@@ -121,7 +122,11 @@ namespace InfiniteGrid
             set 
             { 
                 items[key] = value;
-                RaiseCollectionChangedEvent(this, new DebugEventArgs(key, value));
+
+                if (RaiseCollectionChangedEvent != null)
+                {
+                    RaiseCollectionChangedEvent(this, new DebugEventArgs(key, value));
+                }
             }
         }
 

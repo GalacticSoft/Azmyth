@@ -167,15 +167,18 @@ namespace InfiniteGrid
                 }
             }
 
-            if (m_quadTree.Count > 0)
+            if (m_quadTree != null)
             {
-                Rectangle rect = Viewport;
-
-                rect.Inflate(m_cellSize, m_cellSize);
-
-                foreach (Item i in m_quadTree.Query(rect))
+                if (m_quadTree.Count > 0)
                 {
-                    graphics.FillRectangle(Brushes.Black, (i.Rectangle.X * m_cellSize) + m_offsetX, (i.Rectangle.Y * m_cellSize) + m_offsetY, m_cellSize, m_cellSize);
+                    Rectangle rect = Viewport;
+
+                    rect.Inflate(m_cellSize, m_cellSize);
+
+                    foreach (Item i in m_quadTree.Query(rect))
+                    {
+                        graphics.FillRectangle(Brushes.Black, (i.Rectangle.X * m_cellSize) + m_offsetX, (i.Rectangle.Y * m_cellSize) + m_offsetY, m_cellSize, m_cellSize);
+                    }
                 }
             }
 
@@ -207,7 +210,7 @@ namespace InfiniteGrid
 
                 if(ViewportChanged != null)
                 {
-                    ViewportChanged.BeginInvoke(this, new CellEventArgs(Viewport), null, null);
+                    ViewportChanged(this, new CellEventArgs(Viewport));
                 }
             }
             if (m_selecting)
@@ -246,7 +249,7 @@ namespace InfiniteGrid
 
                 if (SelectionChanged != null)
                 {
-                    SelectionChanged.BeginInvoke(this, new CellEventArgs(Selection), null, null);
+                    SelectionChanged(this, new CellEventArgs(Selection));
                 }
             }
         }
@@ -278,7 +281,7 @@ namespace InfiniteGrid
 
                 if (ViewportChanging != null)
                 {
-                    ViewportChanging.BeginInvoke(this, new CellEventArgs(Viewport), null, null);
+                    ViewportChanging(this, new CellEventArgs(Viewport));
                 }
             }
             if (m_selecting)
@@ -415,7 +418,7 @@ namespace InfiniteGrid
         {
             if (ViewportChanged != null)
             {
-                ViewportChanged.BeginInvoke(this, new CellEventArgs(Viewport), null, null);
+                ViewportChanged(this, new CellEventArgs(Viewport));
             }
         }
 
@@ -423,7 +426,7 @@ namespace InfiniteGrid
         {
             if (HoverChanged != null)
             {
-                HoverChanged.BeginInvoke(this, new CellEventArgs(new Rectangle(GetCellX(Cursor.Position), GetCellY(Cursor.Position), 1, 1)), null, null);
+                HoverChanged(this, new CellEventArgs(new Rectangle(GetCellX(Cursor.Position), GetCellY(Cursor.Position), 1, 1)));
             }
         }
     }
