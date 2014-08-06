@@ -27,7 +27,7 @@ namespace InfiniteGrid
                     items.Insert(new Item(new Rectangle(x, y, 1, 1)) { Value = false, Color=Utility.RandomColor });
 
             grid1.QuadTree = items;
-           // quadView1.QuadTree = items;
+            quadView2.QuadTree = items;
 
             m_debug.Show();
         }
@@ -50,16 +50,6 @@ namespace InfiniteGrid
         private void grid1_SelectionChanged(object sender, CellEventArgs e)
         {
             m_debug["selection"] = e.Cells;
-        }
-
-        private void grid1_HoverChanged_2(object sender, CellEventArgs e)
-        {
-
-        }
-
-        private void grid1_SelectionChanged_1(object sender, CellEventArgs e)
-        {
-
         }
     }
 
