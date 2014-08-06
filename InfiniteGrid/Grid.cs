@@ -13,6 +13,11 @@ namespace InfiniteGrid
 {
     public delegate void CellEvent(object sender, CellEventArgs e);
 
+    //TODO: Add Zoom feature.
+    //TODO: Fix Pointer tracking when selecting.
+    //TODO: Fix selection code there seems to be a lower limit of -200 in both x and y and an abritrary upper limit.
+    //TODO: offset the dottted line of the grid so it doesn't appear to slide across. Maybe add emphasis on corners.
+    //TODO: When filling a 200, 200 grid the bottom right cell is (199, 200), should be (199, 199) for 0 based grids.
     public partial class Grid : UserControl
     {
         private int m_deltaX = 0;
@@ -21,7 +26,7 @@ namespace InfiniteGrid
         private int m_offsetY = 0;
         private int m_cellOffsetX = 0;
         private int m_cellOffsetY = 0;
-        private int m_cellSize = 16;
+        private int m_cellSize = 32;
 
         private Rectangle m_selection;
         private Point m_lastMousePosition;
@@ -148,7 +153,7 @@ namespace InfiniteGrid
             using(Pen gridPen = new Pen(GridColor, 1))
             {
                 //calcuate the dots based on offset.
-                float[] dashValues = { 1, 1, 1 };
+                float[] dashValues = { 1, 1 };
                 gridPen.DashPattern = dashValues;
             
                 for (int index = 0; index <= rows; index++)
@@ -181,8 +186,6 @@ namespace InfiniteGrid
                 }
             }
 
-
-
             if (client.Contains(selection))
             {
                 using (Pen m_selectionPen = new Pen(new SolidBrush(SelectionColor), 3))
@@ -197,8 +200,6 @@ namespace InfiniteGrid
                     graphics.DrawRectangle(m_selectionPen, m_selection);
                 }
             }
-
-
         }
 
         private void Grid_MouseUp(object sender, MouseEventArgs e)
@@ -273,7 +274,7 @@ namespace InfiniteGrid
                 // I changed this from ceiling to Floor.  It made more sense to me to have this represent the # of
                 // whole cells offset from the viewport and not to include a partial cell in this.  It shouldn't be too
                 // hard to flip this in the other direction, if you wanted tho.
-                m_cellOffsetX = m_offsetX / m_cellSize;
+                m_cellOffsetX = (int)System.Math.Floor((double)m_offsetX / (double)m_cellSize);
                 m_cellOffsetY = (int)System.Math.Floor((double)m_offsetY / (double)m_cellSize);
 
                 m_lastMousePosition = (e.Location);
@@ -307,6 +308,11 @@ namespace InfiniteGrid
                 m_lastSelectMousePosition = e.Location;
 
                 Invalidate();
+            }
+
+            if (HoverChanged != null)
+            {
+                HoverChanged(this, new CellEventArgs(new Rectangle(GetCellX(e.Location), GetCellY(e.Location), 1, 1)));
             }
         }
 
@@ -420,14 +426,6 @@ namespace InfiniteGrid
             if (ViewportChanged != null)
             {
                 ViewportChanged(this, new CellEventArgs(Viewport));
-            }
-        }
-
-        private void Grid_MouseHover(object sender, EventArgs e)
-        {
-            if (HoverChanged != null)
-            {
-                HoverChanged(this, new CellEventArgs(new Rectangle(GetCellX(Cursor.Position), GetCellY(Cursor.Position), 1, 1)));
             }
         }
     }

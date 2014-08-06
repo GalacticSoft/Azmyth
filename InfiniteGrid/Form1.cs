@@ -14,7 +14,7 @@ namespace InfiniteGrid
     {
         //Create Quad Tree for testing.
         //TODO: need to change to int.min and int.max but values don't currently work.
-        QuadTree<Item> items = new QuadTree<Item>(new RectangleF(-200, -200, 500, 500));
+        QuadTree<Item> items = new QuadTree<Item>(new RectangleF(-200, -200, int.MaxValue, int.MaxValue));
         Debug m_debug = new Debug();
 
         public Form1()

@@ -41,7 +41,6 @@
             this.Size = new System.Drawing.Size(545, 370);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Grid_Paint);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Grid_MouseDown);
-            this.MouseHover += new System.EventHandler(this.Grid_MouseHover);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Grid_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Grid_MouseUp);
             this.Resize += new System.EventHandler(this.Grid_Resize);
