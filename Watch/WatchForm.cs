@@ -10,6 +10,12 @@ using System.Windows.Forms;
 
 namespace Stoatly.Util
 {
+    /// <summary>
+    /// A Windows Form to accompany Watch
+    /// </summary>
+    /// <example>
+    /// <code>WatchForm.GetInstance().Show();</code>
+    /// </example>
     public class WatchForm : Form
     {
         private static WatchForm s_instance;
@@ -55,10 +61,10 @@ namespace Stoatly.Util
         {
             StringBuilder s = new StringBuilder();
             IEnumerator<KeyValuePair<string, object>> enumerator = Watch.GetEnumerator();
-            while(enumerator.MoveNext())
+            while (enumerator.MoveNext())
             {
                 KeyValuePair<string, object> pair = enumerator.Current;
-                string valueString = "null";
+                string valueString = "<null>";
                 if (pair.Value != null)
                 {
                     valueString = pair.Value.ToString();
