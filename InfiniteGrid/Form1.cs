@@ -21,8 +21,8 @@ namespace InfiniteGrid
         {
             InitializeComponent();
 
-            for (int x = 0; x < 500; x++)
-                for (int y = 0; y < 500; y++ )
+            for (int x = 0; x < 20; x++)
+                for (int y = 0; y <20; y++ )
                     items.Insert(new Item(new Rectangle(x, y, 1, 1)) { Value = false, Color=Utility.RandomColor });
 
             grid1.QuadTree = items;
