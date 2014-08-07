@@ -71,14 +71,16 @@
             this.grid1.OriginColor = System.Drawing.Color.Black;
             this.grid1.QuadTree = null;
             this.grid1.SelectionColor = System.Drawing.Color.DarkRed;
-            this.grid1.ShowOrigin = true;
-            this.grid1.ShowSelection = true;
+            this.grid1.ShowGrid = false;
+            this.grid1.ShowOrigin = false;
+            this.grid1.ShowSelection = false;
             this.grid1.Size = new System.Drawing.Size(874, 612);
             this.grid1.TabIndex = 3;
             this.grid1.HoverChanged += new InfiniteGrid.CellEvent(this.grid1_HoverChanged);
             this.grid1.ViewportChanged += new InfiniteGrid.CellEvent(this.grid1_ViewportChanged);
             this.grid1.ViewportChanging += new InfiniteGrid.CellEvent(this.grid1_ViewportChanging);
             this.grid1.SelectionChanged += new InfiniteGrid.CellEvent(this.grid1_SelectionChanged);
+            this.grid1.DoubleClick += new System.EventHandler(this.grid1_DoubleClick);
             // 
             // tabPage2
             // 

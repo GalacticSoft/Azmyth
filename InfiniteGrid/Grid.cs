@@ -83,6 +83,9 @@ namespace InfiniteGrid
         public bool ShowOrigin { get; set; }
 
         [Browsable(true), Category("Appearance")]
+        public bool ShowGrid { get; set; }
+
+        [Browsable(true), Category("Appearance")]
         public bool ShowSelection { get; set; }
 
         [Browsable(true), Category("Appearance")]
@@ -146,24 +149,27 @@ namespace InfiniteGrid
                 }
             }
 
-            using(Pen gridPen = new Pen(GridColor, 1))
+            if (ShowGrid)
             {
-                //calcuate the dots based on offset.
-                float[] dashValues = { 1, 1 };
-                gridPen.DashPattern = dashValues;
-            
-                for (int index = 0; index <= rows; index++)
+                using (Pen gridPen = new Pen(GridColor, 1))
                 {
-                    int yPos = (index * m_cellSize) + (m_offsetY % m_cellSize);
+                    //TODO: calcuate the dots based on offset.
+                    float[] dashValues = { 1, 1 };
+                    gridPen.DashPattern = dashValues;
 
-                    graphics.DrawLine(gridPen, new Point(0, yPos), new Point(width, yPos));
-                }
+                    for (int index = 0; index <= rows; index++)
+                    {
+                        int yPos = (index * m_cellSize) + (m_offsetY % m_cellSize);
 
-                for (int index = 0; index <= cols; index++)
-                {
-                    int xPos = (index * m_cellSize) + (m_offsetX % m_cellSize);
+                        graphics.DrawLine(gridPen, new Point(0, yPos), new Point(width, yPos));
+                    }
 
-                    graphics.DrawLine(gridPen, new Point(xPos, 0), new Point(xPos, width));
+                    for (int index = 0; index <= cols; index++)
+                    {
+                        int xPos = (index * m_cellSize) + (m_offsetX % m_cellSize);
+
+                        graphics.DrawLine(gridPen, new Point(xPos, 0), new Point(xPos, width));
+                    }
                 }
             }
 
@@ -423,6 +429,23 @@ namespace InfiniteGrid
             {
                 ViewportChanged(this, new CellEventArgs(Viewport));
             }
+        }
+
+        public void MoveToOrigin()
+        {
+            m_offsetX = 0;
+            m_offsetY = 0;
+            m_cellOffsetX = 0;
+            m_cellOffsetY = 0;
+
+            m_selection = new Rectangle(0, 0, m_cellSize, m_cellSize);
+
+            m_selectionOffsetX = 0;
+            m_selectionOffsetY = 0;
+            m_selectionStartX = 0;
+            m_selectionStartY = 0;
+
+            Invalidate();
         }
     }
 

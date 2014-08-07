@@ -18,3 +18,5 @@ C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\InfiniteGrid\obj\Debug\InfiniteGr
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\InfiniteGrid\obj\Debug\InfiniteGrid.csproj.GenerateResource.Cache
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\InfiniteGrid\bin\Debug\InfiniteGrid.exe
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\InfiniteGrid\bin\Debug\InfiniteGrid.pdb
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\InfiniteGrid\bin\Debug\Watch.dll
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\InfiniteGrid\bin\Debug\Watch.pdb
