@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Stoatly.Util;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,8 +16,6 @@ namespace InfiniteGrid
         //Create Quad Tree for testing.
         //TODO: need to change to int.min and int.max but values don't currently work.
         QuadTree<Item> items = new QuadTree<Item>(new RectangleF(0, 0, int.MaxValue, int.MaxValue));
-        Debug m_debug = new Debug();
-
 
         public Form1()
         {
@@ -29,27 +28,27 @@ namespace InfiniteGrid
             grid1.QuadTree = items;
             quadView2.QuadTree = items;
 
-            m_debug.Show();
+            WatchForm.GetInstance().Show();
         }
 
         private void grid1_ViewportChanged(object sender, CellEventArgs e)
         {
-            m_debug["viewport"] = e.Cells;
+            Watch.Set("viewport", e.Cells);
         }
 
         private void grid1_ViewportChanging(object sender, CellEventArgs e)
         {
-            m_debug["viewport"] = e.Cells;
+            Watch.Set("viewport", e.Cells);
         }
 
         private void grid1_HoverChanged(object sender, CellEventArgs e)
         {
-            m_debug["hover"] = e.Cells;
+            Watch.Set("hover", e.Cells);
         }
 
         private void grid1_SelectionChanged(object sender, CellEventArgs e)
         {
-            m_debug["selection"] = e.Cells;
+            Watch.Set("selection", e.Cells);
         }
     }
 
