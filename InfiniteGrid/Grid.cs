@@ -15,8 +15,6 @@ namespace InfiniteGrid
     public delegate void CellEvent(object sender, CellEventArgs e);
 
     //TODO: Add Zoom feature.
-    //TODO: Fix Pointer tracking when selecting.
-    //TODO: Fix selection code there seems to be a lower limit of -200 in both x and y and an abritrary upper limit.
     //TODO: offset the dottted line of the grid so it doesn't appear to slide across. Maybe add emphasis on corners.
     //TODO: When filling a 200, 200 grid the bottom right cell is (199, 200), should be (199, 199) for 0 based grids.
     public partial class Grid : UserControl
@@ -29,7 +27,7 @@ namespace InfiniteGrid
         private int m_cellOffsetY = 0;
         private int m_cellSize = 32;
 
-        private Rectangle m_selection;
+        private Rectangle m_dipSelection;
         private Point m_lastMousePosition;
         private Point m_lastSelectMousePosition;
 
@@ -37,10 +35,8 @@ namespace InfiniteGrid
         private int m_selectedY = 0;
         private int m_selectDeltaX;
         private int m_selectDeltaY;
-        private int m_selectionOffsetX;
-        private int m_selectionOffsetY;
-        private int m_selectionStartX;
-        private int m_selectionStartY;
+        private int m_dipSelectionStartX;
+        private int m_dipSelectionStartY;
 
         private int m_mouseOffsetX = 0;
         private int m_mouseOffsetY = 0;
@@ -57,15 +53,18 @@ namespace InfiniteGrid
 
         private QuadTree<Item> m_quadTree;
 
+		/// <summary>
+		/// Returns the selection rect in cell units
+		/// </summary>
         [Browsable(false)]
-        public Rectangle Selection
+        public Rectangle CellSelection
         {
             get
             {
-                int selectedX = GetCellX(m_selection.Location);
-                int selectedY = GetCellY(m_selection.Location);
-                int selectedWidth = m_selection.Width / m_cellSize;
-                int selectedHeight = m_selection.Height / m_cellSize;
+                int selectedX = GetCellX(m_dipSelection.Location);
+                int selectedY = GetCellY(m_dipSelection.Location);
+                int selectedWidth = m_dipSelection.Width / m_cellSize;
+                int selectedHeight = m_dipSelection.Height / m_cellSize;
 
                 return new Rectangle(selectedX, selectedY, selectedWidth, selectedHeight);
             }
@@ -124,81 +123,83 @@ namespace InfiniteGrid
 
         private void Grid_Paint(object sender, PaintEventArgs e)
         {
-            int width = Width;
-            int height = Height;
+			int width = Width;
+			int height = Height;
 
-            int rows = (height / m_cellSize) + 1;
-            int cols = (width / m_cellSize) + 1;
+			int rows = (height / m_cellSize) + 1;
+			int cols = (width / m_cellSize) + 1;
 
-            Graphics graphics = e.Graphics;
-            Rectangle selection = Selection;
-            Rectangle client = ClientRectangle;
-            Rectangle view = Viewport;
+			Graphics graphics = e.Graphics;
+			Rectangle client = ClientRectangle;
 
-            view.Inflate(4, 4);
-            client.Inflate(200, 200);
-            
-            if (m_quadTree != null)
-            {
-                foreach (Item i in m_quadTree.Query(view))
-                {
-                    graphics.FillRectangle(new SolidBrush(i.Color), (i.Rectangle.X * m_cellSize) + m_offsetX, (i.Rectangle.Y * m_cellSize) + m_offsetY, m_cellSize, m_cellSize);
-                }
-            }
+			// in cells? 
+			Rectangle view = Viewport;
 
-            if (ShowGrid)
-            {
-                using (Pen gridPen = new Pen(GridColor, 1))
-                {
-                    //TODO: calcuate the dots based on offset.
-                    float[] dashValues = { 1, 1 };
-                    gridPen.DashPattern = dashValues;
+			view.Inflate(4, 4);
+			client.Inflate(200, 200);
 
-                    for (int index = 0; index <= rows; index++)
-                    {
-                        int yPos = (index * m_cellSize) + (m_offsetY % m_cellSize);
+			if (m_quadTree != null)
+			{
+				foreach (Item i in m_quadTree.Query(view))
+				{
+					graphics.FillRectangle(new SolidBrush(i.Color), (i.Rectangle.X * m_cellSize) + m_offsetX, (i.Rectangle.Y * m_cellSize) + m_offsetY, m_cellSize, m_cellSize);
+				}
+			}
 
-                        graphics.DrawLine(gridPen, new Point(0, yPos), new Point(width, yPos));
-                    }
+			if (ShowGrid)
+			{
+				using (Pen gridPen = new Pen(GridColor, 1))
+				{
+					//TODO: calcuate the dots based on offset.
+					float[] dashValues = { 1, 1 };
+					gridPen.DashPattern = dashValues;
 
-                    for (int index = 0; index <= cols; index++)
-                    {
-                        int xPos = (index * m_cellSize) + (m_offsetX % m_cellSize);
+					for (int index = 0; index <= rows; index++)
+					{
+						int yPos = (index * m_cellSize) + (m_offsetY % m_cellSize);
 
-                        graphics.DrawLine(gridPen, new Point(xPos, 0), new Point(xPos, width));
-                    }
-                }
-            }
+						graphics.DrawLine(gridPen, new Point(0, yPos), new Point(width, yPos));
+					}
 
-            if (ShowOrigin)
-            {
-                if (client.Contains(new Point(m_offsetX, m_offsetY)))
-                {
-                    using (Pen m_originPen = new Pen(OriginColor, 3))
-                    {
-                        graphics.DrawString("(0, 0) (" + m_cellOffsetX + ", " + m_cellOffsetY + ")",
-                                new Font("Arial", 20), new SolidBrush(OriginColor),
-                                new Point(m_offsetX + m_cellSize, m_offsetY + m_cellSize));
+					for (int index = 0; index <= cols; index++)
+					{
+						int xPos = (index * m_cellSize) + (m_offsetX % m_cellSize);
 
-                        graphics.DrawRectangle(m_originPen, new Rectangle(new Point(m_offsetX, m_offsetY), new Size(m_cellSize, m_cellSize)));
-                    }
-                }
-            }
+						graphics.DrawLine(gridPen, new Point(xPos, 0), new Point(xPos, width));
+					}
+				}
+			}
 
-            if (client.Contains(selection))
-            {
-                using (Pen m_selectionPen = new Pen(new SolidBrush(SelectionColor), 3))
-                {
-                    if (ShowSelection)
-                    {
-                        graphics.DrawString("(" + selection.X + "," + selection.Y + ") (" + selection.Width + ", " + selection.Height + ")",
-                                new Font("Arial", 20), new SolidBrush(SelectionColor),
-                                new Point(0, this.Height - 40));
-                    }
+			if (ShowOrigin)
+			{
+				if (client.Contains(new Point(m_offsetX, m_offsetY)))
+				{
+					using (Pen m_originPen = new Pen(OriginColor, 3))
+					{
+						graphics.DrawString("(0, 0) (" + m_cellOffsetX + ", " + m_cellOffsetY + ")",
+								new Font("Arial", 20), new SolidBrush(OriginColor),
+								new Point(m_offsetX + m_cellSize, m_offsetY + m_cellSize));
 
-                    graphics.DrawRectangle(m_selectionPen, m_selection);
-                }
-            }
+						graphics.DrawRectangle(m_originPen, new Rectangle(new Point(m_offsetX, m_offsetY), new Size(m_cellSize, m_cellSize)));
+					}
+				}
+			}
+
+			if (client.Contains(m_dipSelection))
+			{
+				using (Pen m_selectionPen = new Pen(new SolidBrush(SelectionColor), 3))
+				{
+					graphics.DrawRectangle(m_selectionPen, m_dipSelection);
+				}
+			}
+
+			if (ShowSelection)
+			{
+				graphics.DrawString("(" + CellSelection.X + "," + CellSelection.Y + ") (" + CellSelection.Width + ", " + CellSelection.Height + ")",
+						new Font("Arial", 20), new SolidBrush(SelectionColor),
+						new Point(0, this.Height - 40));
+			}
+
         }
 
         private void Grid_MouseUp(object sender, MouseEventArgs e)
@@ -218,39 +219,39 @@ namespace InfiniteGrid
             {
                 m_selecting = false;
 
-                if (m_selection.X == m_selectionStartX && m_selection.Width % m_cellSize != 0)
+                if (m_dipSelection.X == m_dipSelectionStartX && m_dipSelection.Width % m_cellSize != 0)
                 {
-                    var nextWholeCellSnapX = m_cellSize - (m_selection.Width % m_cellSize);
-                    m_selection.Width += nextWholeCellSnapX;
+                    var nextWholeCellSnapX = m_cellSize - (m_dipSelection.Width % m_cellSize);
+                    m_dipSelection.Width += nextWholeCellSnapX;
                 }
-                else if (e.Location.X < m_selectionStartX)
+                else if (e.Location.X < m_dipSelectionStartX)
                 {
-                    var nextWholeCellSnapX = m_selection.X % m_cellSize;
-                    nextWholeCellSnapX += (m_cellSize - GetPartialCellSizeX());
+                    var nextWholeCellSnapX = m_dipSelection.X % m_cellSize;
+                    nextWholeCellSnapX += (m_cellSize - GetPartialCellWidth());
                     nextWholeCellSnapX %= m_cellSize;
-                    m_selection.X -= nextWholeCellSnapX;
-                    m_selection.Width += nextWholeCellSnapX;
+                    m_dipSelection.X -= nextWholeCellSnapX;
+                    m_dipSelection.Width += nextWholeCellSnapX;
                 }
 
-                if (m_selection.Y == m_selectionStartY && m_selection.Height % m_cellSize != 0)
+                if (m_dipSelection.Y == m_dipSelectionStartY && m_dipSelection.Height % m_cellSize != 0)
                 {
-                    var nextWholeCellSnapY = m_cellSize - (m_selection.Height % m_cellSize);
-                    m_selection.Height += nextWholeCellSnapY;
+                    var nextWholeCellSnapY = m_cellSize - (m_dipSelection.Height % m_cellSize);
+                    m_dipSelection.Height += nextWholeCellSnapY;
                 }
-                else if (e.Location.Y < m_selectionStartY)
+                else if (e.Location.Y < m_dipSelectionStartY)
                 {
-                    var nextWholeCellSnapY = m_selection.Y % m_cellSize;
-                    nextWholeCellSnapY += (m_cellSize - GetPartialCellSizeY());
+                    var nextWholeCellSnapY = m_dipSelection.Y % m_cellSize;
+                    nextWholeCellSnapY += (m_cellSize - GetPartialCellHeight());
                     nextWholeCellSnapY %= m_cellSize;
-                    m_selection.Y -= nextWholeCellSnapY;
-                    m_selection.Height += nextWholeCellSnapY;
+                    m_dipSelection.Y -= nextWholeCellSnapY;
+                    m_dipSelection.Height += nextWholeCellSnapY;
                 }
 
                 Invalidate();
 
                 if (SelectionChanged != null)
                 {
-                    SelectionChanged(this, new CellEventArgs(Selection));
+                    SelectionChanged(this, new CellEventArgs(CellSelection));
                 }
             }
         }
@@ -267,8 +268,8 @@ namespace InfiniteGrid
                 m_offsetX += m_deltaX;
                 m_offsetY += m_deltaY;
 
-                m_selection.X += m_deltaX;
-                m_selection.Y += m_deltaY;
+                m_dipSelection.X += m_deltaX;
+                m_dipSelection.Y += m_deltaY;
 
                 // I changed this from ceiling to Floor.  It made more sense to me to have this represent the # of
                 // whole cells offset from the viewport and not to include a partial cell in this.  It shouldn't be too
@@ -288,23 +289,15 @@ namespace InfiniteGrid
             if (m_selecting)
             {
                 Point p = e.Location;
-                // TODO: Improved pointer tracking
-                // The pointer tracking seems to be off by the distance between  
-                // the original click and the distance from the cells origin
 
                 m_selectDeltaX = p.X - m_lastSelectMousePosition.X;
-                m_selectDeltaY = p.Y - m_lastSelectMousePosition.Y;
+				m_selectDeltaY = p.Y - m_lastSelectMousePosition.Y;
 
-                m_selectionOffsetX += m_selectDeltaX;
-                m_selectionOffsetY += m_selectDeltaY;
+				m_dipSelection.Height = Math.Abs(p.Y - m_dipSelectionStartY);
+				m_dipSelection.Width = Math.Abs(p.X - m_dipSelectionStartX);
 
-                m_selection.Height = System.Math.Abs(m_cellSize + m_selectionOffsetY + m_selectDeltaY);
-                m_selection.Width = System.Math.Abs(m_cellSize + m_selectionOffsetX + m_selectDeltaX);
-
-                m_selection.X = System.Math.Min(m_selectionStartX, m_selectionStartX + m_cellSize + m_selectionOffsetX + m_selectDeltaX);
-                m_selection.Y = System.Math.Min(m_selectionStartY, m_selectionStartY + m_cellSize + m_selectionOffsetY + m_selectDeltaY);
-
-                m_lastSelectMousePosition = e.Location;
+				m_dipSelection.X = Math.Min(m_dipSelectionStartX, p.X);
+				m_dipSelection.Y = Math.Min(m_dipSelectionStartY, p.Y);
 
                 Invalidate();
             }
@@ -327,9 +320,7 @@ namespace InfiniteGrid
                 m_selecting = true;
                 m_lastSelectMousePosition = e.Location;
                 m_selectDeltaX = 0;
-                m_selectionOffsetX = 0;
                 m_selectDeltaY = 0;
-                m_selectionOffsetY = 0;
 
                 m_selectedX = GetCellX(e.Location);
                 m_selectedY = GetCellY(e.Location);
@@ -337,21 +328,29 @@ namespace InfiniteGrid
                 var cellX = (int)System.Math.Floor((((double)m_mouseOffsetX) / ((double)m_cellSize)));
                 var cellY = (int)System.Math.Floor((((double)m_mouseOffsetY) / ((double)m_cellSize)));
 
-                m_selectionStartX = cellX * m_cellSize + GetPartialCellSizeX();
-                m_selectionStartY = cellY * m_cellSize + GetPartialCellSizeY();
+                m_dipSelectionStartX = cellX * m_cellSize + GetPartialCellWidth();
+                m_dipSelectionStartY = cellY * m_cellSize + GetPartialCellHeight();
 
-                m_selection = new Rectangle(m_selectionStartX, m_selectionStartY, m_cellSize, m_cellSize);
+                m_dipSelection = new Rectangle(m_dipSelectionStartX, m_dipSelectionStartY, m_cellSize, m_cellSize);
 
                 Invalidate();
             }
         }
 
-        private int GetPartialCellSizeX()
+		/// <summary>
+		/// Returns the width in dips of the cell that is only partially dragged into the viewport
+		/// </summary>
+		/// <returns>the size in dips</returns>
+        private int GetPartialCellWidth()
         {
-            return m_offsetX % m_cellSize;
+            return m_offsetX % m_cellSize; 
         }
 
-        private int GetPartialCellSizeY()
+		/// <summary>
+		/// Returns the height in dips of the cell that is only partially dragged into the viewport
+		/// </summary>
+		/// <returns>the size in dips</returns>
+        private int GetPartialCellHeight()
         {
             return m_offsetY % m_cellSize;
         }
@@ -365,7 +364,7 @@ namespace InfiniteGrid
             // We add a cell to the offset so that when the viewport and the grid are perfectly aligned the modulo
             // returns 0 instead of 16.  I substract this out from p.X to get the mouse position as it lies in the
             // entirely visible grid.  
-            m_mouseOffsetX = p.X - GetPartialCellSizeX();
+            m_mouseOffsetX = p.X - GetPartialCellWidth();
 
             // Just doing a simple division works for m_mouseOffsetX > 0. But when a partially visible cell is selected
             // m_mouseOffsetX will be negative and -10 / 16 = 0, not -1.
@@ -382,10 +381,7 @@ namespace InfiniteGrid
 
             m_mouseY = p.Y;
 
-            // We add a cell to the offset so that when the viewport and the grid are perfectly aligned the modulo
-            // returns 0 instead of 16.  I substract this out from p.Y to get the mouse position as it lies in the
-            // entirely visible grid.  
-            m_mouseOffsetY = p.Y - GetPartialCellSizeY();
+            m_mouseOffsetY = p.Y - GetPartialCellHeight();
 
             // Just doing a simple division works for m_mouseOffsetY > 0. But when a partially visible cell is selected
             // m_mouseOffsetY will be negative and -10 / 16 = 0, not -1.
@@ -435,12 +431,10 @@ namespace InfiniteGrid
             m_cellOffsetX = 0;
             m_cellOffsetY = 0;
 
-            m_selection = new Rectangle(0, 0, m_cellSize, m_cellSize);
+            m_dipSelection = new Rectangle(0, 0, m_cellSize, m_cellSize);
 
-            m_selectionOffsetX = 0;
-            m_selectionOffsetY = 0;
-            m_selectionStartX = 0;
-            m_selectionStartY = 0;
+            m_dipSelectionStartX = 0;
+            m_dipSelectionStartY = 0;
 
             Invalidate();
         }
