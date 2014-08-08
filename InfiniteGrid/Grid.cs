@@ -132,20 +132,16 @@ namespace InfiniteGrid
             Graphics graphics = e.Graphics;
             Rectangle selection = Selection;
             Rectangle client = ClientRectangle;
+            Rectangle view = Viewport;
 
+            view.Inflate(4, 4);
             client.Inflate(200, 200);
+            
             if (m_quadTree != null)
             {
-                if (m_quadTree.Count > 0)
+                foreach (Item i in m_quadTree.Query(view))
                 {
-                    Rectangle rect = Viewport;
-
-                    rect.Inflate(5, 5);
-                    
-                    foreach (Item i in m_quadTree.Query(rect))
-                    {
-                        graphics.FillRectangle(new SolidBrush(i.Color), (i.Rectangle.X * m_cellSize) + m_offsetX, (i.Rectangle.Y * m_cellSize) + m_offsetY, m_cellSize, m_cellSize);
-                    }
+                    graphics.FillRectangle(new SolidBrush(i.Color), (i.Rectangle.X * m_cellSize) + m_offsetX, (i.Rectangle.Y * m_cellSize) + m_offsetY, m_cellSize, m_cellSize);
                 }
             }
 
@@ -359,7 +355,7 @@ namespace InfiniteGrid
             return (m_offsetY + m_cellSize) % m_cellSize;
         }
 
-        private int GetCellX(Point p)
+        public int GetCellX(Point p)
         {
             int x = 0;
 
@@ -379,7 +375,7 @@ namespace InfiniteGrid
             return x * -1;
         }
 
-        private int GetCellY(Point p)
+        public int GetCellY(Point p)
         {
             int y = 0;
 
