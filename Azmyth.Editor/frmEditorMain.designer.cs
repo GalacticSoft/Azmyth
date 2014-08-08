@@ -48,37 +48,37 @@
             this.cboShape1 = new System.Windows.Forms.RibbonComboBox();
             this.ribbonLabel1 = new System.Windows.Forms.RibbonLabel();
             this.ribbonLabel5 = new System.Windows.Forms.RibbonLabel();
+            this.tabLife = new System.Windows.Forms.RibbonTab();
+            this.pnlCreateLife = new System.Windows.Forms.RibbonPanel();
+            this.btnLife = new System.Windows.Forms.RibbonButton();
+            this.btnUpdate = new System.Windows.Forms.RibbonButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pnlMain = new System.Windows.Forms.Panel();
             this.tabMain = new System.Windows.Forms.TabControl();
             this.splitRight = new System.Windows.Forms.Splitter();
             this.pnlRight = new System.Windows.Forms.Panel();
             this.gridProperties = new System.Windows.Forms.PropertyGrid();
+            this.pnlProperties = new Azmyth.Editor.SplitPanel();
             this.pnlPropertiesCollapsed = new System.Windows.Forms.Panel();
             this.btnPropertiesShow = new System.Windows.Forms.Button();
             this.splitLeft = new System.Windows.Forms.Splitter();
             this.pnlLeft = new System.Windows.Forms.Panel();
             this.tvwWorld = new System.Windows.Forms.TreeView();
+            this.pnlAssets = new Azmyth.Editor.SplitPanel();
             this.pnlAssetsCollapsed = new System.Windows.Forms.Panel();
             this.btnAssetsShow = new System.Windows.Forms.Button();
             this.splitBottom = new System.Windows.Forms.Splitter();
             this.pnlBottom = new System.Windows.Forms.Panel();
+            this.splitPanel2 = new Azmyth.Editor.SplitPanel();
             this.splitTop = new System.Windows.Forms.Splitter();
             this.pnlTop = new System.Windows.Forms.Panel();
+            this.splitPanel1 = new Azmyth.Editor.SplitPanel();
             this.TopPanel = new System.Windows.Forms.Panel();
             this.BottomPanel = new System.Windows.Forms.Panel();
             this.LeftPanel = new System.Windows.Forms.Panel();
             this.RightPanel = new System.Windows.Forms.Panel();
             this.MainPanel = new System.Windows.Forms.Panel();
-            this.pnlProperties = new Azmyth.Editor.SplitPanel();
-            this.pnlAssets = new Azmyth.Editor.SplitPanel();
-            this.splitPanel2 = new Azmyth.Editor.SplitPanel();
-            this.splitPanel1 = new Azmyth.Editor.SplitPanel();
             this.mapGrid1 = new Azmyth.Editor.MapGrid();
-            this.tabLife = new System.Windows.Forms.RibbonTab();
-            this.pnlCreateLife = new System.Windows.Forms.RibbonPanel();
-            this.btnLife = new System.Windows.Forms.RibbonButton();
-            this.btnUpdate = new System.Windows.Forms.RibbonButton();
             this.panel1.SuspendLayout();
             this.pnlMain.SuspendLayout();
             this.pnlRight.SuspendLayout();
@@ -261,6 +261,31 @@
             this.ribbonLabel5.Text = "Circle";
             this.ribbonLabel5.Value = "Circle";
             // 
+            // tabLife
+            // 
+            this.tabLife.Panels.Add(this.pnlCreateLife);
+            this.tabLife.Text = "Life";
+            // 
+            // pnlCreateLife
+            // 
+            this.pnlCreateLife.Items.Add(this.btnLife);
+            this.pnlCreateLife.Items.Add(this.btnUpdate);
+            this.pnlCreateLife.Text = "Life";
+            // 
+            // btnLife
+            // 
+            this.btnLife.Image = ((System.Drawing.Image)(resources.GetObject("btnLife.Image")));
+            this.btnLife.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnLife.SmallImage")));
+            this.btnLife.Text = "Life";
+            this.btnLife.Click += new System.EventHandler(this.btnLife_Click);
+            // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdate.Image")));
+            this.btnUpdate.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnUpdate.SmallImage")));
+            this.btnUpdate.Text = "Update";
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.pnlMain);
@@ -326,6 +351,17 @@
             this.gridProperties.Size = new System.Drawing.Size(186, 336);
             this.gridProperties.TabIndex = 17;
             // 
+            // pnlProperties
+            // 
+            this.pnlProperties.Caption = "Properties";
+            this.pnlProperties.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlProperties.Location = new System.Drawing.Point(0, 0);
+            this.pnlProperties.Name = "pnlProperties";
+            this.pnlProperties.Size = new System.Drawing.Size(186, 25);
+            this.pnlProperties.TabIndex = 16;
+            this.pnlProperties.Close += new System.Action<object, System.EventArgs>(this.pnlProperties_Close);
+            this.pnlProperties.Minimize += new System.Action<object, System.EventArgs>(this.pnlProperties_Minimize);
+            // 
             // pnlPropertiesCollapsed
             // 
             this.pnlPropertiesCollapsed.Controls.Add(this.btnPropertiesShow);
@@ -387,6 +423,18 @@
             this.tvwWorld.Name = "tvwWorld";
             this.tvwWorld.Size = new System.Drawing.Size(186, 336);
             this.tvwWorld.TabIndex = 12;
+            this.tvwWorld.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvwWorld_AfterSelect);
+            // 
+            // pnlAssets
+            // 
+            this.pnlAssets.Caption = "Assets";
+            this.pnlAssets.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlAssets.Location = new System.Drawing.Point(25, 0);
+            this.pnlAssets.Name = "pnlAssets";
+            this.pnlAssets.Size = new System.Drawing.Size(186, 25);
+            this.pnlAssets.TabIndex = 11;
+            this.pnlAssets.Close += new System.Action<object, System.EventArgs>(this.pnlAssets_Close);
+            this.pnlAssets.Minimize += new System.Action<object, System.EventArgs>(this.pnlAssets_Minimize);
             // 
             // pnlAssetsCollapsed
             // 
@@ -441,6 +489,15 @@
             this.pnlBottom.Size = new System.Drawing.Size(1025, 100);
             this.pnlBottom.TabIndex = 13;
             // 
+            // splitPanel2
+            // 
+            this.splitPanel2.Caption = null;
+            this.splitPanel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.splitPanel2.Location = new System.Drawing.Point(0, 0);
+            this.splitPanel2.Name = "splitPanel2";
+            this.splitPanel2.Size = new System.Drawing.Size(1025, 24);
+            this.splitPanel2.TabIndex = 1;
+            // 
             // splitTop
             // 
             this.splitTop.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -460,6 +517,15 @@
             this.pnlTop.Name = "pnlTop";
             this.pnlTop.Size = new System.Drawing.Size(1025, 100);
             this.pnlTop.TabIndex = 11;
+            // 
+            // splitPanel1
+            // 
+            this.splitPanel1.Caption = null;
+            this.splitPanel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.splitPanel1.Location = new System.Drawing.Point(0, 0);
+            this.splitPanel1.Name = "splitPanel1";
+            this.splitPanel1.Size = new System.Drawing.Size(1025, 24);
+            this.splitPanel1.TabIndex = 1;
             // 
             // TopPanel
             // 
@@ -501,46 +567,6 @@
             this.MainPanel.Size = new System.Drawing.Size(969, 237);
             this.MainPanel.TabIndex = 10;
             // 
-            // pnlProperties
-            // 
-            this.pnlProperties.Caption = "Properties";
-            this.pnlProperties.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlProperties.Location = new System.Drawing.Point(0, 0);
-            this.pnlProperties.Name = "pnlProperties";
-            this.pnlProperties.Size = new System.Drawing.Size(186, 25);
-            this.pnlProperties.TabIndex = 16;
-            this.pnlProperties.Close += new System.Action<object, System.EventArgs>(this.pnlProperties_Close);
-            this.pnlProperties.Minimize += new System.Action<object, System.EventArgs>(this.pnlProperties_Minimize);
-            // 
-            // pnlAssets
-            // 
-            this.pnlAssets.Caption = "Assets";
-            this.pnlAssets.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlAssets.Location = new System.Drawing.Point(25, 0);
-            this.pnlAssets.Name = "pnlAssets";
-            this.pnlAssets.Size = new System.Drawing.Size(186, 25);
-            this.pnlAssets.TabIndex = 11;
-            this.pnlAssets.Close += new System.Action<object, System.EventArgs>(this.pnlAssets_Close);
-            this.pnlAssets.Minimize += new System.Action<object, System.EventArgs>(this.pnlAssets_Minimize);
-            // 
-            // splitPanel2
-            // 
-            this.splitPanel2.Caption = null;
-            this.splitPanel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.splitPanel2.Location = new System.Drawing.Point(0, 0);
-            this.splitPanel2.Name = "splitPanel2";
-            this.splitPanel2.Size = new System.Drawing.Size(1025, 24);
-            this.splitPanel2.TabIndex = 1;
-            // 
-            // splitPanel1
-            // 
-            this.splitPanel1.Caption = null;
-            this.splitPanel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.splitPanel1.Location = new System.Drawing.Point(0, 0);
-            this.splitPanel1.Name = "splitPanel1";
-            this.splitPanel1.Size = new System.Drawing.Size(1025, 24);
-            this.splitPanel1.TabIndex = 1;
-            // 
             // mapGrid1
             // 
             this.mapGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -563,31 +589,6 @@
             this.mapGrid1.ShowGrid = false;
             this.mapGrid1.Size = new System.Drawing.Size(1977, 640);
             this.mapGrid1.TabIndex = 2;
-            // 
-            // tabLife
-            // 
-            this.tabLife.Panels.Add(this.pnlCreateLife);
-            this.tabLife.Text = "Life";
-            // 
-            // pnlCreateLife
-            // 
-            this.pnlCreateLife.Items.Add(this.btnLife);
-            this.pnlCreateLife.Items.Add(this.btnUpdate);
-            this.pnlCreateLife.Text = "Life";
-            // 
-            // btnLife
-            // 
-            this.btnLife.Image = ((System.Drawing.Image)(resources.GetObject("btnLife.Image")));
-            this.btnLife.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnLife.SmallImage")));
-            this.btnLife.Text = "Life";
-            this.btnLife.Click += new System.EventHandler(this.btnLife_Click);
-            // 
-            // btnUpdate
-            // 
-            this.btnUpdate.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdate.Image")));
-            this.btnUpdate.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnUpdate.SmallImage")));
-            this.btnUpdate.Text = "Update";
-            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
             // frmEditorMain
             // 

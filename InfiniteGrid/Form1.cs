@@ -54,6 +54,11 @@ namespace InfiniteGrid
         {
             grid1.MoveToOrigin();
         }
+
+        private void trackBar1_ValueChanged(object sender, EventArgs e)
+        {
+            grid1.Zoom = (float)trackBar1.Value / 100f;
+        }
     }
 
     public class Item : IHasRect
