@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows;
+using Stoatly.Util;
 
 namespace InfiniteGrid
 {
@@ -272,8 +273,8 @@ namespace InfiniteGrid
                 // I changed this from ceiling to Floor.  It made more sense to me to have this represent the # of
                 // whole cells offset from the viewport and not to include a partial cell in this.  It shouldn't be too
                 // hard to flip this in the other direction, if you wanted tho.
-                m_cellOffsetX = (int)System.Math.Floor((double)m_offsetX / (double)m_cellSize);
-                m_cellOffsetY = (int)System.Math.Floor((double)m_offsetY / (double)m_cellSize);
+                m_cellOffsetX = m_offsetX / m_cellSize;
+                m_cellOffsetY = m_offsetY / m_cellSize;
 
                 m_lastMousePosition = (e.Location);
 
@@ -347,12 +348,12 @@ namespace InfiniteGrid
 
         private int GetPartialCellSizeX()
         {
-            return (m_offsetX + m_cellSize) % m_cellSize;
+            return m_offsetX % m_cellSize;
         }
 
         private int GetPartialCellSizeY()
         {
-            return (m_offsetY + m_cellSize) % m_cellSize;
+            return m_offsetY % m_cellSize;
         }
 
         public int GetCellX(Point p)
@@ -368,7 +369,7 @@ namespace InfiniteGrid
 
             // Just doing a simple division works for m_mouseOffsetX > 0. But when a partially visible cell is selected
             // m_mouseOffsetX will be negative and -10 / 16 = 0, not -1.
-            int cellX = (int)Math.Floor((((double)m_mouseOffsetX) / ((double)m_cellSize)));
+            int cellX = m_mouseOffsetX / m_cellSize;
 
             x = m_cellOffsetX - cellX;
 
@@ -388,7 +389,7 @@ namespace InfiniteGrid
 
             // Just doing a simple division works for m_mouseOffsetY > 0. But when a partially visible cell is selected
             // m_mouseOffsetY will be negative and -10 / 16 = 0, not -1.
-            int cellY = (int)Math.Floor((((double)m_mouseOffsetY) / ((double)m_cellSize)));
+            int cellY = m_mouseOffsetY / m_cellSize;
 
             y = m_cellOffsetY - cellY;
 
