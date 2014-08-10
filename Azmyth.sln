@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azmyth", "Azmyth\Azmyth.csproj", "{97FA754D-E522-4288-B313-1A982939EEEA}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfiniteGrid", "InfiniteGrid\InfiniteGrid.csproj", "{C32F7027-89E7-4FAB-A860-AF18572B8F09}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Watch", "Watch\Watch.csproj", "{10B87859-9757-4A34-9F57-EBEC187F50BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azmyth.WinForms", "Azmyth.WinForms\Azmyth.WinForms.csproj", "{94DC1BC8-5AA9-45E3-A041-9A3AAFB963F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{10B87859-9757-4A34-9F57-EBEC187F50BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10B87859-9757-4A34-9F57-EBEC187F50BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10B87859-9757-4A34-9F57-EBEC187F50BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94DC1BC8-5AA9-45E3-A041-9A3AAFB963F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94DC1BC8-5AA9-45E3-A041-9A3AAFB963F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94DC1BC8-5AA9-45E3-A041-9A3AAFB963F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94DC1BC8-5AA9-45E3-A041-9A3AAFB963F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

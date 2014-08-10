@@ -182,7 +182,7 @@ namespace Azmyth
             {
                 return true;
             }
-
+            
             return this.Vector == other.Vector && this.ID == other.ID;
         }
 

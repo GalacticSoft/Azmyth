@@ -20,3 +20,6 @@ C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\InfiniteGrid\bin\Debug\InfiniteGr
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\InfiniteGrid\bin\Debug\InfiniteGrid.pdb
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\InfiniteGrid\bin\Debug\Watch.dll
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\InfiniteGrid\bin\Debug\Watch.pdb
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\InfiniteGrid\obj\Debug\InfiniteGrid.GridControl.resources
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\InfiniteGrid\bin\Debug\Azmyth.dll
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\InfiniteGrid\bin\Debug\Azmyth.pdb

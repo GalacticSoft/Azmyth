@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -39,8 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ansi\AnsiColor.cs" />
+    <Compile Include="Ansi\AnsiToRtfBuilder.cs" />
     <Compile Include="Assets\Asset.cs" />
     <Compile Include="Assets\AssetStore.cs" />
+    <Compile Include="Ansi\ColorData.cs" />
+    <Compile Include="Ansi\ModifierData.cs" />
     <Compile Include="Stats\IHasStats.cs" />
     <Compile Include="Stats\IStat.cs" />
     <Compile Include="Math\Numbers.cs" />

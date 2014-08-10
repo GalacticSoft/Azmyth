@@ -14,22 +14,23 @@ namespace InfiniteGrid
     public partial class Form1 : Form
     {
         //TODO: need to change to int.min and int.max but values don't currently work.
-        QuadTree<Item> items = new QuadTree<Item>(new RectangleF(0, 0, int.MaxValue, int.MaxValue));
+        QuadTree<Item> items = new QuadTree<Item>(new RectangleF(-5000, -5000, int.MaxValue, int.MaxValue));
 
         public Form1()
         {
             InitializeComponent();
 
-            for (int x = 0; x < 200; x++)
-                for (int y = 0; y <200; y++ )
-                    items.Insert(new Item(new Rectangle(x, y, 1, 1)) { Value = false, Color=Utility.RandomColor });
+            //for (int x = 0; x < 200; x++)
+            // //   for (int y = 0; y < 200; y++ )
+            //        items.Insert(new Item(new Rectangle(x, y, 1, 1)) { Value = false, Color=Utility.RandomColor });
 
             grid1.QuadTree = items;
             quadView2.QuadTree = items;
-
+            gridControl1.m_quadTree = items;
             WatchForm.GetInstance().Show();
         }
 
+       
         private void grid1_ViewportChanged(object sender, CellEventArgs e)
         {
             Watch.Set("viewport", e.Cells);
@@ -57,7 +58,7 @@ namespace InfiniteGrid
 
         private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
-            grid1.Zoom = (float)trackBar1.Value / 100f;
+            //grid1.Zoom = (float)trackBar1.Value / 100f;
         }
     }
 

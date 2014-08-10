@@ -20,8 +20,8 @@ namespace InfiniteGrid
     {
         private int m_deltaX = 0;
         private int m_deltaY = 0;
-        private int m_offsetX = 0;
-        private int m_offsetY = 0;
+        private int m_dipOffsetX = 0;
+        private int m_dipoffsetY = 0;
         private int m_cellOffsetX = 0;
         private int m_cellOffsetY = 0;
         private int m_cellSize = 32;
@@ -74,7 +74,7 @@ namespace InfiniteGrid
         {
             get
             {
-                return (int)(m_cellSize * m_zoomLevel);
+                return m_cellSize; //(int)(m_cellSize * m_zoomLevel);
             }
         }
 
@@ -149,7 +149,7 @@ namespace InfiniteGrid
 			{
 				foreach (Item i in m_quadTree.Query(view))
 				{
-                    graphics.FillRectangle(new SolidBrush(i.Color), (i.Rectangle.X * CellSize) + m_offsetX, (i.Rectangle.Y * CellSize) + m_offsetY, CellSize, CellSize);
+                    graphics.FillRectangle(new SolidBrush(i.Color), (i.Rectangle.X * CellSize) + m_dipOffsetX, (i.Rectangle.Y * CellSize) + m_dipoffsetY, CellSize, CellSize);
 				}
 			}
 
@@ -157,20 +157,16 @@ namespace InfiniteGrid
 			{
 				using (Pen gridPen = new Pen(GridColor, 1))
 				{
-					//TODO: calcuate the dots based on offset.
-					float[] dashValues = { 1, 1, 1 };
-					gridPen.DashPattern = dashValues;
-
 					for (int index = 0; index <= rows; index++)
 					{
-                        int yPos = (index * CellSize) + (m_offsetY % CellSize);
+                        int yPos = (index * CellSize) + (m_dipoffsetY % CellSize);
 
 						graphics.DrawLine(gridPen, new Point(0, yPos), new Point(width, yPos));
 					}
 
-					for (int index = 0; index <= cols; index++)
+                    for (int index = 0; index <= cols; index++)
 					{
-                        int xPos = (index * CellSize) + (m_offsetX % CellSize);
+                        int xPos = (index * CellSize) + (m_dipOffsetX % CellSize);
 
 						graphics.DrawLine(gridPen, new Point(xPos, 0), new Point(xPos, width));
 					}
@@ -179,20 +175,20 @@ namespace InfiniteGrid
 
 			if (ShowOrigin)
 			{
-				if (client.Contains(new Point(m_offsetX, m_offsetY)))
+				if (client.Contains(new Point(m_dipOffsetX, m_dipoffsetY)))
 				{
 					using (Pen m_originPen = new Pen(OriginColor, 3))
 					{
 						graphics.DrawString("(0, 0) (" + m_cellOffsetX + ", " + m_cellOffsetY + ")",
 								new Font("Arial", 20), new SolidBrush(OriginColor),
-								new Point(m_offsetX + CellSize, m_offsetY + CellSize));
+								new Point(m_dipOffsetX + CellSize, m_dipoffsetY + CellSize));
 
-                        graphics.DrawRectangle(m_originPen, new Rectangle(new Point(m_offsetX, m_offsetY), new Size(CellSize, CellSize)));
+                        graphics.DrawRectangle(m_originPen, new Rectangle(new Point(m_dipOffsetX, m_dipoffsetY), new Size(CellSize, CellSize)));
 					}
 				}
 			}
 
-			if (client.Contains(m_dipSelection))
+			if (client.IntersectsWith(m_dipSelection))
 			{
 				using (Pen m_selectionPen = new Pen(new SolidBrush(SelectionColor), 3))
 				{
@@ -271,8 +267,8 @@ namespace InfiniteGrid
                 m_deltaX = p.X - m_lastMousePosition.X;
                 m_deltaY = p.Y - m_lastMousePosition.Y;
 
-                m_offsetX += m_deltaX;
-                m_offsetY += m_deltaY;
+                m_dipOffsetX += m_deltaX;
+                m_dipoffsetY += m_deltaY;
 
                 m_dipSelection.X += m_deltaX;
                 m_dipSelection.Y += m_deltaY;
@@ -280,8 +276,8 @@ namespace InfiniteGrid
                 // I changed this from ceiling to Floor.  It made more sense to me to have this represent the # of
                 // whole cells offset from the viewport and not to include a partial cell in this.  It shouldn't be too
                 // hard to flip this in the other direction, if you wanted tho.
-                m_cellOffsetX = m_offsetX / CellSize;
-                m_cellOffsetY = m_offsetY / CellSize;
+                m_cellOffsetX = m_dipOffsetX / CellSize;
+                m_cellOffsetY = m_dipoffsetY / CellSize;
 
                 m_lastMousePosition = (e.Location);
 
@@ -349,7 +345,7 @@ namespace InfiniteGrid
 		/// <returns>the size in dips</returns>
         private int GetPartialCellWidth()
         {
-            return m_offsetX % CellSize; 
+            return m_dipOffsetX % CellSize; 
         }
 
 		/// <summary>
@@ -358,7 +354,7 @@ namespace InfiniteGrid
 		/// <returns>the size in dips</returns>
         private int GetPartialCellHeight()
         {
-            return m_offsetY % CellSize;
+            return m_dipoffsetY % CellSize;
         }
 
         public int GetCellX(Point p)
@@ -432,8 +428,8 @@ namespace InfiniteGrid
 
         public void MoveToOrigin()
         {
-            m_offsetX = 0;
-            m_offsetY = 0;
+            m_dipOffsetX = 0;
+            m_dipoffsetY = 0;
             m_cellOffsetX = 0;
             m_cellOffsetY = 0;
 
