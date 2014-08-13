@@ -50,6 +50,21 @@ namespace InfiniteGrid
 
         public QuadTree<Item> m_quadTree;
 
+        public event CellEvent ViewportChanged;
+
+        public QuadTree<Item> QuadTree
+        {
+            get
+            {
+                return m_quadTree;
+            }
+            set
+            {
+                m_quadTree = value;
+                Invalidate();
+            }
+        }
+
         public GridControl()
         {
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -57,7 +72,7 @@ namespace InfiniteGrid
             SetStyle(ControlStyles.ResizeRedraw, true);
             SetStyle(ControlStyles.UserPaint, true);
 
-            BackColor = Color.Blue;
+            BackColor = Color.White;
 
             m_cellHeight = 16.0f;
             m_cellWidth = 16.0f;
@@ -96,49 +111,60 @@ namespace InfiniteGrid
             m.Scale(m_scale, m_scale);
             m.Rotate(m_rotateAngle);
             e.Graphics.Transform = m;
+            UpdateCellLocations(e.Graphics);
 
-            e.Graphics.FillRectangle(Brushes.Blue, e.Graphics.VisibleClipBounds);
+            PaintGrid(e.Graphics);
+
             if (m_quadTree != null)
             {
                 RectangleF viewport = m_viewport;
 
-                //viewport.Inflate(3, 3);
+                //viewport.Inflate(300, 300);
                 //List<Item> items = m_quadTree.Query(viewport);
-
                 Azmyth.Math.PerlinNoise noise = new Azmyth.Math.PerlinNoise(1, 0.05f, 1, 1, 500);
+                int cellX, cellY, totalCells;
 
-                double height = 0;
-                for (float x = viewport.X; x <= viewport.Width; x++)
+                cellX = (int)viewport.Left;
+                cellY = (int)viewport.Top;
+
+                totalCells = (int)((viewport.Width + 1) * (viewport.Height + 1));
+
+                for (int index = 0; index < totalCells; index++)
                 {
-                    for (float y = viewport.Y; y <= viewport.Height; y++)
+                    double height = Math.Round(noise.GetHeight(cellX, cellY), 2);
+                    if (height <= .03 && height > 0)
                     {
-                        height = Math.Round(noise.GetHeight(x, y), 2);
-                        if (height <= .03 && height > 0)
-                        {
-                            e.Graphics.FillRectangle(new SolidBrush(Color.SandyBrown), new RectangleF(x * m_cellWidth, y * m_cellHeight, m_cellWidth, m_cellHeight));
-                        }
-                        else if (height > .03)
-                        {
-                            e.Graphics.FillRectangle(new SolidBrush(Color.Brown), new RectangleF(x * m_cellWidth, y * m_cellHeight, m_cellWidth, m_cellHeight));
-                        }
-                        else
-                        {
-                            //e.Graphics.FillRectangle(new SolidBrush(Color.Blue), new RectangleF(x * m_cellWidth, y * m_cellHeight, m_cellWidth, m_cellHeight));
-                        }
+                        e.Graphics.FillRectangle(new SolidBrush(Color.SandyBrown), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                    }
+                    else if (height > .03)
+                    {
+                        e.Graphics.FillRectangle(new SolidBrush(Color.Brown), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                    }
+                    else
+                    {
+                        e.Graphics.FillRectangle(new SolidBrush(Color.Blue), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                    }
+                    //if (height > 0)
+                    //    e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(255, (int)(255 * height), (int)(255 * height), (int)(255 * height))), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+
+                    cellX++;
+
+                    if (cellX > viewport.Right)
+                    {
+                        cellY++;
+                        cellX = (int)viewport.Left;
                     }
                 }
 
-                //foreach (Item i in items)
-                //{
-                //    e.Graphics.FillRectangle(new SolidBrush(i.Color), new RectangleF(i.Rectangle.X * m_cellWidth, i.Rectangle.Y * m_cellHeight, m_cellWidth, m_cellHeight));
-                // }
+               //foreach (Item i in items)
+               //{
+               //     e.Graphics.FillRectangle(new SolidBrush(i.Color), new RectangleF(i.Rectangle.X * m_cellWidth, i.Rectangle.Y * m_cellHeight, m_cellWidth, m_cellHeight));
+               //}
             }
 
-            UpdateCellLocations(e.Graphics);
+
             PaintSelectedCell(e.Graphics);
             PaintHighlightedCell(e.Graphics);
-            PaintGrid(e.Graphics);
-            
 
 
             m_debug["m_cellWidth"] = m_cellWidth;
@@ -214,19 +240,19 @@ namespace InfiniteGrid
 
             int startCol = (int)(bounds.Left / m_cellWidth);
             int endCol = (int)(bounds.Right / m_cellWidth);
-           // for (int col = startCol; col <= endCol; col++)
-           // {
-          //      float x = col * m_cellWidth;
-          //      g.DrawLine(m_gridPen, x, bounds.Top, x, bounds.Bottom);
-          //  }
+            for (int col = startCol; col <= endCol; col++)
+            {
+                float x = col * m_cellWidth;
+                g.DrawLine(m_gridPen, x, bounds.Top, x, bounds.Bottom);
+            }
 
             int startRow = (int)(bounds.Top / m_cellHeight);
             int endRow = (int)(bounds.Bottom / m_cellHeight);
-            //for (int row = startRow; row <= endRow; row++)
-            //{
-           //     float y = row * m_cellHeight;
-           //     g.DrawLine(m_gridPen, bounds.Left, y, bounds.Right, y);
-            //}
+            for (int row = startRow; row <= endRow; row++)
+            {
+                float y = row * m_cellHeight;
+                g.DrawLine(m_gridPen, bounds.Left, y, bounds.Right, y);
+            }
 
             m_debug["bounds"] = bounds;
 
@@ -277,6 +303,11 @@ namespace InfiniteGrid
 
                 m_translateX += dX;
                 m_translateY += dY;
+
+                if(ViewportChanged != null)
+                {
+                    ViewportChanged(this, new CellEventArgs(m_viewport));
+                }
             }
 
             m_previousMouseLocation = e.Location;
@@ -366,7 +397,7 @@ namespace InfiniteGrid
             // 
             // GridControl
             // 
-            this.BackColor = System.Drawing.Color.Blue;
+            this.BackColor = System.Drawing.Color.White;
             this.ResumeLayout(false);
 
         }

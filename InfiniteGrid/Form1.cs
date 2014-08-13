@@ -24,7 +24,7 @@ namespace InfiniteGrid
             // //   for (int y = 0; y < 200; y++ )
             //        items.Insert(new Item(new Rectangle(x, y, 1, 1)) { Value = false, Color=Utility.RandomColor });
 
-            grid1.QuadTree = items;
+            //grid1.QuadTree = items;
             quadView2.QuadTree = items;
             gridControl1.m_quadTree = items;
             WatchForm.GetInstance().Show();
@@ -53,7 +53,7 @@ namespace InfiniteGrid
 
         private void grid1_DoubleClick(object sender, EventArgs e)
         {
-            grid1.MoveToOrigin();
+            //grid1.MoveToOrigin();
         }
 
         private void trackBar1_ValueChanged(object sender, EventArgs e)
