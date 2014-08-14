@@ -24,41 +24,42 @@ namespace InfiniteGrid
             // //   for (int y = 0; y < 200; y++ )
             //        items.Insert(new Item(new Rectangle(x, y, 1, 1)) { Value = false, Color=Utility.RandomColor });
 
-            //grid1.QuadTree = items;
-            quadView2.QuadTree = items;
             gridControl1.m_quadTree = items;
-            WatchForm.GetInstance().Show();
+            gridControl2.m_quadTree = items;
+
+            numericUpDown1_ValueChanged(this, null);
+            numericUpDown2_ValueChanged(this, null);
+            numericUpDown3_ValueChanged(this, null);
         }
 
-       
-        private void grid1_ViewportChanged(object sender, CellEventArgs e)
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-            Watch.Set("viewport", e.Cells);
+            double amplitude = 1.0f;
+            if (double.TryParse(numericUpDown1.Text, out amplitude))
+            {
+                gridControl1.Amplitude = amplitude;
+                gridControl2.Amplitude = amplitude;
+            }
         }
 
-        private void grid1_ViewportChanging(object sender, CellEventArgs e)
+        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
         {
-            Watch.Set("viewport", e.Cells);
+            double frequency = 1;
+            if (double.TryParse(numericUpDown2.Text, out frequency))
+            {
+                gridControl1.Frequency = frequency;
+                gridControl2.Frequency = frequency;
+            }
         }
 
-        private void grid1_HoverChanged(object sender, CellEventArgs e)
+        private void numericUpDown3_ValueChanged(object sender, EventArgs e)
         {
-            Watch.Set("hover", e.Cells);
-        }
-
-        private void grid1_SelectionChanged(object sender, CellEventArgs e)
-        {
-            Watch.Set("selection", e.Cells);
-        }
-
-        private void grid1_DoubleClick(object sender, EventArgs e)
-        {
-            //grid1.MoveToOrigin();
-        }
-
-        private void trackBar1_ValueChanged(object sender, EventArgs e)
-        {
-            //grid1.Zoom = (float)trackBar1.Value / 100f;
+            int seed = 1;
+            if (int.TryParse(numericUpDown3.Text, out seed))
+            {
+                gridControl1.Seed = seed;
+                gridControl2.Seed = seed;
+            }
         }
     }
 

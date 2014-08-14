@@ -65,6 +65,91 @@ namespace InfiniteGrid
             }
         }
 
+        private bool m_heightMap;
+
+        [Browsable(true), Category("Appearance")]
+        public bool HeightMap
+        {
+            get
+            {
+                return m_heightMap;
+            }
+            set
+            {
+                m_heightMap = value;
+                Invalidate();
+            }
+        }
+
+        private double m_amplitude = 1.00f;
+        private double m_persistance = 1.00f;
+        private double m_frequency = 0.05f;
+        private int m_octaves = 1;
+        private int m_seed = 500;
+
+        public double Persistance
+        {
+            get
+            {
+                return m_persistance;
+            }
+            set
+            {
+                m_persistance = value;
+                Invalidate();
+            }
+        }
+
+        public double Amplitude
+        {
+            get
+            {
+                return m_amplitude;
+            }
+            set
+            {
+                m_amplitude = value;
+                Invalidate();
+            }
+        }
+
+        public double Frequency
+        {
+            get
+            {
+                return m_frequency;
+            }
+            set
+            {
+                m_frequency = value;
+                Invalidate();
+            }
+        }
+
+        public int Octaves
+        {
+            get
+            {
+                return m_octaves;
+            }
+            set
+            {
+                m_octaves = value;
+                Invalidate();
+            }
+        }
+        public int Seed
+        {
+            get
+            {
+                return m_seed;
+            }
+            set
+            {
+                m_seed = value;
+                Invalidate();
+            }
+        }
         public GridControl()
         {
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -121,7 +206,7 @@ namespace InfiniteGrid
 
                 //viewport.Inflate(300, 300);
                 //List<Item> items = m_quadTree.Query(viewport);
-                Azmyth.Math.PerlinNoise noise = new Azmyth.Math.PerlinNoise(1, 0.05f, 1, 1, 500);
+                Azmyth.Math.PerlinNoise noise = new Azmyth.Math.PerlinNoise(m_persistance, m_frequency, m_amplitude, m_octaves, m_seed);
                 int cellX, cellY, totalCells;
 
                 cellX = (int)viewport.Left;
@@ -132,21 +217,52 @@ namespace InfiniteGrid
                 for (int index = 0; index < totalCells; index++)
                 {
                     double height = Math.Round(noise.GetHeight(cellX, cellY), 2);
-                    if (height <= .03 && height > 0)
+
+                    if (m_heightMap)
                     {
-                        e.Graphics.FillRectangle(new SolidBrush(Color.SandyBrown), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
-                    }
-                    else if (height > .03)
-                    {
-                        e.Graphics.FillRectangle(new SolidBrush(Color.Brown), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                        if (height > 0)
+                        {
+                            var val = 255 * height > 255 ? 255 : 255 * height;
+                            e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(255, (int)val, (int)val, (int)val)), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                        }
+                        //else if(height == 0)
+                       // {
+                        //    e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(255, 255, 0, 0)), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                        ////
+                        
+                        //}
+                        else
+                        {
+                            var val = 255 * Math.Abs(height) > 255 ? 255 : 255 * Math.Abs(height);
+                            e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(150, (int)val, (int)val, 255)), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                        
+                        }
                     }
                     else
                     {
-                        e.Graphics.FillRectangle(new SolidBrush(Color.Blue), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                        if(height <= 0.04 && height > 0.03)
+                        {
+                            e.Graphics.FillRectangle(new SolidBrush(Color.CornflowerBlue), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                        
+                        }
+                        else if (height < .07 && height > 0.04)
+                        {
+                            e.Graphics.FillRectangle(new SolidBrush(Color.SandyBrown), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                        }
+                        else if (height > .06)
+                        {
+                            e.Graphics.FillRectangle(new SolidBrush(Color.Brown), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                        }
+                        else if(height < -0.07)
+                        {
+                            e.Graphics.FillRectangle(new SolidBrush(Color.Blue), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                        }
+                        else
+                        {
+                            e.Graphics.FillRectangle(new SolidBrush(Color.Blue), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                        }
                     }
-                    //if (height > 0)
-                    //    e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(255, (int)(255 * height), (int)(255 * height), (int)(255 * height))), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
-
+                    
                     cellX++;
 
                     if (cellX > viewport.Right)
