@@ -30,9 +30,9 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.gridControl1 = new InfiniteGrid.GridControl();
+            this.gridControl1 = new InfiniteGrid.GridControl1();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.gridControl2 = new InfiniteGrid.GridControl();
+            this.gridControl2 = new InfiniteGrid.GridControl1();
             this.panel1 = new System.Windows.Forms.Panel();
             this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
@@ -265,8 +265,8 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
-        private InfiniteGrid.GridControl gridControl1;
-        private GridControl gridControl2;
+        private InfiniteGrid.GridControl1 gridControl1;
+        private GridControl1 gridControl2;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label label1;

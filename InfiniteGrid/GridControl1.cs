@@ -11,7 +11,7 @@ using System.Drawing.Drawing2D;
 
 namespace InfiniteGrid
 {
-    public class GridControl : Control
+    public class GridControl1 : Control
     {
         private float m_cellHeight;
         private float m_cellWidth;
@@ -150,7 +150,7 @@ namespace InfiniteGrid
                 Invalidate();
             }
         }
-        public GridControl()
+        public GridControl1()
         {
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);

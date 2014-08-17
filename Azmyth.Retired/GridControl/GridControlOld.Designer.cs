@@ -1,6 +1,6 @@
 ﻿namespace Azmyth.Editor
 {
-    partial class GridControl
+    partial class GridControlOld
     {
         /// <summary>
         /// Required designer variable.
@@ -30,11 +30,12 @@
         {
             this.SuspendLayout();
             // 
-            // GridControl
+            // GridControlOld
             // 
             this.BackColor = System.Drawing.Color.White;
             this.ForeColor = System.Drawing.Color.White;
             this.Size = new System.Drawing.Size(329, 287);
+            this.Text = "plit";
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.GridControl_MouseClick);
             this.MouseLeave += new System.EventHandler(this.GridControl_MouseLeave);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GridControl_MouseMove);

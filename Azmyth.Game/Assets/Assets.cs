@@ -21,7 +21,7 @@ namespace Azmyth.Assets
 
         public static VectorID CreateWorld()
         {
-            return Store.CreateAsset(typeof(World));
+            return null; // Store.CreateAsset(typeof(World));
         }
 
         public static VectorID CreateArea()

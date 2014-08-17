@@ -53,30 +53,14 @@
     <Compile Include="Controls\AssetPanel.designer.cs">
       <DependentUpon>AssetPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\GridControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="frmEditorMain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmEditorMain.designer.cs">
       <DependentUpon>frmEditorMain.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\GridControl\CellEventArgs.cs" />
-    <Compile Include="Controls\GridControl\GridControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\GridControl\GridControl.Designer.cs">
-      <DependentUpon>GridControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\GridControl\GridViewer.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\GridControl\GridViewer.Designer.cs">
-      <DependentUpon>GridViewer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\GridControl\MapGrid.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\GridControl\MapGrid.Designer.cs">
-      <DependentUpon>MapGrid.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\MapViewer.cs">
       <SubType>UserControl</SubType>
@@ -100,23 +84,14 @@
       <DependentUpon>SplitPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Terrain.cs" />
-    <Compile Include="Controls\ToolStripSlider\ToolStripSlider.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <EmbeddedResource Include="Controls\AssetPanel.resx">
       <DependentUpon>AssetPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmEditorMain.resx">
-      <DependentUpon>frmEditorMain.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\GridControl\GridControl.resx">
+    <EmbeddedResource Include="Controls\GridControl.resx">
       <DependentUpon>GridControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\GridControl\GridViewer.resx">
-      <DependentUpon>GridViewer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\GridControl\MapGrid.resx">
-      <DependentUpon>MapGrid.cs</DependentUpon>
+    <EmbeddedResource Include="frmEditorMain.resx">
+      <DependentUpon>frmEditorMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MapViewer.resx">
       <DependentUpon>MapViewer.cs</DependentUpon>

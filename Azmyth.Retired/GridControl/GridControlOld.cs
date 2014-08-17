@@ -16,7 +16,7 @@ namespace Azmyth.Editor
     public delegate void CellClickEvent(object sender, CellClickEventArgs e);
     public delegate void CellSelectEvent(object sender, CellSelectedEventArgs e);
    
-    public partial class GridControl : Control
+    public partial class GridControlOld : Control
     {
         #region Variables
 
@@ -214,7 +214,7 @@ namespace Azmyth.Editor
 
         #endregion
 
-        public GridControl()
+        public GridControlOld()
         {
             Grid = new VectorGrid(1, 1, 1);
 

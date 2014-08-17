@@ -28,9 +28,8 @@ namespace Azmyth.Editor
         private TreeNode _root = null;
         private Asset _selected = null;
         private VectorID _worldID = null;
-        private VectorID _lifeID = null;
-        private MapViewer _lifeView = null;
-        LifeCell[,] newCells;
+
+        private Ansi.AnsiToRtfBuilder _ansiBuilder = new Ansi.AnsiToRtfBuilder();
 
         public frmEditorMain()
         {
@@ -55,7 +54,7 @@ namespace Azmyth.Editor
             ShowPanel(PanelPosition.Left, Properties.Settings.Default.LeftPanelVisible);
             ShowPanel(PanelPosition.Right, Properties.Settings.Default.RightPanelVisible);
 
-            
+            Output("&B&+wInitializing...&N");
         }
 
         private void tvwWorld_AfterSelect(object sender, TreeViewEventArgs e)
@@ -82,7 +81,7 @@ namespace Azmyth.Editor
             VectorID areaID = null;
             MapViewer areaView = null;
   
-            areaID = Azmyth.Assets.Assets.CreateArea(int.Parse(txtWidth.TextBoxText), int.Parse(txtHeight.TextBoxText));
+            areaID = Azmyth.Assets.Assets.CreateArea(100, 100);
 
             areaView = new MapViewer(areaID);
 
@@ -90,8 +89,6 @@ namespace Azmyth.Editor
             areaView.AreaNode.Tag = areaID;
 
             areaView.Dock = DockStyle.Fill;
-            areaView.CellClick += areaView_CellClick;
-            areaView.CellHover += areaView_CellHover;
 
             tabMain.TabPages.Add(areaID.ToString(), Azmyth.Assets.Assets.Store[areaID].Name);
             tabMain.SelectedIndex = tabMain.TabPages.IndexOfKey(areaID.ToString());
@@ -102,126 +99,126 @@ namespace Azmyth.Editor
             _selected = Azmyth.Assets.Assets.Store[areaID];
         }
 
-        void areaView_CellHover(object sender, CellSelectedEventArgs e)
-        {
-            if (this.InvokeRequired)
-            {
-                this.Invoke((MethodInvoker) delegate { areaView_CellHover(sender, e); });
-            }
-            else
-            {
-                int r = 10; // radius
-                int ox = e.Vector.X, oy = e.Vector.Y; // origin
-                Room room = null;
+        //void areaView_CellHover(object sender, CellSelectedEventArgs e)
+        //{
+        //    if (this.InvokeRequired)
+        //    {
+        //        this.Invoke((MethodInvoker) delegate { areaView_CellHover(sender, e); });
+        //    }
+        //    else
+        //    {
+        //        int r = 10; // radius
+        //        int ox = e.Vector.X, oy = e.Vector.Y; // origin
+        //        Room room = null;
 
-                if ((Control.MouseButtons & MouseButtons.Left) != 0)
-                {
-                    switch (cboTool1.SelectedValue)
-                    {
-                        case "Fill":
-                            switch (cboShape1.SelectedValue)
-                            {
-                                case "Pixel":
-                                    //if (_selected[new VectorID(e.Vector.X, e.Vector.Y)] != null)
-                                    {
-                                        VectorID roomID = Azmyth.Assets.Assets.CreateRoom();
-                                        room = Azmyth.Assets.Assets.GetRoom(roomID);
-                                        room.GridX = e.Vector.X;
-                                        room.GridY = e.Vector.Y;
-                                        _selected.AddObject(room);
-                                        room.Name = "Default Room";
-                                        tvwWorld.SelectedNode.Nodes.Add(room.Name).Tag = roomID;
-                                        ((MapViewer)sender).SetCellColor(e.Vector, Color.Red);
-                                    }
+        //        if ((Control.MouseButtons & MouseButtons.Left) != 0)
+        //        {
+        //            switch (cboTool1.SelectedValue)
+        //            {
+        //                case "Fill":
+        //                    switch (cboShape1.SelectedValue)
+        //                    {
+        //                        case "Pixel":
+        //                            //if (_selected[new VectorID(e.Vector.X, e.Vector.Y)] != null)
+        //                            {
+        //                                VectorID roomID = Azmyth.Assets.Assets.CreateRoom();
+        //                                room = Azmyth.Assets.Assets.GetRoom(roomID);
+        //                                room.GridX = e.Vector.X;
+        //                                room.GridY = e.Vector.Y;
+        //                                _selected.AddObject(room);
+        //                                room.Name = "Default Room";
+        //                                tvwWorld.SelectedNode.Nodes.Add(room.Name).Tag = roomID;
+        //                                ((MapViewer)sender).SetCellColor(e.Vector, Color.Red);
+        //                            }
 
-                                    break;
-                                case "Circle":
-                                    for (int x = -r; x < r; x++)
-                                    {
-                                        int height = (int)System.Math.Sqrt(r * r - x * x);
+        //                            break;
+        //                        case "Circle":
+        //                            for (int x = -r; x < r; x++)
+        //                            {
+        //                                int height = (int)System.Math.Sqrt(r * r - x * x);
 
-                                        for (int y = -height; y < height; y++)
-                                        {
-                                            VectorID roomID = Azmyth.Assets.Assets.CreateRoom();
-                                            room = Azmyth.Assets.Assets.GetRoom(roomID);
-                                            room.GridX = e.Vector.X;
-                                            room.GridY = e.Vector.Y;
-                                            _selected.AddObject(room);
-                                            room.Name = "Default Room";
-                                            tvwWorld.SelectedNode.Nodes.Add(room.Name).Tag = roomID;
-                                            ((MapViewer)sender).SetCellColor(new Vector(x + ox, y + oy, 1), Color.Red);
-                                            ((MapViewer)sender).RepaintMap();
+        //                                for (int y = -height; y < height; y++)
+        //                                {
+        //                                    VectorID roomID = Azmyth.Assets.Assets.CreateRoom();
+        //                                    room = Azmyth.Assets.Assets.GetRoom(roomID);
+        //                                    room.GridX = e.Vector.X;
+        //                                    room.GridY = e.Vector.Y;
+        //                                    _selected.AddObject(room);
+        //                                    room.Name = "Default Room";
+        //                                    tvwWorld.SelectedNode.Nodes.Add(room.Name).Tag = roomID;
+        //                                    ((MapViewer)sender).SetCellColor(new Vector(x + ox, y + oy, 1), Color.Red);
+        //                                    ((MapViewer)sender).RepaintMap();
 
-                                        }
-                                    }
-
-
+        //                                }
+        //                            }
 
 
-                                    break;
-                            }
-                            break;
-                    }
-                }
-            }
-        }
 
-        void areaView_CellClick(object sender, CellClickEventArgs e)
-        {
-            int r = 10; // radius
-            int ox = e.CellX, oy = e.CellY; // origin
-            VectorID roomID = null;
-            Room room = null;
-            switch (cboTool1.SelectedValue)
-            {
-                case "Fill":
-                    switch (cboShape1.SelectedValue)
-                    {
-                        case "Pixel":
-                            //if (_selected[new VectorID(e.CellX, e.CellY)] != null)
-                            {
-                                roomID = Azmyth.Assets.Assets.CreateRoom();
-                                room = Azmyth.Assets.Assets.GetRoom(roomID);
 
-                                room.GridX = e.CellX;
-                                room.GridY = e.CellY;
+        //                            break;
+        //                    }
+        //                    break;
+        //            }
+        //        }
+        //    }
+        //}
 
-                                _selected.AddObject(room);
+        //void areaView_CellClick(object sender, CellClickEventArgs e)
+        //{
+        //    int r = 10; // radius
+        //    int ox = e.CellX, oy = e.CellY; // origin
+        //    VectorID roomID = null;
+        //    Room room = null;
+        //    switch (cboTool1.SelectedValue)
+        //    {
+        //        case "Fill":
+        //            switch (cboShape1.SelectedValue)
+        //            {
+        //                case "Pixel":
+        //                    //if (_selected[new VectorID(e.CellX, e.CellY)] != null)
+        //                    {
+        //                        roomID = Azmyth.Assets.Assets.CreateRoom();
+        //                        room = Azmyth.Assets.Assets.GetRoom(roomID);
 
-                                room.Name = "Default Room";
+        //                        room.GridX = e.CellX;
+        //                        room.GridY = e.CellY;
 
-                                tvwWorld.SelectedNode.Nodes.Add(room.Name).Tag = roomID;
-                                ((MapViewer)sender).SetCellColor(e.Cell.CellVector, Color.Red);
-                            }
+        //                        _selected.AddObject(room);
 
-                            break;
-                        case "Circle":
-                            for (int x = -r; x < r; x++)
-                            {
-                                int height = (int)System.Math.Sqrt(r * r - x * x);
+        //                        room.Name = "Default Room";
 
-                                for (int y = -height; y < height; y++)
-                                {
-                                    roomID = Azmyth.Assets.Assets.CreateRoom();
-                                    room = Azmyth.Assets.Assets.GetRoom(roomID);
-                                    room.GridX = e.CellX;
-                                    room.GridY = e.CellY;
-                                    _selected.AddObject(room);
-                                    room.Name = "Default Room";
-                                    tvwWorld.SelectedNode.Nodes.Add(room.Name).Tag = roomID;
-                                    ((MapViewer)sender).SetCellColor(new Vector(x + ox, y + oy, 1), Color.Red);
+        //                        tvwWorld.SelectedNode.Nodes.Add(room.Name).Tag = roomID;
+        //                        ((MapViewer)sender).SetCellColor(e.Cell.CellVector, Color.Red);
+        //                    }
 
-                                }
-                            }
+        //                    break;
+        //                case "Circle":
+        //                    for (int x = -r; x < r; x++)
+        //                    {
+        //                        int height = (int)System.Math.Sqrt(r * r - x * x);
 
-                            ((MapViewer)sender).RepaintMap();
-                            this.Invalidate();
+        //                        for (int y = -height; y < height; y++)
+        //                        {
+        //                            roomID = Azmyth.Assets.Assets.CreateRoom();
+        //                            room = Azmyth.Assets.Assets.GetRoom(roomID);
+        //                            room.GridX = e.CellX;
+        //                            room.GridY = e.CellY;
+        //                            _selected.AddObject(room);
+        //                            room.Name = "Default Room";
+        //                            tvwWorld.SelectedNode.Nodes.Add(room.Name).Tag = roomID;
+        //                            ((MapViewer)sender).SetCellColor(new Vector(x + ox, y + oy, 1), Color.Red);
 
-                            break;
-                    }
-                    break;
-            }
-        }
+        //                        }
+        //                    }
+
+        //                    ((MapViewer)sender).RepaintMap();
+        //                    this.Invalidate();
+
+        //                    break;
+        //            }
+        //            break;
+        //    }
+        //}
 
         private void frmEditorMain_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -438,195 +435,39 @@ namespace Azmyth.Editor
             splitRight.Visible = true;
         }
 
-        private void btnLife_Click(object sender, EventArgs e)
+        private void splitPanelTop_Minimize(object sender, EventArgs e)
         {
-            VectorID lifeID = Assets.Assets.CreateLife(100, 100);
-            Life life = Assets.Assets.Store[lifeID] as Life;
-            TreeNode lifeNode = tvwWorld.Nodes.Add(life.Name);
-            MapViewer lifeView = new MapViewer(lifeID);
+            splitPanelTop.Visible = false;
 
-            _lifeID = lifeID;
-            _lifeView = lifeView;
-            _selected = Azmyth.Assets.Assets.Store[lifeID];
+            pnlTopCollapsed.Visible = true;
+            //pnlTopCollapsed.Dock = DockStyle.Top;
 
-            lifeView.AreaNode = lifeNode;
-            lifeView.AreaNode.Tag = lifeID;
+            pnlTop.Height = 32;
 
-            lifeView.Dock = DockStyle.Fill;
-            lifeView.CellClick += lifeView_CellClick;
-            lifeView.CellHover += lifeView_CellHover;
-
-            tabMain.TabPages.Add(lifeID.ToString(), Azmyth.Assets.Assets.Store[lifeID].Name);
-            tabMain.SelectedIndex = tabMain.TabPages.IndexOfKey(lifeID.ToString());
-            tabMain.SelectedTab.Controls.Add(lifeView);
-
-            lifeView.AreaPage = tabMain.SelectedTab;
-
-            life.LifeCells = new LifeCell[life.GridX, life.GridY];
-            newCells = new LifeCell[life.GridX, life.GridY];
-
-            for (int index = 0; index < (life.GridX * life.GridY); index++)
-            {
-                int x = index / (int)life.GridX;
-                int y = index % (int)life.GridX;
-
-                LifeCell cell;
-
-                cell.Life = _lifeID;
-                cell.X = x;
-                cell.Y = y;
-                cell.Alive = false;
-
-                newCells[x, y].X = x;
-                newCells[x, y].Y = y;
-                newCells[x, y].Life = _lifeID;
-                newCells[x, y].Alive = false;
-
-                life.LifeCells[x, y] = cell;
-                lifeView.SetCellColor(new Vector(x, y, 0), Color.White);
-                Application.DoEvents();
-            }            
+            splitTop.Visible = false;
         }
 
-        void lifeView_CellHover(object sender, CellSelectedEventArgs e)
+        private void splitPanelTop_Close(object sender, EventArgs e)
         {
-            Life life = Assets.Assets.Store[_lifeID] as Life;
-
-            if (life.LifeCells[e.Vector.X, e.Vector.Y].Alive)
-            {
-                _lifeView.SetCellColor(e.Vector, Color.Black);
-            }
-            else
-            {
-                _lifeView.SetCellColor(e.Vector, Color.White);
-            }
+            CollapsePanel(PanelPosition.Top);
         }
 
-        void lifeView_CellClick(object sender, CellClickEventArgs e)
+        private void btnTopShow_Click(object sender, EventArgs e)
         {
-            Life life = Assets.Assets.Store[_lifeID] as Life;
+            splitPanelTop.Visible = true;
+            
+            pnlTopCollapsed.Visible = false;
 
-            life.LifeCells[e.CellX, e.CellY].Alive = !life.LifeCells[e.CellX, e.CellY].Alive;
+            pnlTop.Height = Properties.Settings.Default.TopPanelHeight;
 
-            if (life.LifeCells[e.CellX, e.CellY].Alive)
-            {
-                _lifeView.SetCellColor(e.Cell.CellVector, Color.Black);
-            }
-            else
-            {
-                _lifeView.SetCellColor(e.Cell.CellVector, Color.White);
-            }
+            splitTop.Visible = true;
         }
 
-        private void btnUpdate_Click(object sender, EventArgs e)
+        public void Output(string output)
         {
-            UpdateCells();
-           // Thread t = new Thread(() =>
-            //{
-                //Life life = Assets.Assets.Store[_lifeID] as Life;
+            _ansiBuilder.AppendLine("&B&+l[&N&B&+m " + DateTime.Now.ToLongTimeString() + "&B&+l ]&N " + output);
 
-                //while (true)
-                //{
-                //    DrawingControl.SuspendDrawing(_lifeView);
-
-                //    _lifeView.ClearCells();
-                //    LifeCell[,] newCells = new LifeCell[life.GridX, life.GridY];
-                    
-                //    for (int index = 0; index < (life.GridX * life.GridY); index++)
-                //    {
-                //        int x = index / (int)life.GridX;
-                //        int y = index % (int)life.GridX;
-
-                //        LifeCell cell = new LifeCell();
-
-                //        cell.Life = _lifeID;
-                //        cell.X = x;
-                //        cell.Y = y;
-                //        cell.Alive = life.LifeCells[x, y].Update();
-
-                //        if (cell.Alive)
-                //        {
-                //            _lifeView.SetCellColor(new Vector(x, y, 0), Color.Black, true);
-                //        }
-                //        else
-                //        {
-                //            _lifeView.SetCellColor(new Vector(x, y, 0), Color.White, true);
-                //        }
-
-                //        newCells[x, y] = cell;
-                //        //Application.DoEvents();
-                //    }
-
-
-                //    //_lifeView.RepaintMap();
-
-                //    life.LifeCells = newCells;
-                //    DrawingControl.ResumeDrawing(_lifeView);
-                //    //Thread.Sleep(0);
-                //    //Application.DoEvents();
-                //}
-            //});
-
-            //t.Start();
-        }
-
-        public void UpdateCells()
-        {
-            Life life = Assets.Assets.Store[_lifeID] as Life;
-
-            while (true)
-            {
-                LifeCell[,] newc = (LifeCell[,])newCells.Clone();
-                DrawingControl.SuspendDrawing(_lifeView);
-
-                var liveCells = from LifeCell item in life.LifeCells
-                                where item.Update()
-                                select item;
-
-                _lifeView.ClearCells();
-
-                foreach (LifeCell cell in liveCells)
-                {
-                    newc[cell.X, cell.Y].Alive = cell.Update();// life.LifeCells[cell.X, cell.Y].Update();
-
-                    if (newc[cell.X, cell.Y].Alive)
-                    {
-                        _lifeView.SetCellColor(new Vector(cell.X, cell.Y, 0), Color.Black);
-                    }
-                    //else
-                    //{
-                    //    _lifeView.SetCellColor(new Vector(cell.X, cell.Y, 0), Color.White, true);
-                    //}
-
-                    //Application.DoEvents();
-                }
-
-                life.LifeCells = newc;
-                
-                DrawingControl.ResumeDrawing(_lifeView);
-                _lifeView.RepaintMap();
-                Application.DoEvents();
-            }
-        }
-    }
-
-
-    public class DrawingControl
-    {
-        [DllImport("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, Int32 wMsg, bool wParam, Int32 lParam);
-
-        private const int WM_SETREDRAW = 11;
-
-        public static void SuspendDrawing(MapViewer parent)
-        {
-            SendMessage(parent.Handle, WM_SETREDRAW, false, 0);
-        }
-
-        public static void ResumeDrawing(MapViewer parent)
-        {
-            SendMessage(parent.Handle, WM_SETREDRAW, true, 0);
-            parent.Refresh();
+            txtOutput.Rtf = _ansiBuilder.ToString();
         }
     }
 }

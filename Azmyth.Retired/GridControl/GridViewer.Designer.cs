@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.scrollPanel = new System.Windows.Forms.Panel();
-            this.gridControl = new Azmyth.Editor.GridControl();
+            this.gridControl = new Azmyth.Editor.GridControlOld();
             this.scrollPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,6 +80,6 @@
         #endregion
 
         private System.Windows.Forms.Panel scrollPanel;
-        private GridControl gridControl;
+        private GridControlOld gridControl;
     }
 }
