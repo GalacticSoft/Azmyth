@@ -17,3 +17,4 @@ C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Ed
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.pdb
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.Grid.resources
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.GridControl.resources
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.frmMarkov.resources

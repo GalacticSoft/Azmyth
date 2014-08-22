@@ -469,5 +469,12 @@ namespace Azmyth.Editor
 
             txtOutput.Rtf = _ansiBuilder.ToString();
         }
+
+        private void rbnMarkov_Click(object sender, EventArgs e)
+        {
+            frmMarkov frm = new frmMarkov();
+
+            frm.Show();
+        }
     }
 }

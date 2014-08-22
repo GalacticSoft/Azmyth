@@ -61,6 +61,7 @@
             this.btnAssetsShow = new System.Windows.Forms.Button();
             this.splitBottom = new System.Windows.Forms.Splitter();
             this.pnlBottom = new System.Windows.Forms.Panel();
+            this.txtOutput = new System.Windows.Forms.RichTextBox();
             this.splitTop = new System.Windows.Forms.Splitter();
             this.pnlTop = new System.Windows.Forms.Panel();
             this.pnlTopCollapsed = new System.Windows.Forms.Panel();
@@ -70,11 +71,11 @@
             this.LeftPanel = new System.Windows.Forms.Panel();
             this.RightPanel = new System.Windows.Forms.Panel();
             this.MainPanel = new System.Windows.Forms.Panel();
-            this.txtOutput = new System.Windows.Forms.RichTextBox();
             this.pnlProperties = new Azmyth.Editor.SplitPanel();
             this.pnlAssets = new Azmyth.Editor.SplitPanel();
             this.splitPanelOutput = new Azmyth.Editor.SplitPanel();
             this.splitPanelTop = new Azmyth.Editor.SplitPanel();
+            this.rbnMarkov = new System.Windows.Forms.RibbonButton();
             this.panel1.SuspendLayout();
             this.pnlMain.SuspendLayout();
             this.pnlRight.SuspendLayout();
@@ -163,6 +164,7 @@
             this.ribbonPanel1.ButtonMoreEnabled = false;
             this.ribbonPanel1.ButtonMoreVisible = false;
             this.ribbonPanel1.Items.Add(this.btnNewArea);
+            this.ribbonPanel1.Items.Add(this.rbnMarkov);
             this.ribbonPanel1.Text = "Actions";
             // 
             // btnNewArea
@@ -423,6 +425,16 @@
             this.pnlBottom.Size = new System.Drawing.Size(1025, 100);
             this.pnlBottom.TabIndex = 13;
             // 
+            // txtOutput
+            // 
+            this.txtOutput.BackColor = System.Drawing.Color.Black;
+            this.txtOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtOutput.Location = new System.Drawing.Point(0, 24);
+            this.txtOutput.Name = "txtOutput";
+            this.txtOutput.Size = new System.Drawing.Size(1025, 76);
+            this.txtOutput.TabIndex = 2;
+            this.txtOutput.Text = "";
+            // 
             // splitTop
             // 
             this.splitTop.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -513,16 +525,6 @@
             this.MainPanel.Size = new System.Drawing.Size(969, 237);
             this.MainPanel.TabIndex = 10;
             // 
-            // txtOutput
-            // 
-            this.txtOutput.BackColor = System.Drawing.Color.Black;
-            this.txtOutput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtOutput.Location = new System.Drawing.Point(0, 24);
-            this.txtOutput.Name = "txtOutput";
-            this.txtOutput.Size = new System.Drawing.Size(1025, 76);
-            this.txtOutput.TabIndex = 2;
-            this.txtOutput.Text = "";
-            // 
             // pnlProperties
             // 
             this.pnlProperties.Caption = "Properties";
@@ -564,6 +566,13 @@
             this.splitPanelTop.TabIndex = 1;
             this.splitPanelTop.Close += new System.Action<object, System.EventArgs>(this.splitPanelTop_Close);
             this.splitPanelTop.Minimize += new System.Action<object, System.EventArgs>(this.splitPanelTop_Minimize);
+            // 
+            // rbnMarkov
+            // 
+            this.rbnMarkov.Image = ((System.Drawing.Image)(resources.GetObject("rbnMarkov.Image")));
+            this.rbnMarkov.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbnMarkov.SmallImage")));
+            this.rbnMarkov.Text = "Markov";
+            this.rbnMarkov.Click += new System.EventHandler(this.rbnMarkov_Click);
             // 
             // frmEditorMain
             // 
@@ -637,5 +646,6 @@
         private System.Windows.Forms.Panel pnlTopCollapsed;
         private System.Windows.Forms.Button btnTopShow;
         private System.Windows.Forms.RichTextBox txtOutput;
+        private System.Windows.Forms.RibbonButton rbnMarkov;
     }
 }
