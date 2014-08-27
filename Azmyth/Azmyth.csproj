@@ -48,12 +48,9 @@
     <Compile Include="Ansi\ModifierData.cs" />
     <Compile Include="Stats\IHasStats.cs" />
     <Compile Include="Stats\IStat.cs" />
-    <Compile Include="Math\Numbers.cs" />
-    <Compile Include="Math\Perlin.cs" />
-    <Compile Include="Math\Vector.cs" />
-    <Compile Include="Math\VectorMap\VectorCell.cs" />
-    <Compile Include="Math\VectorMap\VectorGrid.cs" />
-    <Compile Include="Math\VectorMap\VectorMap.cs" />
+    <Compile Include="Maths\Numbers.cs" />
+    <Compile Include="Noise\Perlin.cs" />
+    <Compile Include="Maths\Vector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VectorID\VectorID.cs" />
     <Compile Include="VectorID\VectorList.cs" />

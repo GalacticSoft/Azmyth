@@ -41,8 +41,6 @@
   <ItemGroup>
     <Compile Include="Assets\Area.cs" />
     <Compile Include="Assets\Assets.cs" />
-    <Compile Include="Assets\Life.cs" />
-    <Compile Include="Assets\LifeCell.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Assets\Exit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

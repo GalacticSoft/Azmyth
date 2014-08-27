@@ -10,7 +10,6 @@ using System.Threading;
 using System.Windows.Forms;
 using Azmyth;
 using Azmyth.Assets;
-using Azmyth.Math;
 using Azmyth.Game;
 using System.Runtime.InteropServices;
 
@@ -27,7 +26,6 @@ namespace Azmyth.Editor
     {
         private TreeNode _root = null;
         private Asset _selected = null;
-        private VectorID _worldID = null;
 
         private Ansi.AnsiToRtfBuilder _ansiBuilder = new Ansi.AnsiToRtfBuilder();
 
@@ -38,8 +36,6 @@ namespace Azmyth.Editor
             InitializeComponent();
 
             _root = tvwWorld.Nodes.Add("Assets");
-            _worldID = Azmyth.Assets.Assets.CreateWorld();
-            _root.Tag =  _worldID;
 
             int splitterPosition = this.gridProperties.GetInternalLabelWidth();
             this.gridProperties.MoveSplitterTo(splitterPosition + 200);
@@ -61,7 +57,15 @@ namespace Azmyth.Editor
         {
             VectorID id = e.Node.Tag as VectorID;
 
-            gridProperties.SelectedObject = Azmyth.Assets.Assets.Store[id];
+            if (Azmyth.Assets.Assets.Store[id] is World)
+            {
+                WorldAdapter adp = new WorldAdapter(gridProperties, (World)Azmyth.Assets.Assets.Store[id]);
+                adp.Map = tabMain.TabPages[tabMain.TabPages.IndexOfKey(adp.WorldID.ToString())].Controls["av" + adp.WorldID.ID] as MapViewer;
+                gridProperties.SelectedObject = adp;
+                
+            }
+            else
+                gridProperties.SelectedObject = Azmyth.Assets.Assets.Store[id];
         }
 
         private void tvwWorld_DoubleClick(object sender, EventArgs e)
@@ -78,25 +82,33 @@ namespace Azmyth.Editor
 
         private void btnNewArea_Click(object sender, EventArgs e)
         {
-            VectorID areaID = null;
+            VectorID worldID = null;
             MapViewer areaView = null;
   
-            areaID = Azmyth.Assets.Assets.CreateArea(100, 100);
+            worldID = Azmyth.Assets.Assets.CreateWorld();
 
-            areaView = new MapViewer(areaID);
-
-            areaView.AreaNode = _root.Nodes.Add(Azmyth.Assets.Assets.Store[areaID].Name);
-            areaView.AreaNode.Tag = areaID;
+            areaView = new MapViewer(worldID);
+            areaView.Name = "av" + worldID.ID;
+            areaView.AreaNode = _root.Nodes.Add(Azmyth.Assets.Assets.Store[worldID].Name);
+            areaView.AreaNode.Tag = worldID;
 
             areaView.Dock = DockStyle.Fill;
 
-            tabMain.TabPages.Add(areaID.ToString(), Azmyth.Assets.Assets.Store[areaID].Name);
-            tabMain.SelectedIndex = tabMain.TabPages.IndexOfKey(areaID.ToString());
+            tabMain.TabPages.Add(worldID.ToString(), Azmyth.Assets.Assets.Store[worldID].Name);
+            tabMain.SelectedIndex = tabMain.TabPages.IndexOfKey(worldID.ToString());
             tabMain.SelectedTab.Controls.Add(areaView);
 
             areaView.AreaPage = tabMain.SelectedTab;
+            areaView.CellHover +=areaView_CellHover;
+            _selected = Azmyth.Assets.Assets.Store[worldID];
+        }
 
-            _selected = Azmyth.Assets.Assets.Store[areaID];
+        private void areaView_CellHover(object sender, Point e)
+        {
+            Room r = Assets.Assets.GetWorld(((GridControl)sender).m_world.AssetID).GetRoom(e.X, e.Y);
+
+
+            Output(r.m_height.ToString());
         }
 
         //void areaView_CellHover(object sender, CellSelectedEventArgs e)
@@ -475,6 +487,20 @@ namespace Azmyth.Editor
             frmMarkov frm = new frmMarkov();
 
             frm.Show();
+        }
+
+        private void gridProperties_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            WorldAdapter world = gridProperties.SelectedObject as WorldAdapter;
+
+            if (world != null)
+            {
+                tabMain.SelectedIndex = tabMain.TabPages.IndexOfKey(world.WorldID.ToString());
+                tabMain.Invalidate();
+                
+
+                //_selected = world;
+            }
         }
     }
 }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Azmyth.Math
+namespace Azmyth.Noise
 {
-    public class PerlinNoise
+    public class Perlin
     {
         double     persistence = 0;
         double     frequency = 0;
@@ -14,7 +14,7 @@ namespace Azmyth.Math
         double     randomseed = 0;
 
         // Constructor
-        PerlinNoise()
+        Perlin()
         {
             persistence = 0;
             frequency = 0;
@@ -23,7 +23,7 @@ namespace Azmyth.Math
             randomseed = 0;
         }
 
-        public PerlinNoise(double _persistence, double _frequency, double _amplitude, int _octaves, int _randomseed)
+        public Perlin(double _persistence, double _frequency, double _amplitude, int _octaves, int _randomseed)
         {
           persistence = _persistence;
           frequency = _frequency;

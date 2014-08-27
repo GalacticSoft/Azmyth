@@ -4,6 +4,10 @@ namespace Azmyth.Assets
 {
     public class Room : Asset
     {
+        public Terrain m_terrain;
+        public double m_height;
+        public double m_value;
+
         public long GridX { get; set; }
         public long GridY { get; set; }
 

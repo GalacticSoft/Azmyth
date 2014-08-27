@@ -1,6 +1,6 @@
 ﻿namespace Azmyth.Editor
 {
-    partial class AssetPanel
+    partial class ShoreLineScroll
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,37 +28,36 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
-            // button1
+            // trackBar1
             // 
-            this.button1.Location = new System.Drawing.Point(459, 225);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-
+            this.trackBar1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.trackBar1.Location = new System.Drawing.Point(0, 0);
+            this.trackBar1.Maximum = 100;
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(222, 26);
+            this.trackBar1.TabIndex = 0;
+            this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
             // 
-            // AssetPanel
+            // PropScroll
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "AssetPanel";
-            this.Size = new System.Drawing.Size(1047, 666);
-            this.MouseEnter += new System.EventHandler(this.AssetPanel_MouseEnter);
-            this.MouseLeave += new System.EventHandler(this.AssetPanel_MouseLeave);
+            this.Controls.Add(this.trackBar1);
+            this.Name = "PropScroll";
+            this.Size = new System.Drawing.Size(222, 26);
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-
-
-
-
+        private System.Windows.Forms.TrackBar trackBar1;
     }
 }

@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using Azmyth.Noise;
+using Azmyth;
+using Azmyth.Assets;
 
 namespace Azmyth.Editor
 {
@@ -68,75 +71,8 @@ namespace Azmyth.Editor
             }
         }
 
-        private double m_amplitude = 1.00f;
-        private double m_persistance = 1.00f;
-        private double m_frequency = 0.05f;
-        private int m_octaves = 1;
-        private int m_seed = 500;
+        public World m_world;
 
-        public double Persistance
-        {
-            get
-            {
-                return m_persistance;
-            }
-            set
-            {
-                m_persistance = value;
-                Invalidate();
-            }
-        }
-
-        public double Amplitude
-        {
-            get
-            {
-                return m_amplitude;
-            }
-            set
-            {
-                m_amplitude = value;
-                Invalidate();
-            }
-        }
-
-        public double Frequency
-        {
-            get
-            {
-                return m_frequency;
-            }
-            set
-            {
-                m_frequency = value;
-                Invalidate();
-            }
-        }
-
-        public int Octaves
-        {
-            get
-            {
-                return m_octaves;
-            }
-            set
-            {
-                m_octaves = value;
-                Invalidate();
-            }
-        }
-        public int Seed
-        {
-            get
-            {
-                return m_seed;
-            }
-            set
-            {
-                m_seed = value;
-                Invalidate();
-            }
-        }
         public GridControl()
         {
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -156,7 +92,7 @@ namespace Azmyth.Editor
             m_translateStep = 10.0f;
             m_scaleStep = 1.1f;
             m_rotateStep = 15.0f;
-            m_scaleMin = (float)System.Math.Pow(m_scaleStep, -15.0f);
+            m_scaleMin = (float)System.Math.Pow(m_scaleStep, -20.0f);
             m_scaleMax = (float)System.Math.Pow(m_scaleStep, 15.0f);
 
             m_mouseLocation = new Point(0, 0);
@@ -175,7 +111,6 @@ namespace Azmyth.Editor
             m_debugForegroundBrush = new SolidBrush(Color.FromArgb(192, Color.Black));
             m_originBrush = new SolidBrush(Color.FromArgb(128, Color.Orange));
         }
-
         protected override void OnPaint(PaintEventArgs e)
         {
             Matrix m = e.Graphics.Transform.Clone();
@@ -187,67 +122,101 @@ namespace Azmyth.Editor
 
             PaintGrid(e.Graphics);
 
-                RectangleF viewport = m_viewport;
+            RectangleF viewport = m_viewport;
 
-                //viewport.Inflate(300, 300);
-                //List<Item> items = m_quadTree.Query(viewport);
-                Azmyth.Math.PerlinNoise noise = new Azmyth.Math.PerlinNoise(m_persistance, m_frequency, m_amplitude, m_octaves, m_seed);
-                int cellX, cellY, totalCells;
+            //viewport.Inflate(300, 300);
+            //List<Item> items = m_quadTree.Query(viewport);
+            //Perlin noise = new Perlin(m_persistance, m_frequency, m_amplitude, m_octaves, m_seed);
+            int cellX, cellY, totalCells;
 
-                cellX = (int)viewport.Left;
-                cellY = (int)viewport.Top;
+            cellX = (int)viewport.Left;
+            cellY = (int)viewport.Top;
 
-                totalCells = (int)((viewport.Width + 1) * (viewport.Height + 1));
+            totalCells = (int)((viewport.Width + 1) * (viewport.Height + 1));
 
+            if (m_world != null)
+            {
                 for (int index = 0; index < totalCells; index++)
                 {
-                    double height = System.Math.Round(noise.GetHeight(cellX, cellY), 2);
+                    Room room = m_world.GetRoom(cellX, cellY);
 
                     if (m_heightMap)
                     {
-                        if (height > 0)
+                        double height = room.m_height;
+
+                        if (room.m_terrain != Terrain.Ocean && room.m_terrain != Terrain.Coast)
                         {
-                            var val = 255 * height > 255 ? 255 : 255 * height;
-                            e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(255, (int)val, (int)val, (int)val)), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                            if (height >= 0)
+                            {
+                                var val = 255 * Math.Abs(height) > 255 ? 255 : 255 * Math.Abs(height);
+
+                                e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(255, (int)val, (int)val, (int)val)),
+                                    new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                            }
+                            else
+                            {
+                                var val = 255 * Math.Abs(height) > 255 ? 255 : 255 * Math.Abs(height);
+
+                                e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(255, 255-(int)val, 255-(int)val, 255-(int)val)),
+                                    new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                            }
+
                         }
-                        //else if(height == 0)
-                       // {
-                        //    e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(255, 255, 0, 0)), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
-                        ////
-                        
-                        //}
                         else
                         {
-                            var val = 255 * System.Math.Abs(height) > 255 ? 255 : 255 * System.Math.Abs(height);
-                            e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(150, (int)val, (int)val, 255)), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
-                        
+                            if (height >= 0)
+                            {
+                                var val = 255 * System.Math.Abs(height) > 255 ? 255 : 255 * System.Math.Abs(height);
+
+                                e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(255, 0, 0, (int)val)),
+                                    new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                            }
+                            else
+                            {
+                                var val = 255 * System.Math.Abs(height) > 255 ? 255 : 255 * System.Math.Abs(height);
+
+                                e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(255, 255-(int)val, 255-(int)val, 255)),
+                                    new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                            }
+
                         }
                     }
                     else
                     {
-                        if(height <= 0.04 && height > 0.03)
+                        switch (room.m_terrain)
                         {
-                            e.Graphics.FillRectangle(new SolidBrush(Color.CornflowerBlue), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
-                        
-                        }
-                        else if (height < .07 && height > 0.04)
-                        {
-                            e.Graphics.FillRectangle(new SolidBrush(Color.SandyBrown), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
-                        }
-                        else if (height > .06)
-                        {
-                            e.Graphics.FillRectangle(new SolidBrush(Color.Brown), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
-                        }
-                        else if(height < -0.07)
-                        {
-                            e.Graphics.FillRectangle(new SolidBrush(Color.Blue), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
-                        }
-                        else
-                        {
-                            e.Graphics.FillRectangle(new SolidBrush(Color.Blue), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                            case Terrain.Ocean:
+                                e.Graphics.FillRectangle(new SolidBrush(Color.Blue), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                                break;
+                            case Terrain.Coast:
+                                e.Graphics.FillRectangle(new SolidBrush(Color.CornflowerBlue), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                                break;
+                            case Terrain.Dirt:
+                                Color dirtColor = ControlPaint.Light(Color.SaddleBrown, ((float)room.m_height / (float)m_world.TerrainHeight));
+                                e.Graphics.FillRectangle(new SolidBrush(dirtColor), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                                break;
+                            case Terrain.Beach:
+                                e.Graphics.FillRectangle(new SolidBrush(Color.BurlyWood), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                                break;
+                            case Terrain.Mountain:
+                                Color mountainColor = ControlPaint.Light(Color.SaddleBrown, (float)room.m_height /  (float)m_world.TerrainHeight);
+
+                                e.Graphics.FillRectangle(new SolidBrush(mountainColor), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                                break;
+                            case Terrain.Stone:
+                                e.Graphics.FillRectangle(new SolidBrush(Color.SlateGray), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                                break;
+                            case Terrain.Snow:
+                                Color snowColor = ControlPaint.Light(Color.LightGray, (float)room.m_height / (float)m_world.TerrainHeight);
+                                e.Graphics.FillRectangle(new SolidBrush(snowColor), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                                break;
+                            case Terrain.Lava:
+                                e.Graphics.FillRectangle(new SolidBrush(Color.Red), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                                break;
+                                
                         }
                     }
-                    
+
                     cellX++;
 
                     if (cellX > viewport.Right)
@@ -256,6 +225,7 @@ namespace Azmyth.Editor
                         cellX = (int)viewport.Left;
                     }
                 }
+            }
 
                //foreach (Item i in items)
                //{
@@ -392,6 +362,8 @@ namespace Azmyth.Editor
             g.Transform = savedMatrix;
         }
 
+        public event EventHandler<Point> CellHover;
+
         protected override void OnMouseMove(MouseEventArgs e)
         {
             m_mouseLocation = e.Location;
@@ -409,7 +381,7 @@ namespace Azmyth.Editor
                     ViewportChanged(this, new CellEventArgs(m_viewport));
                 }
             }
-
+            
             m_previousMouseLocation = e.Location;
 
             Invalidate();
@@ -423,6 +395,12 @@ namespace Azmyth.Editor
             {
                 m_isLeftMouseDown = true;
                 Invalidate();
+
+
+                if (CellHover != null)
+                {
+                    CellHover(this, m_highlightedCellLocation);
+                }
             }
 
             if (e.Button == MouseButtons.Right)

@@ -3,7 +3,6 @@ C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Ed
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.csproj.GenerateResource.Cache
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.frmEditorMain.resources
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.MapViewer.resources
-C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.AssetPanel.resources
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.SplitPanel.resources
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\bin\Debug\Azmyth.Editor.exe.config
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\bin\Debug\Azmyth.Editor.exe
@@ -18,3 +17,8 @@ C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Ed
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.Grid.resources
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.GridControl.resources
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.frmMarkov.resources
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.TerrainHeightScroll.resources
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.CoastLineScroll.resources
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.TreeLineScroll.resources
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.SnowLineScroll.resources
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.ShoreLineScroll.resources

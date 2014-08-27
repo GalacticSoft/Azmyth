@@ -47,15 +47,44 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\AssetPanel.cs">
+    <Compile Include="Controls\ShoreLineScroll.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\AssetPanel.designer.cs">
-      <DependentUpon>AssetPanel.cs</DependentUpon>
+    <Compile Include="Controls\ShoreLineScroll.Designer.cs">
+      <DependentUpon>ShoreLineScroll.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Type Editors\CoastLineEditor.cs" />
+    <Compile Include="Type Editors\ShoreLineEditor.cs" />
+    <Compile Include="Type Editors\SnowLineEditor.cs" />
+    <Compile Include="Type Editors\TreeLineEditor.cs" />
+    <Compile Include="Controls\CoastLineScroll.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CoastLineScroll.Designer.cs">
+      <DependentUpon>CoastLineScroll.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\GridControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\TerrainHeightScroll.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TerrainHeightScroll.Designer.cs">
+      <DependentUpon>TerrainHeightScroll.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SnowLineScroll.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SnowLineScroll.Designer.cs">
+      <DependentUpon>SnowLineScroll.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TreeLineScroll.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TreeLineScroll.Designer.cs">
+      <DependentUpon>TreeLineScroll.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Adapters\WorldAdapter.cs" />
     <Compile Include="frmEditorMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,11 +119,23 @@
     <Compile Include="Controls\SplitPanel.designer.cs">
       <DependentUpon>SplitPanel.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Controls\AssetPanel.resx">
-      <DependentUpon>AssetPanel.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\CoastLineScroll.resx">
+      <DependentUpon>CoastLineScroll.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\GridControl.resx">
       <DependentUpon>GridControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ShoreLineScroll.resx">
+      <DependentUpon>ShoreLineScroll.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TerrainHeightScroll.resx">
+      <DependentUpon>TerrainHeightScroll.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\SnowLineScroll.resx">
+      <DependentUpon>SnowLineScroll.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TreeLineScroll.resx">
+      <DependentUpon>TreeLineScroll.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmEditorMain.resx">
       <DependentUpon>frmEditorMain.cs</DependentUpon>
@@ -145,6 +186,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\icon.png" />
     <Content Include="Images\igmTag.png" />
     <Content Include="Images\imgAlert.png" />
     <Content Include="Images\imgBroadcast.png" />

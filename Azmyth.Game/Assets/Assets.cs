@@ -15,13 +15,17 @@ namespace Azmyth.Assets
             AddAssetType(typeof(World));
             AddAssetType(typeof(Area));
             AddAssetType(typeof(Room));
-            AddAssetType(typeof(Life));
-            AddAssetType(typeof(LifeCell));
         }
 
         public static VectorID CreateWorld()
         {
-            return null; // Store.CreateAsset(typeof(World));
+            
+            VectorID worldID = Store.CreateAsset(typeof(World));
+            World world = Assets.GetWorld(worldID);
+            world.Seed = new Random().Next(500, 9999);
+            world.Name = "World " + world.AssetID.ID;
+
+            return  worldID;
         }
 
         public static VectorID CreateArea()
@@ -46,25 +50,6 @@ namespace Azmyth.Assets
             }
 
             return areaID;
-        }
-
-        public static VectorID CreateLife(int sizeX, int sizeY)
-        {
-            Life life = null;
-            VectorID lifeID = null;
-
-            lifeID = Store.CreateAsset(typeof(Life));
-
-            life = (Life)Assets.Store[lifeID];
-
-            if (life != null)
-            {
-                life.GridX = sizeX;
-                life.GridY = sizeY;
-                life.Name = "Life " + lifeID.ID;
-            }
-
-            return lifeID;
         }
 
         public static VectorID CreateArea(string name, int sizeX, int sizeY)

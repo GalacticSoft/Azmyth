@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Azmyth.Math
+namespace Azmyth
 {
     public class Numbers
     {
