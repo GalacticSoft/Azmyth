@@ -7,7 +7,7 @@ namespace Azmyth.Assets
     {
         Ocean = 0,
         Coast = 1,
-        Beach = 2,
+        Sand = 2,
         Dirt = 3,
         Forest = 4,
         River = 5,
@@ -122,7 +122,7 @@ namespace Azmyth.Assets
                 room.m_terrain = Terrain.Coast;
 
             if (room.m_height > m_coastLine && room.m_height <= (m_coastLine + ((m_terrainHeight - m_coastLine) * m_shoreLine)))
-                room.m_terrain = Terrain.Beach;
+                room.m_terrain = Terrain.Sand;
 
             if (room.m_height > m_coastLine + ((m_terrainHeight - m_coastLine) * m_shoreLine))
                 room.m_terrain = Terrain.Dirt;
@@ -133,11 +133,13 @@ namespace Azmyth.Assets
             if (room.m_height > m_coastLine + ((m_terrainHeight - m_coastLine) * m_snowLine))
                 room.m_terrain = Terrain.Snow;
 
+
+
             if (room.m_height > m_coastLine)
             {
                 if (Math.Abs(m_stones.GetHeight(x, y)) > .95f)
                 {
-                    room.m_terrain = Terrain.Stone;
+                        room.m_terrain = Terrain.Stone;
                 }
             }
 
@@ -145,8 +147,25 @@ namespace Azmyth.Assets
             {
                 if (Math.Abs(m_stones.GetHeight(x, y)) >= .80f)
                 {
-                    room.m_terrain = Terrain.Lava;
+                        room.m_terrain = Terrain.Lava;
                 }
+            }
+
+            if (room.m_terrain != Terrain.Ocean && room.m_terrain != Terrain.Snow && room.m_height < m_coastLine + ((m_terrainHeight - m_coastLine) * m_snowLine))
+            {
+                if (Math.Abs(m_rivers.GetHeight(x, y)) < m_terrainHeight * .05)
+                {
+                    if (room.m_terrain != Terrain.Coast)
+                        room.m_terrain = Terrain.Sand;
+                    else
+                        room.m_terrain = Terrain.River;
+
+                }
+                if (Math.Abs(m_rivers.GetHeight(x, y)) < m_terrainHeight * .03)
+                {
+                    room.m_terrain = Terrain.River;
+                }
+
             }
 
             return room;
@@ -166,7 +185,7 @@ namespace Azmyth.Assets
         {
             m_terrain = new Perlin(m_persistance, m_frequency, m_terrainHeight, m_octaves, m_seed);
             m_forest = new Perlin(m_persistance, m_frequency, m_terrainHeight, m_octaves, m_seed);
-            m_rivers = new Perlin(m_persistance, m_frequency, m_terrainHeight, m_octaves, m_seed);
+            m_rivers = new Perlin(m_persistance, .02, m_terrainHeight, 2, (m_seed / 5) * 3);
             m_stones = new Perlin(m_persistance, .07, 1, 4, m_seed);
             m_lava = new Perlin(m_persistance, m_frequency, 1, 1, (m_seed / 2) * 3);
             m_random = new Random(m_seed);

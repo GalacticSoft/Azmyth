@@ -186,16 +186,18 @@ namespace Azmyth.Editor
                         switch (room.m_terrain)
                         {
                             case Terrain.Ocean:
-                                e.Graphics.FillRectangle(new SolidBrush(Color.Blue), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                                Color oceanColor = ControlPaint.Light(Color.Blue, (float)room.m_height / (float)m_world.TerrainHeight);
+                                e.Graphics.FillRectangle(new SolidBrush(oceanColor), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
                                 break;
                             case Terrain.Coast:
-                                e.Graphics.FillRectangle(new SolidBrush(Color.CornflowerBlue), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                                Color coastColor = ControlPaint.Light(Color.CornflowerBlue, (float)room.m_height / (float)m_world.TerrainHeight);
+                                e.Graphics.FillRectangle(new SolidBrush(coastColor), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
                                 break;
                             case Terrain.Dirt:
                                 Color dirtColor = ControlPaint.Light(Color.SaddleBrown, ((float)room.m_height / (float)m_world.TerrainHeight));
                                 e.Graphics.FillRectangle(new SolidBrush(dirtColor), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
                                 break;
-                            case Terrain.Beach:
+                            case Terrain.Sand:
                                 e.Graphics.FillRectangle(new SolidBrush(Color.BurlyWood), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
                                 break;
                             case Terrain.Mountain:
@@ -212,6 +214,10 @@ namespace Azmyth.Editor
                                 break;
                             case Terrain.Lava:
                                 e.Graphics.FillRectangle(new SolidBrush(Color.Red), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                                break;
+                            case Terrain.River:
+                                Color riverColor = ControlPaint.Light(Color.Blue, (float)room.m_height / (float)m_world.TerrainHeight);
+                                e.Graphics.FillRectangle(new SolidBrush(riverColor), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
                                 break;
                                 
                         }

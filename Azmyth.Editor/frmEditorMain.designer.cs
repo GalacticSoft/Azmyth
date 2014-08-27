@@ -30,17 +30,14 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmEditorMain));
             this.ribbon1 = new System.Windows.Forms.Ribbon();
+            this.ribbonButton1 = new System.Windows.Forms.RibbonButton();
+            this.ribbonButton2 = new System.Windows.Forms.RibbonButton();
+            this.ribbonButton3 = new System.Windows.Forms.RibbonButton();
+            this.ribbonButton4 = new System.Windows.Forms.RibbonButton();
             this.ribbonTab1 = new System.Windows.Forms.RibbonTab();
             this.ribbonPanel1 = new System.Windows.Forms.RibbonPanel();
-            this.ribbonTab2 = new System.Windows.Forms.RibbonTab();
-            this.ribbonPanel4 = new System.Windows.Forms.RibbonPanel();
-            this.cboTool1 = new System.Windows.Forms.RibbonComboBox();
-            this.ribbonLabel2 = new System.Windows.Forms.RibbonLabel();
-            this.ribbonLabel3 = new System.Windows.Forms.RibbonLabel();
-            this.ribbonLabel4 = new System.Windows.Forms.RibbonLabel();
-            this.cboShape1 = new System.Windows.Forms.RibbonComboBox();
-            this.ribbonLabel1 = new System.Windows.Forms.RibbonLabel();
-            this.ribbonLabel5 = new System.Windows.Forms.RibbonLabel();
+            this.btnNewArea = new System.Windows.Forms.RibbonButton();
+            this.rbnMarkov = new System.Windows.Forms.RibbonButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pnlMain = new System.Windows.Forms.Panel();
             this.tabMain = new System.Windows.Forms.TabControl();
@@ -48,34 +45,28 @@
             this.pnlRight = new System.Windows.Forms.Panel();
             this.gridProperties = new System.Windows.Forms.PropertyGrid();
             this.pnlPropertiesCollapsed = new System.Windows.Forms.Panel();
+            this.btnPropertiesShow = new System.Windows.Forms.Button();
             this.splitLeft = new System.Windows.Forms.Splitter();
             this.pnlLeft = new System.Windows.Forms.Panel();
             this.tvwWorld = new System.Windows.Forms.TreeView();
             this.pnlAssetsCollapsed = new System.Windows.Forms.Panel();
+            this.btnAssetsShow = new System.Windows.Forms.Button();
             this.splitBottom = new System.Windows.Forms.Splitter();
             this.pnlBottom = new System.Windows.Forms.Panel();
             this.txtOutput = new System.Windows.Forms.RichTextBox();
             this.splitTop = new System.Windows.Forms.Splitter();
             this.pnlTop = new System.Windows.Forms.Panel();
             this.pnlTopCollapsed = new System.Windows.Forms.Panel();
+            this.btnTopShow = new System.Windows.Forms.Button();
             this.TopPanel = new System.Windows.Forms.Panel();
             this.BottomPanel = new System.Windows.Forms.Panel();
             this.LeftPanel = new System.Windows.Forms.Panel();
             this.RightPanel = new System.Windows.Forms.Panel();
             this.MainPanel = new System.Windows.Forms.Panel();
             this.pnlProperties = new Azmyth.Editor.SplitPanel();
-            this.btnPropertiesShow = new System.Windows.Forms.Button();
             this.pnlAssets = new Azmyth.Editor.SplitPanel();
-            this.btnAssetsShow = new System.Windows.Forms.Button();
             this.splitPanelOutput = new Azmyth.Editor.SplitPanel();
             this.splitPanelTop = new Azmyth.Editor.SplitPanel();
-            this.btnTopShow = new System.Windows.Forms.Button();
-            this.ribbonButton1 = new System.Windows.Forms.RibbonButton();
-            this.ribbonButton2 = new System.Windows.Forms.RibbonButton();
-            this.ribbonButton3 = new System.Windows.Forms.RibbonButton();
-            this.ribbonButton4 = new System.Windows.Forms.RibbonButton();
-            this.btnNewArea = new System.Windows.Forms.RibbonButton();
-            this.rbnMarkov = new System.Windows.Forms.RibbonButton();
             this.panel1.SuspendLayout();
             this.pnlMain.SuspendLayout();
             this.pnlRight.SuspendLayout();
@@ -117,10 +108,41 @@
             this.ribbon1.Size = new System.Drawing.Size(1025, 148);
             this.ribbon1.TabIndex = 4;
             this.ribbon1.Tabs.Add(this.ribbonTab1);
-            this.ribbon1.Tabs.Add(this.ribbonTab2);
             this.ribbon1.TabsMargin = new System.Windows.Forms.Padding(12, 2, 20, 0);
             this.ribbon1.Text = "ribbon1";
             this.ribbon1.ThemeColor = System.Windows.Forms.RibbonTheme.Black;
+            // 
+            // ribbonButton1
+            // 
+            this.ribbonButton1.Enabled = false;
+            this.ribbonButton1.Image = ((System.Drawing.Image)(resources.GetObject("ribbonButton1.Image")));
+            this.ribbonButton1.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Compact;
+            this.ribbonButton1.SmallImage = ((System.Drawing.Image)(resources.GetObject("ribbonButton1.SmallImage")));
+            this.ribbonButton1.Text = "ribbonButton1";
+            // 
+            // ribbonButton2
+            // 
+            this.ribbonButton2.Enabled = false;
+            this.ribbonButton2.Image = ((System.Drawing.Image)(resources.GetObject("ribbonButton2.Image")));
+            this.ribbonButton2.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Compact;
+            this.ribbonButton2.SmallImage = ((System.Drawing.Image)(resources.GetObject("ribbonButton2.SmallImage")));
+            this.ribbonButton2.Text = "ribbonButton2";
+            // 
+            // ribbonButton3
+            // 
+            this.ribbonButton3.Enabled = false;
+            this.ribbonButton3.Image = ((System.Drawing.Image)(resources.GetObject("ribbonButton3.Image")));
+            this.ribbonButton3.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Compact;
+            this.ribbonButton3.SmallImage = ((System.Drawing.Image)(resources.GetObject("ribbonButton3.SmallImage")));
+            this.ribbonButton3.Text = "ribbonButton3";
+            // 
+            // ribbonButton4
+            // 
+            this.ribbonButton4.Enabled = false;
+            this.ribbonButton4.Image = ((System.Drawing.Image)(resources.GetObject("ribbonButton4.Image")));
+            this.ribbonButton4.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Compact;
+            this.ribbonButton4.SmallImage = ((System.Drawing.Image)(resources.GetObject("ribbonButton4.SmallImage")));
+            this.ribbonButton4.Text = "ribbonButton4";
             // 
             // ribbonTab1
             // 
@@ -135,71 +157,22 @@
             this.ribbonPanel1.Items.Add(this.rbnMarkov);
             this.ribbonPanel1.Text = "Actions";
             // 
-            // ribbonTab2
+            // btnNewArea
             // 
-            this.ribbonTab2.Panels.Add(this.ribbonPanel4);
-            this.ribbonTab2.Text = "Area";
+            this.btnNewArea.DrawIconsBar = false;
+            this.btnNewArea.Image = ((System.Drawing.Image)(resources.GetObject("btnNewArea.Image")));
+            this.btnNewArea.MaximumSize = new System.Drawing.Size(99, 0);
+            this.btnNewArea.MinimumSize = new System.Drawing.Size(99, 0);
+            this.btnNewArea.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnNewArea.SmallImage")));
+            this.btnNewArea.Text = "New Map";
+            this.btnNewArea.Click += new System.EventHandler(this.btnNewArea_Click);
             // 
-            // ribbonPanel4
+            // rbnMarkov
             // 
-            this.ribbonPanel4.Items.Add(this.cboTool1);
-            this.ribbonPanel4.Items.Add(this.cboShape1);
-            this.ribbonPanel4.Text = "Tools";
-            // 
-            // cboTool1
-            // 
-            this.cboTool1.DrawIconsBar = false;
-            this.cboTool1.DropDownItems.Add(this.ribbonLabel2);
-            this.cboTool1.DropDownItems.Add(this.ribbonLabel3);
-            this.cboTool1.DropDownItems.Add(this.ribbonLabel4);
-            this.cboTool1.LabelWidth = 60;
-            this.cboTool1.Text = "Tool";
-            this.cboTool1.TextBoxText = "Fill";
-            this.cboTool1.Value = "Fill";
-            // 
-            // ribbonLabel2
-            // 
-            this.ribbonLabel2.LabelWidth = 100;
-            this.ribbonLabel2.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.DropDown;
-            this.ribbonLabel2.Tag = "Outline";
-            this.ribbonLabel2.Text = "Outline";
-            this.ribbonLabel2.Value = "Outline";
-            // 
-            // ribbonLabel3
-            // 
-            this.ribbonLabel3.Tag = "Fill";
-            this.ribbonLabel3.Text = "Fill";
-            this.ribbonLabel3.Value = "Fill";
-            // 
-            // ribbonLabel4
-            // 
-            this.ribbonLabel4.Tag = "Erase";
-            this.ribbonLabel4.Text = "Erase";
-            this.ribbonLabel4.Value = "Erase";
-            // 
-            // cboShape1
-            // 
-            this.cboShape1.AllowTextEdit = false;
-            this.cboShape1.DrawIconsBar = false;
-            this.cboShape1.DropDownItems.Add(this.ribbonLabel1);
-            this.cboShape1.DropDownItems.Add(this.ribbonLabel5);
-            this.cboShape1.LabelWidth = 60;
-            this.cboShape1.Text = "Shape";
-            this.cboShape1.TextBoxText = "Pixel";
-            this.cboShape1.Value = "Pixel";
-            // 
-            // ribbonLabel1
-            // 
-            this.ribbonLabel1.LabelWidth = 100;
-            this.ribbonLabel1.Tag = "Pixel";
-            this.ribbonLabel1.Text = "Pixel";
-            this.ribbonLabel1.Value = "Pixel";
-            // 
-            // ribbonLabel5
-            // 
-            this.ribbonLabel5.Tag = "Circle";
-            this.ribbonLabel5.Text = "Circle";
-            this.ribbonLabel5.Value = "Circle";
+            this.rbnMarkov.Image = ((System.Drawing.Image)(resources.GetObject("rbnMarkov.Image")));
+            this.rbnMarkov.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbnMarkov.SmallImage")));
+            this.rbnMarkov.Text = "";
+            this.rbnMarkov.Click += new System.EventHandler(this.rbnMarkov_Click);
             // 
             // panel1
             // 
@@ -280,6 +253,27 @@
             this.pnlPropertiesCollapsed.TabIndex = 14;
             this.pnlPropertiesCollapsed.Visible = false;
             // 
+            // btnPropertiesShow
+            // 
+            this.btnPropertiesShow.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnPropertiesShow.FlatAppearance.BorderSize = 0;
+            this.btnPropertiesShow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPropertiesShow.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPropertiesShow.Image = ((System.Drawing.Image)(resources.GetObject("btnPropertiesShow.Image")));
+            this.btnPropertiesShow.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnPropertiesShow.Location = new System.Drawing.Point(2, 2);
+            this.btnPropertiesShow.Margin = new System.Windows.Forms.Padding(0);
+            this.btnPropertiesShow.Name = "btnPropertiesShow";
+            this.btnPropertiesShow.Size = new System.Drawing.Size(21, 103);
+            this.btnPropertiesShow.TabIndex = 0;
+            this.btnPropertiesShow.Text = "Properties";
+            this.btnPropertiesShow.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnPropertiesShow.UseVisualStyleBackColor = true;
+            this.btnPropertiesShow.Click += new System.EventHandler(this.btnPropertiesShow_Click);
+            this.btnPropertiesShow.Paint += new System.Windows.Forms.PaintEventHandler(this.btnPropertiesCollapsed_Paint);
+            this.btnPropertiesShow.MouseEnter += new System.EventHandler(this.btnPropertiesCollapsed_MouseEnter);
+            this.btnPropertiesShow.MouseLeave += new System.EventHandler(this.btnPropertiesCollapsed_MouseLeave);
+            // 
             // splitLeft
             // 
             this.splitLeft.Location = new System.Drawing.Point(211, 103);
@@ -321,6 +315,27 @@
             this.pnlAssetsCollapsed.Size = new System.Drawing.Size(25, 361);
             this.pnlAssetsCollapsed.TabIndex = 8;
             this.pnlAssetsCollapsed.Visible = false;
+            // 
+            // btnAssetsShow
+            // 
+            this.btnAssetsShow.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnAssetsShow.FlatAppearance.BorderSize = 0;
+            this.btnAssetsShow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAssetsShow.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAssetsShow.Image = ((System.Drawing.Image)(resources.GetObject("btnAssetsShow.Image")));
+            this.btnAssetsShow.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnAssetsShow.Location = new System.Drawing.Point(2, 2);
+            this.btnAssetsShow.Margin = new System.Windows.Forms.Padding(0);
+            this.btnAssetsShow.Name = "btnAssetsShow";
+            this.btnAssetsShow.Size = new System.Drawing.Size(21, 103);
+            this.btnAssetsShow.TabIndex = 0;
+            this.btnAssetsShow.Text = "Assets";
+            this.btnAssetsShow.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnAssetsShow.UseVisualStyleBackColor = true;
+            this.btnAssetsShow.Click += new System.EventHandler(this.btnAssetsShow_Click);
+            this.btnAssetsShow.Paint += new System.Windows.Forms.PaintEventHandler(this.btnAssetsShow_Paint);
+            this.btnAssetsShow.MouseEnter += new System.EventHandler(this.btnAssetsShow_MouseEnter);
+            this.btnAssetsShow.MouseLeave += new System.EventHandler(this.btnAssetsShow_MouseLeave);
             // 
             // splitBottom
             // 
@@ -386,6 +401,23 @@
             this.pnlTopCollapsed.TabIndex = 11;
             this.pnlTopCollapsed.Visible = false;
             // 
+            // btnTopShow
+            // 
+            this.btnTopShow.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnTopShow.FlatAppearance.BorderSize = 0;
+            this.btnTopShow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTopShow.Image = global::Azmyth.Editor.Properties.Resources.imgFolder;
+            this.btnTopShow.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.btnTopShow.Location = new System.Drawing.Point(2, 2);
+            this.btnTopShow.Margin = new System.Windows.Forms.Padding(0);
+            this.btnTopShow.Name = "btnTopShow";
+            this.btnTopShow.Size = new System.Drawing.Size(91, 21);
+            this.btnTopShow.TabIndex = 0;
+            this.btnTopShow.Text = "Top Panel";
+            this.btnTopShow.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnTopShow.UseVisualStyleBackColor = true;
+            this.btnTopShow.Click += new System.EventHandler(this.btnTopShow_Click);
+            // 
             // TopPanel
             // 
             this.TopPanel.Dock = System.Windows.Forms.DockStyle.Top;
@@ -437,27 +469,6 @@
             this.pnlProperties.Close += new System.Action<object, System.EventArgs>(this.pnlProperties_Close);
             this.pnlProperties.Minimize += new System.Action<object, System.EventArgs>(this.pnlProperties_Minimize);
             // 
-            // btnPropertiesShow
-            // 
-            this.btnPropertiesShow.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnPropertiesShow.FlatAppearance.BorderSize = 0;
-            this.btnPropertiesShow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPropertiesShow.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPropertiesShow.Image = ((System.Drawing.Image)(resources.GetObject("btnPropertiesShow.Image")));
-            this.btnPropertiesShow.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnPropertiesShow.Location = new System.Drawing.Point(2, 2);
-            this.btnPropertiesShow.Margin = new System.Windows.Forms.Padding(0);
-            this.btnPropertiesShow.Name = "btnPropertiesShow";
-            this.btnPropertiesShow.Size = new System.Drawing.Size(21, 103);
-            this.btnPropertiesShow.TabIndex = 0;
-            this.btnPropertiesShow.Text = "Properties";
-            this.btnPropertiesShow.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnPropertiesShow.UseVisualStyleBackColor = true;
-            this.btnPropertiesShow.Click += new System.EventHandler(this.btnPropertiesShow_Click);
-            this.btnPropertiesShow.Paint += new System.Windows.Forms.PaintEventHandler(this.btnPropertiesCollapsed_Paint);
-            this.btnPropertiesShow.MouseEnter += new System.EventHandler(this.btnPropertiesCollapsed_MouseEnter);
-            this.btnPropertiesShow.MouseLeave += new System.EventHandler(this.btnPropertiesCollapsed_MouseLeave);
-            // 
             // pnlAssets
             // 
             this.pnlAssets.Caption = "Assets";
@@ -468,27 +479,6 @@
             this.pnlAssets.TabIndex = 11;
             this.pnlAssets.Close += new System.Action<object, System.EventArgs>(this.pnlAssets_Close);
             this.pnlAssets.Minimize += new System.Action<object, System.EventArgs>(this.pnlAssets_Minimize);
-            // 
-            // btnAssetsShow
-            // 
-            this.btnAssetsShow.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnAssetsShow.FlatAppearance.BorderSize = 0;
-            this.btnAssetsShow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAssetsShow.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAssetsShow.Image = ((System.Drawing.Image)(resources.GetObject("btnAssetsShow.Image")));
-            this.btnAssetsShow.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnAssetsShow.Location = new System.Drawing.Point(2, 2);
-            this.btnAssetsShow.Margin = new System.Windows.Forms.Padding(0);
-            this.btnAssetsShow.Name = "btnAssetsShow";
-            this.btnAssetsShow.Size = new System.Drawing.Size(21, 103);
-            this.btnAssetsShow.TabIndex = 0;
-            this.btnAssetsShow.Text = "Assets";
-            this.btnAssetsShow.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnAssetsShow.UseVisualStyleBackColor = true;
-            this.btnAssetsShow.Click += new System.EventHandler(this.btnAssetsShow_Click);
-            this.btnAssetsShow.Paint += new System.Windows.Forms.PaintEventHandler(this.btnAssetsShow_Paint);
-            this.btnAssetsShow.MouseEnter += new System.EventHandler(this.btnAssetsShow_MouseEnter);
-            this.btnAssetsShow.MouseLeave += new System.EventHandler(this.btnAssetsShow_MouseLeave);
             // 
             // splitPanelOutput
             // 
@@ -510,72 +500,6 @@
             this.splitPanelTop.Close += new System.Action<object, System.EventArgs>(this.splitPanelTop_Close);
             this.splitPanelTop.Minimize += new System.Action<object, System.EventArgs>(this.splitPanelTop_Minimize);
             // 
-            // btnTopShow
-            // 
-            this.btnTopShow.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnTopShow.FlatAppearance.BorderSize = 0;
-            this.btnTopShow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnTopShow.Image = global::Azmyth.Editor.Properties.Resources.imgFolder;
-            this.btnTopShow.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.btnTopShow.Location = new System.Drawing.Point(2, 2);
-            this.btnTopShow.Margin = new System.Windows.Forms.Padding(0);
-            this.btnTopShow.Name = "btnTopShow";
-            this.btnTopShow.Size = new System.Drawing.Size(91, 21);
-            this.btnTopShow.TabIndex = 0;
-            this.btnTopShow.Text = "Top Panel";
-            this.btnTopShow.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnTopShow.UseVisualStyleBackColor = true;
-            this.btnTopShow.Click += new System.EventHandler(this.btnTopShow_Click);
-            // 
-            // ribbonButton1
-            // 
-            this.ribbonButton1.Enabled = false;
-            this.ribbonButton1.Image = ((System.Drawing.Image)(resources.GetObject("ribbonButton1.Image")));
-            this.ribbonButton1.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Compact;
-            this.ribbonButton1.SmallImage = ((System.Drawing.Image)(resources.GetObject("ribbonButton1.SmallImage")));
-            this.ribbonButton1.Text = "ribbonButton1";
-            // 
-            // ribbonButton2
-            // 
-            this.ribbonButton2.Enabled = false;
-            this.ribbonButton2.Image = ((System.Drawing.Image)(resources.GetObject("ribbonButton2.Image")));
-            this.ribbonButton2.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Compact;
-            this.ribbonButton2.SmallImage = ((System.Drawing.Image)(resources.GetObject("ribbonButton2.SmallImage")));
-            this.ribbonButton2.Text = "ribbonButton2";
-            // 
-            // ribbonButton3
-            // 
-            this.ribbonButton3.Enabled = false;
-            this.ribbonButton3.Image = ((System.Drawing.Image)(resources.GetObject("ribbonButton3.Image")));
-            this.ribbonButton3.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Compact;
-            this.ribbonButton3.SmallImage = ((System.Drawing.Image)(resources.GetObject("ribbonButton3.SmallImage")));
-            this.ribbonButton3.Text = "ribbonButton3";
-            // 
-            // ribbonButton4
-            // 
-            this.ribbonButton4.Enabled = false;
-            this.ribbonButton4.Image = ((System.Drawing.Image)(resources.GetObject("ribbonButton4.Image")));
-            this.ribbonButton4.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Compact;
-            this.ribbonButton4.SmallImage = ((System.Drawing.Image)(resources.GetObject("ribbonButton4.SmallImage")));
-            this.ribbonButton4.Text = "ribbonButton4";
-            // 
-            // btnNewArea
-            // 
-            this.btnNewArea.DrawIconsBar = false;
-            this.btnNewArea.Image = ((System.Drawing.Image)(resources.GetObject("btnNewArea.Image")));
-            this.btnNewArea.MaximumSize = new System.Drawing.Size(99, 0);
-            this.btnNewArea.MinimumSize = new System.Drawing.Size(99, 0);
-            this.btnNewArea.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnNewArea.SmallImage")));
-            this.btnNewArea.Text = "New Map";
-            this.btnNewArea.Click += new System.EventHandler(this.btnNewArea_Click);
-            // 
-            // rbnMarkov
-            // 
-            this.rbnMarkov.Image = ((System.Drawing.Image)(resources.GetObject("rbnMarkov.Image")));
-            this.rbnMarkov.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbnMarkov.SmallImage")));
-            this.rbnMarkov.Text = "Markov";
-            this.rbnMarkov.Click += new System.EventHandler(this.rbnMarkov_Click);
-            // 
             // frmEditorMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -583,6 +507,7 @@
             this.ClientSize = new System.Drawing.Size(1025, 715);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.ribbon1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmEditorMain";
             this.Text = "frmEditorMain";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -609,16 +534,7 @@
         private System.Windows.Forms.RibbonTab ribbonTab1;
         private System.Windows.Forms.RibbonButton ribbonButton4;
         private System.Windows.Forms.RibbonPanel ribbonPanel1;
-        private System.Windows.Forms.RibbonTab ribbonTab2;
         private System.Windows.Forms.RibbonButton btnNewArea;
-        private System.Windows.Forms.RibbonPanel ribbonPanel4;
-        private System.Windows.Forms.RibbonComboBox cboTool1;
-        private System.Windows.Forms.RibbonComboBox cboShape1;
-        private System.Windows.Forms.RibbonLabel ribbonLabel2;
-        private System.Windows.Forms.RibbonLabel ribbonLabel3;
-        private System.Windows.Forms.RibbonLabel ribbonLabel4;
-        private System.Windows.Forms.RibbonLabel ribbonLabel1;
-        private System.Windows.Forms.RibbonLabel ribbonLabel5;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel pnlMain;
         private System.Windows.Forms.TabControl tabMain;
