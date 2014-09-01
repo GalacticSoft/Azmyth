@@ -105,6 +105,14 @@ namespace Azmyth.Assets
             return id;
         }
 
+        public virtual void AddAsset(Asset asset)
+        {
+            if(!_assetList.ContainsKey(asset.AssetID))
+            {
+                _assetList.Add(asset.AssetID, asset);
+            }
+        }
+
         public virtual void RemoveAsset(VectorID id)
         {
             if (_assetList.ContainsKey(id))

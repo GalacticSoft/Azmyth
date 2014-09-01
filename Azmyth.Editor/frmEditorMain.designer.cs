@@ -37,25 +37,35 @@
             this.ribbonTab1 = new System.Windows.Forms.RibbonTab();
             this.ribbonPanel1 = new System.Windows.Forms.RibbonPanel();
             this.btnNewArea = new System.Windows.Forms.RibbonButton();
+            this.btnSave = new System.Windows.Forms.RibbonButton();
+            this.btnOpen = new System.Windows.Forms.RibbonButton();
             this.rbnMarkov = new System.Windows.Forms.RibbonButton();
+            this.ribbonPanel2 = new System.Windows.Forms.RibbonPanel();
+            this.btnSelection = new System.Windows.Forms.RibbonButton();
+            this.btnSquare = new System.Windows.Forms.RibbonButton();
+            this.btnCircle = new System.Windows.Forms.RibbonButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pnlMain = new System.Windows.Forms.Panel();
             this.tabMain = new System.Windows.Forms.TabControl();
             this.splitRight = new System.Windows.Forms.Splitter();
             this.pnlRight = new System.Windows.Forms.Panel();
             this.gridProperties = new System.Windows.Forms.PropertyGrid();
+            this.pnlProperties = new Azmyth.Editor.SplitPanel();
             this.pnlPropertiesCollapsed = new System.Windows.Forms.Panel();
             this.btnPropertiesShow = new System.Windows.Forms.Button();
             this.splitLeft = new System.Windows.Forms.Splitter();
             this.pnlLeft = new System.Windows.Forms.Panel();
             this.tvwWorld = new System.Windows.Forms.TreeView();
+            this.pnlAssets = new Azmyth.Editor.SplitPanel();
             this.pnlAssetsCollapsed = new System.Windows.Forms.Panel();
             this.btnAssetsShow = new System.Windows.Forms.Button();
             this.splitBottom = new System.Windows.Forms.Splitter();
             this.pnlBottom = new System.Windows.Forms.Panel();
             this.txtOutput = new System.Windows.Forms.RichTextBox();
+            this.splitPanelOutput = new Azmyth.Editor.SplitPanel();
             this.splitTop = new System.Windows.Forms.Splitter();
             this.pnlTop = new System.Windows.Forms.Panel();
+            this.splitPanelTop = new Azmyth.Editor.SplitPanel();
             this.pnlTopCollapsed = new System.Windows.Forms.Panel();
             this.btnTopShow = new System.Windows.Forms.Button();
             this.TopPanel = new System.Windows.Forms.Panel();
@@ -63,10 +73,6 @@
             this.LeftPanel = new System.Windows.Forms.Panel();
             this.RightPanel = new System.Windows.Forms.Panel();
             this.MainPanel = new System.Windows.Forms.Panel();
-            this.pnlProperties = new Azmyth.Editor.SplitPanel();
-            this.pnlAssets = new Azmyth.Editor.SplitPanel();
-            this.splitPanelOutput = new Azmyth.Editor.SplitPanel();
-            this.splitPanelTop = new Azmyth.Editor.SplitPanel();
             this.panel1.SuspendLayout();
             this.pnlMain.SuspendLayout();
             this.pnlRight.SuspendLayout();
@@ -147,6 +153,7 @@
             // ribbonTab1
             // 
             this.ribbonTab1.Panels.Add(this.ribbonPanel1);
+            this.ribbonTab1.Panels.Add(this.ribbonPanel2);
             this.ribbonTab1.Text = "Main";
             // 
             // ribbonPanel1
@@ -154,6 +161,8 @@
             this.ribbonPanel1.ButtonMoreEnabled = false;
             this.ribbonPanel1.ButtonMoreVisible = false;
             this.ribbonPanel1.Items.Add(this.btnNewArea);
+            this.ribbonPanel1.Items.Add(this.btnSave);
+            this.ribbonPanel1.Items.Add(this.btnOpen);
             this.ribbonPanel1.Items.Add(this.rbnMarkov);
             this.ribbonPanel1.Text = "Actions";
             // 
@@ -164,8 +173,22 @@
             this.btnNewArea.MaximumSize = new System.Drawing.Size(99, 0);
             this.btnNewArea.MinimumSize = new System.Drawing.Size(99, 0);
             this.btnNewArea.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnNewArea.SmallImage")));
-            this.btnNewArea.Text = "New Map";
+            this.btnNewArea.Text = "New";
             this.btnNewArea.Click += new System.EventHandler(this.btnNewArea_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.Image")));
+            this.btnSave.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnSave.SmallImage")));
+            this.btnSave.Text = "Save";
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // btnOpen
+            // 
+            this.btnOpen.Image = ((System.Drawing.Image)(resources.GetObject("btnOpen.Image")));
+            this.btnOpen.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnOpen.SmallImage")));
+            this.btnOpen.Text = "Open";
+            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
             // rbnMarkov
             // 
@@ -173,6 +196,41 @@
             this.rbnMarkov.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbnMarkov.SmallImage")));
             this.rbnMarkov.Text = "";
             this.rbnMarkov.Click += new System.EventHandler(this.rbnMarkov_Click);
+            // 
+            // ribbonPanel2
+            // 
+            this.ribbonPanel2.Items.Add(this.btnSelection);
+            this.ribbonPanel2.Items.Add(this.btnSquare);
+            this.ribbonPanel2.Items.Add(this.btnCircle);
+            this.ribbonPanel2.Text = "Selection";
+            // 
+            // btnSelection
+            // 
+            this.btnSelection.Checked = true;
+            this.btnSelection.CheckedGroup = "1";
+            this.btnSelection.CheckOnClick = true;
+            this.btnSelection.Image = global::Azmyth.Editor.Properties.Resources.Point;
+            this.btnSelection.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnSelection.SmallImage")));
+            this.btnSelection.Text = "Point";
+            this.btnSelection.Click += new System.EventHandler(this.btnSelection_Click);
+            // 
+            // btnSquare
+            // 
+            this.btnSquare.CheckedGroup = "1";
+            this.btnSquare.CheckOnClick = true;
+            this.btnSquare.Image = global::Azmyth.Editor.Properties.Resources.Square;
+            this.btnSquare.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnSquare.SmallImage")));
+            this.btnSquare.Text = "Square";
+            this.btnSquare.Click += new System.EventHandler(this.btnSquare_Click);
+            // 
+            // btnCircle
+            // 
+            this.btnCircle.CheckedGroup = "1";
+            this.btnCircle.CheckOnClick = true;
+            this.btnCircle.Image = global::Azmyth.Editor.Properties.Resources.Circle;
+            this.btnCircle.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnCircle.SmallImage")));
+            this.btnCircle.Text = "Circle";
+            this.btnCircle.Click += new System.EventHandler(this.btnCircle_Click);
             // 
             // panel1
             // 
@@ -241,6 +299,17 @@
             this.gridProperties.TabIndex = 17;
             this.gridProperties.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.gridProperties_PropertyValueChanged);
             // 
+            // pnlProperties
+            // 
+            this.pnlProperties.Caption = "Properties";
+            this.pnlProperties.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlProperties.Location = new System.Drawing.Point(0, 0);
+            this.pnlProperties.Name = "pnlProperties";
+            this.pnlProperties.Size = new System.Drawing.Size(186, 25);
+            this.pnlProperties.TabIndex = 16;
+            this.pnlProperties.Close += new System.Action<object, System.EventArgs>(this.pnlProperties_Close);
+            this.pnlProperties.Minimize += new System.Action<object, System.EventArgs>(this.pnlProperties_Minimize);
+            // 
             // pnlPropertiesCollapsed
             // 
             this.pnlPropertiesCollapsed.Controls.Add(this.btnPropertiesShow);
@@ -303,6 +372,17 @@
             this.tvwWorld.Size = new System.Drawing.Size(186, 336);
             this.tvwWorld.TabIndex = 12;
             this.tvwWorld.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvwWorld_AfterSelect);
+            // 
+            // pnlAssets
+            // 
+            this.pnlAssets.Caption = "Assets";
+            this.pnlAssets.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlAssets.Location = new System.Drawing.Point(25, 0);
+            this.pnlAssets.Name = "pnlAssets";
+            this.pnlAssets.Size = new System.Drawing.Size(186, 25);
+            this.pnlAssets.TabIndex = 11;
+            this.pnlAssets.Close += new System.Action<object, System.EventArgs>(this.pnlAssets_Close);
+            this.pnlAssets.Minimize += new System.Action<object, System.EventArgs>(this.pnlAssets_Minimize);
             // 
             // pnlAssetsCollapsed
             // 
@@ -368,6 +448,15 @@
             this.txtOutput.TabIndex = 2;
             this.txtOutput.Text = "";
             // 
+            // splitPanelOutput
+            // 
+            this.splitPanelOutput.Caption = "Output";
+            this.splitPanelOutput.Dock = System.Windows.Forms.DockStyle.Top;
+            this.splitPanelOutput.Location = new System.Drawing.Point(0, 0);
+            this.splitPanelOutput.Name = "splitPanelOutput";
+            this.splitPanelOutput.Size = new System.Drawing.Size(1025, 24);
+            this.splitPanelOutput.TabIndex = 1;
+            // 
             // splitTop
             // 
             this.splitTop.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -388,6 +477,17 @@
             this.pnlTop.Name = "pnlTop";
             this.pnlTop.Size = new System.Drawing.Size(1025, 100);
             this.pnlTop.TabIndex = 11;
+            // 
+            // splitPanelTop
+            // 
+            this.splitPanelTop.Caption = null;
+            this.splitPanelTop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.splitPanelTop.Location = new System.Drawing.Point(0, 25);
+            this.splitPanelTop.Name = "splitPanelTop";
+            this.splitPanelTop.Size = new System.Drawing.Size(1025, 24);
+            this.splitPanelTop.TabIndex = 1;
+            this.splitPanelTop.Close += new System.Action<object, System.EventArgs>(this.splitPanelTop_Close);
+            this.splitPanelTop.Minimize += new System.Action<object, System.EventArgs>(this.splitPanelTop_Minimize);
             // 
             // pnlTopCollapsed
             // 
@@ -458,48 +558,6 @@
             this.MainPanel.Size = new System.Drawing.Size(969, 237);
             this.MainPanel.TabIndex = 10;
             // 
-            // pnlProperties
-            // 
-            this.pnlProperties.Caption = "Properties";
-            this.pnlProperties.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlProperties.Location = new System.Drawing.Point(0, 0);
-            this.pnlProperties.Name = "pnlProperties";
-            this.pnlProperties.Size = new System.Drawing.Size(186, 25);
-            this.pnlProperties.TabIndex = 16;
-            this.pnlProperties.Close += new System.Action<object, System.EventArgs>(this.pnlProperties_Close);
-            this.pnlProperties.Minimize += new System.Action<object, System.EventArgs>(this.pnlProperties_Minimize);
-            // 
-            // pnlAssets
-            // 
-            this.pnlAssets.Caption = "Assets";
-            this.pnlAssets.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlAssets.Location = new System.Drawing.Point(25, 0);
-            this.pnlAssets.Name = "pnlAssets";
-            this.pnlAssets.Size = new System.Drawing.Size(186, 25);
-            this.pnlAssets.TabIndex = 11;
-            this.pnlAssets.Close += new System.Action<object, System.EventArgs>(this.pnlAssets_Close);
-            this.pnlAssets.Minimize += new System.Action<object, System.EventArgs>(this.pnlAssets_Minimize);
-            // 
-            // splitPanelOutput
-            // 
-            this.splitPanelOutput.Caption = "Output";
-            this.splitPanelOutput.Dock = System.Windows.Forms.DockStyle.Top;
-            this.splitPanelOutput.Location = new System.Drawing.Point(0, 0);
-            this.splitPanelOutput.Name = "splitPanelOutput";
-            this.splitPanelOutput.Size = new System.Drawing.Size(1025, 24);
-            this.splitPanelOutput.TabIndex = 1;
-            // 
-            // splitPanelTop
-            // 
-            this.splitPanelTop.Caption = null;
-            this.splitPanelTop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.splitPanelTop.Location = new System.Drawing.Point(0, 25);
-            this.splitPanelTop.Name = "splitPanelTop";
-            this.splitPanelTop.Size = new System.Drawing.Size(1025, 24);
-            this.splitPanelTop.TabIndex = 1;
-            this.splitPanelTop.Close += new System.Action<object, System.EventArgs>(this.splitPanelTop_Close);
-            this.splitPanelTop.Minimize += new System.Action<object, System.EventArgs>(this.splitPanelTop_Minimize);
-            // 
             // frmEditorMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -565,5 +623,11 @@
         private System.Windows.Forms.Button btnTopShow;
         private System.Windows.Forms.RichTextBox txtOutput;
         private System.Windows.Forms.RibbonButton rbnMarkov;
+        private System.Windows.Forms.RibbonPanel ribbonPanel2;
+        private System.Windows.Forms.RibbonButton btnSelection;
+        private System.Windows.Forms.RibbonButton btnSquare;
+        private System.Windows.Forms.RibbonButton btnCircle;
+        private System.Windows.Forms.RibbonButton btnSave;
+        private System.Windows.Forms.RibbonButton btnOpen;
     }
 }

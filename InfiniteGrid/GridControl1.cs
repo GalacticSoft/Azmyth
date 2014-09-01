@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
-using Azmyth.Noise;
+using Azmyth.Procedural;
 
 namespace InfiniteGrid
 {
@@ -207,7 +207,7 @@ namespace InfiniteGrid
 
                 //viewport.Inflate(300, 300);
                 //List<Item> items = m_quadTree.Query(viewport);
-                Perlin noise = new Perlin(m_persistance, m_frequency, m_amplitude, m_octaves, m_seed);
+                PerlinNoise noise = new PerlinNoise(m_persistance, m_frequency, m_amplitude, m_octaves, m_seed);
                 int cellX, cellY, totalCells;
 
                 cellX = (int)viewport.Left;

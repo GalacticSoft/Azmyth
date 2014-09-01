@@ -56,6 +56,12 @@ namespace Azmyth.Editor
 
         }
 
+        public void SetTool(ToolShape shape)
+        {
+            gridControl1.ToolShape = shape;
+            gridControl2.ToolShape = shape;
+        }
+
         public event EventHandler<Point> CellHover;
         private void gridControl2_CellHover(object sender, Point e)
         {

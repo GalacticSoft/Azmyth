@@ -7,12 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Azmyth.Procedural;
 
 namespace Azmyth.Editor
 {
     public partial class frmMarkov : Form
     {
-        Markov markov;
+        MarkovNameGenerator markov;
+
         public frmMarkov()
         {
             InitializeComponent();
@@ -20,7 +22,7 @@ namespace Azmyth.Editor
 
         private void btnLoad_Click(object sender, EventArgs e)
         {
-            markov = new Markov(textBox1.Text.Split(','), int.Parse(txtOrder.Text));
+            markov = new MarkovNameGenerator(textBox1.Text.Split(','), int.Parse(txtOrder.Text));
         }
 
         private void btnNextName_Click(object sender, EventArgs e)

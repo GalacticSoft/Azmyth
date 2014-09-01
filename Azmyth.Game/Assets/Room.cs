@@ -4,15 +4,21 @@ namespace Azmyth.Assets
 {
     public class Room : Asset
     {
-        public Terrain m_terrain;
-        public double m_height;
-        public double m_value;
+
+        public TerrainTypes m_terrain;
+        private float m_height;
+        public float m_value;
 
         public long GridX { get; set; }
         public long GridY { get; set; }
 
         private Exit[] _exits = new Exit[(long)Directions.Max];
 
+        public float Height
+        {
+            get { return m_height; }
+            set { m_height = value;  }
+        }
         public Room()
         {
 
@@ -29,14 +35,14 @@ namespace Azmyth.Assets
 
             if(_exits[(long)direction] != null)
             {
-                RemoveObject(_exits[(long)direction]);
+                RemoveAsset(_exits[(long)direction]);
             }
 
             _exits[(long)direction] = exit;
 
             if (!_assets.ContainsKey(exit.AssetID))
             {
-                AddObject(exit);
+                AddAsset(exit);
             }
         }
 
@@ -44,7 +50,7 @@ namespace Azmyth.Assets
         {
             if(_exits[(long)direction] != null)
             {
-                RemoveObject(_exits[(long)direction]);
+                RemoveAsset(_exits[(long)direction]);
             }
 
             _exits[(long)direction] = null;

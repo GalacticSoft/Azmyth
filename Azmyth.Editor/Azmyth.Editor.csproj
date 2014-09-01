@@ -34,6 +34,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms.Ribbon35">
       <HintPath>.\System.Windows.Forms.Ribbon35.dll</HintPath>
     </Reference>
@@ -56,6 +57,7 @@
     <Compile Include="Type Editors\CoastLineEditor.cs" />
     <Compile Include="Type Editors\ShoreLineEditor.cs" />
     <Compile Include="Type Editors\SnowLineEditor.cs" />
+    <Compile Include="Type Editors\HeightEditor.cs" />
     <Compile Include="Type Editors\TreeLineEditor.cs" />
     <Compile Include="Controls\CoastLineScroll.cs">
       <SubType>UserControl</SubType>
@@ -109,7 +111,6 @@
     <Compile Include="Grid.Designer.cs">
       <DependentUpon>Grid.cs</DependentUpon>
     </Compile>
-    <Compile Include="Markov.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controls\PropertyGridExtension.cs" />
@@ -186,6 +187,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\Circle.png" />
     <Content Include="Images\icon.png" />
     <Content Include="Images\igmTag.png" />
     <Content Include="Images\imgAlert.png" />
@@ -194,6 +196,8 @@
     <Content Include="Images\imgCalendar.png" />
     <Content Include="Images\imgCheck.png" />
     <Content Include="Images\imgClock.png" />
+    <Content Include="Images\Point.png" />
+    <Content Include="Images\Square.png" />
     <EmbeddedResource Include="Images\imgClose.png" />
     <Content Include="Images\imgCollapse.png" />
     <Content Include="Images\imgCritical.png" />
@@ -220,6 +224,9 @@
     <Content Include="Images\imgThingy.png" />
     <None Include="Images\imgTools.png" />
     <Content Include="Images\imgUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

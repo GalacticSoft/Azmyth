@@ -21,11 +21,11 @@ namespace Azmyth.Editor
             private int m_cellOffsetX = 0;
             private int m_cellOffsetY = 0;
             private int m_cellSize = 16;
-            private Point m_origin = new Point(0, 0);
+            private System.Drawing.Point m_origin = new System.Drawing.Point(0, 0);
 
             private Rectangle selection;
-            private Point m_lastMousePosition;
-            private Point m_lastSelectMousePosition;
+            private System.Drawing.Point m_lastMousePosition;
+            private System.Drawing.Point m_lastSelectMousePosition;
             
             private int m_selectedX = 0;
             private int m_selectedY = 0;
@@ -78,20 +78,20 @@ namespace Azmyth.Editor
                 {
                     int yPos = (index * m_cellSize) + (m_offsetY % m_cellSize);
 
-                    graphics.DrawLine(m_gridPen, new Point(0, yPos), new Point(width, yPos));
+                    graphics.DrawLine(m_gridPen, new System.Drawing.Point(0, yPos), new System.Drawing.Point(width, yPos));
                 }
 
                 for (int index = 0; index <= cols; index++)
                 {
                     int xPos = (index * m_cellSize) + (m_offsetX % m_cellSize);
 
-                    graphics.DrawLine(m_gridPen, new Point(xPos, 0), new Point(xPos, width));
+                    graphics.DrawLine(m_gridPen, new System.Drawing.Point(xPos, 0), new System.Drawing.Point(xPos, width));
                 }
 
                 Rectangle client = ClientRectangle;
                 client.Inflate(200, 200);
 
-                if (client.Contains(new Point(m_offsetX, m_offsetY)))
+                if (client.Contains(new System.Drawing.Point(m_offsetX, m_offsetY)))
                 {
                     graphics.DrawString("(0, 0) (" + m_cellOffsetX + ", " + m_cellOffsetY + ")",
                             new Font("Arial", 20), Brushes.Black,
@@ -242,7 +242,7 @@ namespace Azmyth.Editor
                 return (m_offsetY + m_cellSize) % m_cellSize;
             }
 
-            private int GetCellX(Point p)
+            private int GetCellX(System.Drawing.Point p)
             {
                 int x = 0;
 
@@ -262,7 +262,7 @@ namespace Azmyth.Editor
                 return x * -1;
             }
 
-            private int GetCellY(Point p)
+            private int GetCellY(System.Drawing.Point p)
             {
                 int y = 0;
 
@@ -278,26 +278,26 @@ namespace Azmyth.Editor
 
             public Rectangle GetViewPortRectangle()
             {
-                return new Rectangle(GetViewPortOrigin(), GetViewPortSize());
+                return new System.Drawing.Rectangle(GetViewPortOrigin(), GetViewPortSize());
             }
 
-            public Point GetViewPortOrigin()
+            public System.Drawing.Point GetViewPortOrigin()
             {
-                return new Point(GetViewPortX(), GetViewPortY());
+                return new System.Drawing.Point(GetViewPortX(), GetViewPortY());
             }
 
             public int GetViewPortX()
             {
-                return GetCellX(new Point(0, 0));
+                return GetCellX(new System.Drawing.Point(0, 0));
             }
             public int GetViewPortY()
             {
-                return GetCellY(new Point(0, 0));
+                return GetCellY(new System.Drawing.Point(0, 0));
             }
 
-            public Size GetViewPortSize()
+            public System.Drawing.Size GetViewPortSize()
             {
-                return new Size(Width / m_cellSize, Height / m_cellSize);
+                return new System.Drawing.Size(Width / m_cellSize, Height / m_cellSize);
             }
         }
     }

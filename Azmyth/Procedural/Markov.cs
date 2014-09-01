@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Azmyth.Editor
+namespace Azmyth.Procedural
 {
-    public class Markov
+    public class MarkovNameGenerator
     {
         private int m_order = 1;
         private int m_minLength = 9999999;
@@ -16,7 +16,7 @@ namespace Azmyth.Editor
         private List<string> m_samples = null;
         private Dictionary<string, List<string>> m_chains = new Dictionary<string,List<string>>();
         
-        public Markov(IEnumerable<string> samples, int order)
+        public MarkovNameGenerator(IEnumerable<string> samples, int order)
         {
             m_order = order;
             m_samples = samples.ToList<string>();

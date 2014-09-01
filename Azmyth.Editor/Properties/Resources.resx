@@ -118,23 +118,20 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="imgClock" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\imgClock.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="imgUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\imgUp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="imgThingy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\imgThingy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="imgNewMap" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\imgNewMap.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="imgShop" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\imgShop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="imgMagnify" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\imgMagnify.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="imgCalendar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\imgCalendar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="imgEnvelope" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\imgEnvelope.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="imgQuestion" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\imgQuestion.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -144,6 +141,9 @@
   </data>
   <data name="imgEdit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\imgEdit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="imgPlus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\imgPlus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="igmTag" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\igmTag.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -160,8 +160,8 @@
   <data name="imgRefresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\imgRefresh.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="imgDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\imgDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Point" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Point.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="imgAlert" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\imgAlert.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -190,11 +190,20 @@
   <data name="imgCheck" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\imgCheck.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="imgHome" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\imgHome.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="imgClock" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\imgClock.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="imgClose1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\imgClose.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="imgDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\imgDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Square" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Square.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="imgHome" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\imgHome.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="imgBubble" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\imgBubble.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -202,8 +211,8 @@
   <data name="imgFolder" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\imgFolder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="imgPlus" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\imgPlus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="imgMagnify" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\imgMagnify.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="imgMinimize" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\imgMinimize.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -214,10 +223,10 @@
   <data name="imgRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\imgRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="imgEnvelope" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\imgEnvelope.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="imgCalendar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\imgCalendar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="imgNewMap" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\imgNewMap.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

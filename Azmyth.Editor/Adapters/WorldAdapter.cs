@@ -17,11 +17,11 @@ namespace Azmyth.Editor
     {
         private World m_world;
 
-        private double m_coastLine = 0;
-        private double m_shoreLine = 02;
-        private double m_treeLine = 20;
-        private double m_snowLine = 50;
-        private double m_terrainHeight = 1024;
+        private float m_coastLine = 0;
+        private float m_shoreLine = 02;
+        private float m_treeLine = 40;
+        private float m_snowLine = 50;
+        private float m_terrainHeight = 1024;
 
         public MapViewer Map {get; set;}
         private PropertyGrid m_parent;
@@ -29,7 +29,7 @@ namespace Azmyth.Editor
 
         [Category("Terrain Values")]
         [Editor(typeof(CoastLineEditor), typeof(UITypeEditor))]
-        public double CoastLine
+        public float CoastLine
         {
             get 
             { 
@@ -40,13 +40,14 @@ namespace Azmyth.Editor
                 m_coastLine = value;
                 m_world.CoastLine = value;
 
-                Map.RepaintMap();
+                if (Map != null)
+                    Map.RepaintMap();
             }
         }
 
         [Category("Terrain Values")]
         [Editor(typeof(ShoreLineEditor), typeof(UITypeEditor))]
-        public double ShoreLine
+        public float ShoreLine
         {
             get
             {
@@ -54,16 +55,17 @@ namespace Azmyth.Editor
             }
             set
             {
-                m_coastLine = value;
+                m_shoreLine = value;
                 m_world.ShoreLine = value / 100;
 
-                Map.RepaintMap();
+                if (Map != null)
+                    Map.RepaintMap();
             }
         }
 
         [Category("Terrain Values")]
         [Editor(typeof(TreeLineEditor), typeof(UITypeEditor))]
-        public double TreeLine
+        public float TreeLine
         {
             get
             {
@@ -74,13 +76,14 @@ namespace Azmyth.Editor
                 m_treeLine = value;
                 m_world.TreeLine = value / 100;
 
-                Map.RepaintMap();
+                if (Map != null)
+                    Map.RepaintMap();
             }
         }
 
         [Category("Terrain Values")]
         [Editor(typeof(SnowLineEditor), typeof(UITypeEditor))]
-        public double SnowLine
+        public float SnowLine
         {
             get
             {
@@ -90,8 +93,9 @@ namespace Azmyth.Editor
             {
                 m_snowLine = value;
                 m_world.SnowLine = value / 100;
-
-                Map.RepaintMap();
+                
+                if (Map != null)
+                    Map.RepaintMap();
             }
         }
 
@@ -108,8 +112,8 @@ namespace Azmyth.Editor
         }
 
         [Category("Terrain Values")]
-        [Editor(typeof(TerrainHeightEditor), typeof(UITypeEditor))]
-        public double TerrainHeight
+        [Editor(typeof(HeightEditor), typeof(UITypeEditor))]
+        public float TerrainHeight
         {
             get 
             { 
@@ -118,10 +122,10 @@ namespace Azmyth.Editor
             set 
             {
                 m_terrainHeight = value;
-                m_coastLine = 0;
-                m_world.CoastLine = 0;
                 m_world.TerrainHeight = value;
-                Map.RepaintMap(); 
+
+                if(Map != null)
+                    Map.RepaintMap(); 
             }
         }
 
@@ -129,6 +133,15 @@ namespace Azmyth.Editor
         {
             m_parent = grid;
             m_world = world;
+
+            Seed = world.Seed;
+            WorldID = world.AssetID;
+            SnowLine = world.SnowLine * 100;
+            TreeLine = world.TreeLine * 100;
+            ShoreLine = world.ShoreLine * 100;
+            TerrainHeight = world.TerrainHeight;
+            CoastLine = world.CoastLine;
+
         }
     }
 }

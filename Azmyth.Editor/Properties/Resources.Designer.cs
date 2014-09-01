@@ -63,6 +63,16 @@ namespace Azmyth.Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Circle {
+            get {
+                object obj = ResourceManager.GetObject("Circle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap igmTag {
             get {
                 object obj = ResourceManager.GetObject("igmTag", resourceCulture);
@@ -396,6 +406,26 @@ namespace Azmyth.Editor.Properties {
         internal static System.Drawing.Bitmap imgUp {
             get {
                 object obj = ResourceManager.GetObject("imgUp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Point {
+            get {
+                object obj = ResourceManager.GetObject("Point", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Square {
+            get {
+                object obj = ResourceManager.GetObject("Square", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

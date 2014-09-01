@@ -35,8 +35,8 @@ namespace Azmyth.Editor
             {
                 m_world = value;
 
-                trackBar1.Minimum = 0;
-                trackBar1.Maximum = 1024;
+                trackBar1.Minimum = 1;
+                trackBar1.Maximum = 1000;
             }
         }
 
@@ -57,45 +57,5 @@ namespace Azmyth.Editor
         }
     }
 
-    public class TerrainHeightEditor : UITypeEditor
-    {
-        private WorldAdapter m_world;
-
-        public TerrainHeightEditor()
-        {
-
-        }
-
-        public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
-        {
-            object newObject = value;
-
-            IWindowsFormsEditorService svc = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
-
-            m_world = context.Instance as WorldAdapter;
-
-            if (svc != null)
-            {
-                TerrainHeightScroll ctrl = new TerrainHeightScroll();
-                ctrl.World = m_world;
-                ctrl.Value = int.Parse(value.ToString());
-
-                svc.DropDownControl(ctrl);
-
-                newObject = ctrl.Value;
-            }
-
-            return newObject;
-        }
-
-        public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context)
-        {
-            return UITypeEditorEditStyle.DropDown;
-        }
-
-        public override bool GetPaintValueSupported(ITypeDescriptorContext context)
-        {
-            return false;
-        }
-    }
+   
 }

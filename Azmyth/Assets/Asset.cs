@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Azmyth.Assets
 {
-    public abstract class Asset
+    public abstract class Asset : IQuadObject
     {
         public string Name { get; set; }
 
@@ -93,22 +93,22 @@ namespace Azmyth.Assets
         //    }
         //}
 
-        public virtual void AddObject(Asset obj)
+        public virtual void AddAsset(Asset asset)
         {
-            _assets.Add(obj.AssetID, obj);
+            _assets.Add(asset.AssetID, asset);
         }
 
-        public virtual void RemoveObject(VectorID objID)
+        public virtual void RemoveAsset(VectorID assetID)
         {
-            _assets.Remove(objID);
+            _assets.Remove(assetID);
         }
 
-        public virtual void RemoveObject(Asset obj)
+        public virtual void RemoveAsset(Asset asset)
         {
-            RemoveObject(obj.AssetID);
+            RemoveAsset(asset.AssetID);
         }
 
-        public virtual void RemoveObjects(long vector)
+        public virtual void RemoveAssets(long vector)
         {
             if (_assets[vector] != null)
             {
@@ -116,7 +116,7 @@ namespace Azmyth.Assets
             }
         }
 
-        public virtual void RemoveObjects()
+        public virtual void RemoveAssets()
         {
             _assets.Clear();
         }
@@ -148,5 +148,25 @@ namespace Azmyth.Assets
                 _assets[id] = value;
             }
         }
+
+        private System.Drawing.RectangleF m_bounds = new System.Drawing.RectangleF();
+
+        public System.Drawing.RectangleF Bounds
+        {
+            get { return m_bounds; }
+            set 
+            {
+                m_bounds = value;
+
+                EventHandler boundsChanged = BoundsChanged;
+
+                if(boundsChanged != null)
+                {
+                    boundsChanged.BeginInvoke(this, new EventArgs(), null, null);
+                }
+            }
+        }
+
+        public event EventHandler BoundsChanged;
     }
 }

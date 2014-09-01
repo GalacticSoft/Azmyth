@@ -33,6 +33,8 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,10 +48,15 @@
     <Compile Include="Assets\AssetStore.cs" />
     <Compile Include="Ansi\ColorData.cs" />
     <Compile Include="Ansi\ModifierData.cs" />
+    <Compile Include="Assets\IQuadObject.cs" />
+    <Compile Include="Assets\QuadTree.cs" />
+    <Compile Include="Procedural\INoise.cs" />
+    <Compile Include="Procedural\Markov.cs" />
+    <Compile Include="Procedural\RandomNoise.cs" />
     <Compile Include="Stats\IHasStats.cs" />
     <Compile Include="Stats\IStat.cs" />
     <Compile Include="Maths\Numbers.cs" />
-    <Compile Include="Noise\Perlin.cs" />
+    <Compile Include="Procedural\PerlinNoise.cs" />
     <Compile Include="Maths\Vector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VectorID\VectorID.cs" />

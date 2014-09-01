@@ -108,129 +108,8 @@ namespace Azmyth.Editor
             Room r = Assets.Assets.GetWorld(((GridControl)sender).m_world.AssetID).GetRoom(e.X, e.Y);
 
 
-            Output(r.m_height.ToString());
+            Output(r.Height.ToString());
         }
-
-        //void areaView_CellHover(object sender, CellSelectedEventArgs e)
-        //{
-        //    if (this.InvokeRequired)
-        //    {
-        //        this.Invoke((MethodInvoker) delegate { areaView_CellHover(sender, e); });
-        //    }
-        //    else
-        //    {
-        //        int r = 10; // radius
-        //        int ox = e.Vector.X, oy = e.Vector.Y; // origin
-        //        Room room = null;
-
-        //        if ((Control.MouseButtons & MouseButtons.Left) != 0)
-        //        {
-        //            switch (cboTool1.SelectedValue)
-        //            {
-        //                case "Fill":
-        //                    switch (cboShape1.SelectedValue)
-        //                    {
-        //                        case "Pixel":
-        //                            //if (_selected[new VectorID(e.Vector.X, e.Vector.Y)] != null)
-        //                            {
-        //                                VectorID roomID = Azmyth.Assets.Assets.CreateRoom();
-        //                                room = Azmyth.Assets.Assets.GetRoom(roomID);
-        //                                room.GridX = e.Vector.X;
-        //                                room.GridY = e.Vector.Y;
-        //                                _selected.AddObject(room);
-        //                                room.Name = "Default Room";
-        //                                tvwWorld.SelectedNode.Nodes.Add(room.Name).Tag = roomID;
-        //                                ((MapViewer)sender).SetCellColor(e.Vector, Color.Red);
-        //                            }
-
-        //                            break;
-        //                        case "Circle":
-        //                            for (int x = -r; x < r; x++)
-        //                            {
-        //                                int height = (int)System.Math.Sqrt(r * r - x * x);
-
-        //                                for (int y = -height; y < height; y++)
-        //                                {
-        //                                    VectorID roomID = Azmyth.Assets.Assets.CreateRoom();
-        //                                    room = Azmyth.Assets.Assets.GetRoom(roomID);
-        //                                    room.GridX = e.Vector.X;
-        //                                    room.GridY = e.Vector.Y;
-        //                                    _selected.AddObject(room);
-        //                                    room.Name = "Default Room";
-        //                                    tvwWorld.SelectedNode.Nodes.Add(room.Name).Tag = roomID;
-        //                                    ((MapViewer)sender).SetCellColor(new Vector(x + ox, y + oy, 1), Color.Red);
-        //                                    ((MapViewer)sender).RepaintMap();
-
-        //                                }
-        //                            }
-
-
-
-
-        //                            break;
-        //                    }
-        //                    break;
-        //            }
-        //        }
-        //    }
-        //}
-
-        //void areaView_CellClick(object sender, CellClickEventArgs e)
-        //{
-        //    int r = 10; // radius
-        //    int ox = e.CellX, oy = e.CellY; // origin
-        //    VectorID roomID = null;
-        //    Room room = null;
-        //    switch (cboTool1.SelectedValue)
-        //    {
-        //        case "Fill":
-        //            switch (cboShape1.SelectedValue)
-        //            {
-        //                case "Pixel":
-        //                    //if (_selected[new VectorID(e.CellX, e.CellY)] != null)
-        //                    {
-        //                        roomID = Azmyth.Assets.Assets.CreateRoom();
-        //                        room = Azmyth.Assets.Assets.GetRoom(roomID);
-
-        //                        room.GridX = e.CellX;
-        //                        room.GridY = e.CellY;
-
-        //                        _selected.AddObject(room);
-
-        //                        room.Name = "Default Room";
-
-        //                        tvwWorld.SelectedNode.Nodes.Add(room.Name).Tag = roomID;
-        //                        ((MapViewer)sender).SetCellColor(e.Cell.CellVector, Color.Red);
-        //                    }
-
-        //                    break;
-        //                case "Circle":
-        //                    for (int x = -r; x < r; x++)
-        //                    {
-        //                        int height = (int)System.Math.Sqrt(r * r - x * x);
-
-        //                        for (int y = -height; y < height; y++)
-        //                        {
-        //                            roomID = Azmyth.Assets.Assets.CreateRoom();
-        //                            room = Azmyth.Assets.Assets.GetRoom(roomID);
-        //                            room.GridX = e.CellX;
-        //                            room.GridY = e.CellY;
-        //                            _selected.AddObject(room);
-        //                            room.Name = "Default Room";
-        //                            tvwWorld.SelectedNode.Nodes.Add(room.Name).Tag = roomID;
-        //                            ((MapViewer)sender).SetCellColor(new Vector(x + ox, y + oy, 1), Color.Red);
-
-        //                        }
-        //                    }
-
-        //                    ((MapViewer)sender).RepaintMap();
-        //                    this.Invalidate();
-
-        //                    break;
-        //            }
-        //            break;
-        //    }
-        //}
 
         private void frmEditorMain_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -500,6 +379,134 @@ namespace Azmyth.Editor
                 
 
                 //_selected = world;
+            }
+        }
+
+        private void btnSelection_Click(object sender, EventArgs e)
+        {
+            foreach(TabPage page in tabMain.TabPages)
+            {
+                foreach(Control c in page.Controls)
+                {
+                    if(c is MapViewer)
+                    {
+                        ((MapViewer)c).SetTool(ToolShape.Point);
+                    }
+                }
+            }
+        }
+
+        private void btnSquare_Click(object sender, EventArgs e)
+        {
+            foreach (TabPage page in tabMain.TabPages)
+            {
+                foreach (Control c in page.Controls)
+                {
+                    if (c is MapViewer)
+                    {
+                        ((MapViewer)c).SetTool(ToolShape.Square);
+                    }
+                }
+            }
+        }
+
+        private void btnCircle_Click(object sender, EventArgs e)
+        {
+            foreach (TabPage page in tabMain.TabPages)
+            {
+                foreach (Control c in page.Controls)
+                {
+                    if (c is MapViewer)
+                    {
+                        ((MapViewer)c).SetTool(ToolShape.Circle);
+                    }
+                }
+            }
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            World world = null;
+            SaveFileDialog dialog = new SaveFileDialog();
+
+            if (tabMain.SelectedTab != null)
+            {
+                foreach (Control c in tabMain.SelectedTab.Controls)
+                {
+                    if (c is MapViewer)
+                    {
+                        world = Assets.Assets.GetWorld(((MapViewer)c).WorldID);
+
+                        if (world != null)
+                        {
+                            dialog.FileName = world.Name + ".wld";
+                            dialog.Filter = "World File (*.wld) | *.wld";
+
+                            if(dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+                            {
+                                SaveWorld(world, dialog.FileName);
+                            }
+                        }
+
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void SaveWorld(World world, string strFileName)
+        {
+            System.Xml.Serialization.XmlSerializer writer = new System.Xml.Serialization.XmlSerializer(typeof(World));
+
+            System.IO.StreamWriter file = new System.IO.StreamWriter(strFileName);
+            writer.Serialize(file, world);
+            file.Close();
+        }
+
+        private World LoadWorld(string strFileName)
+        {
+            System.Xml.Serialization.XmlSerializer deserializer = new System.Xml.Serialization.XmlSerializer(typeof(World));
+            System.IO.TextReader reader = new System.IO.StreamReader(strFileName);
+            object obj = deserializer.Deserialize(reader);
+            World world  = (World)obj;
+
+            return world;
+
+        }
+
+        private void btnOpen_Click(object sender, EventArgs e)
+        {
+            World world = null;
+            OpenFileDialog dialog = new OpenFileDialog();
+
+            dialog.Filter = "World File (*.wld)|*.wld";
+
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+
+                world = LoadWorld(dialog.FileName);
+
+                VectorID worldID = null;
+                MapViewer areaView = null;
+
+                Assets.Assets.Store.AddAsset(world);
+
+                worldID = world.AssetID;
+                
+                areaView = new MapViewer(worldID);
+                areaView.Name = "av" + worldID.ID;
+                areaView.AreaNode = _root.Nodes.Add(world.Name);
+                areaView.AreaNode.Tag = worldID;
+
+                areaView.Dock = DockStyle.Fill;
+
+                tabMain.TabPages.Add(worldID.ToString(), world.Name);
+                tabMain.SelectedIndex = tabMain.TabPages.IndexOfKey(worldID.ToString());
+                tabMain.SelectedTab.Controls.Add(areaView);
+
+                areaView.AreaPage = tabMain.SelectedTab;
+                areaView.CellHover +=areaView_CellHover;
+                _selected = world;
             }
         }
     }
