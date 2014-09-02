@@ -170,8 +170,6 @@
             // 
             this.btnNewArea.DrawIconsBar = false;
             this.btnNewArea.Image = ((System.Drawing.Image)(resources.GetObject("btnNewArea.Image")));
-            this.btnNewArea.MaximumSize = new System.Drawing.Size(99, 0);
-            this.btnNewArea.MinimumSize = new System.Drawing.Size(99, 0);
             this.btnNewArea.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnNewArea.SmallImage")));
             this.btnNewArea.Text = "New";
             this.btnNewArea.Click += new System.EventHandler(this.btnNewArea_Click);

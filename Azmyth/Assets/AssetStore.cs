@@ -107,9 +107,16 @@ namespace Azmyth.Assets
 
         public virtual void AddAsset(Asset asset)
         {
+            
+
             if(!_assetList.ContainsKey(asset.AssetID))
             {
                 _assetList.Add(asset.AssetID, asset);
+
+                if(asset.AssetID.ID >= _currentIDList[asset.AssetID.Vector])
+                {
+                    _currentIDList[asset.AssetID.Vector] = asset.AssetID.ID + 1;
+                }
             }
         }
 

@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace Azmyth.Assets
 {
-    public class QuadTree<T> where T : class, IQuadObject
+    public class QuadTree<T> where T : class, IHasRect
     {
         private readonly bool sort;
         private readonly SizeF minLeafSize;

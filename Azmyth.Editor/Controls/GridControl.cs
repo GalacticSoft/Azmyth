@@ -13,14 +13,6 @@ using Azmyth;
 using Azmyth.Assets;
 namespace Azmyth.Editor
 {
-    public delegate void CellEvent(object sender, CellEventArgs e);
-    public enum Tool
-    {
-        Selection,
-        Drawing,
-        Erase
-    }
-
     public enum ToolShape
     {
         Circle,
@@ -31,13 +23,6 @@ namespace Azmyth.Editor
 
     public class GridControl : Control
     {
-
-        public Tool Tool
-        {
-            get;
-            set;
-        }
-
         public ToolShape ToolShape
         {
             get;
@@ -88,9 +73,9 @@ namespace Azmyth.Editor
         private Brush m_debugForegroundBrush;
         private Brush m_originBrush;
         private SortedDictionary<string, object> m_debug;
+        private GraphicsPath m_graphicsPath = new GraphicsPath();
 
         private System.Drawing.Rectangle m_viewport;
-        public event CellEvent ViewportChanged;
 
         private bool m_heightMap;
         
@@ -122,8 +107,6 @@ namespace Azmyth.Editor
             }
         }
 
-        
-
         public GridControl()
         {
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -133,7 +116,6 @@ namespace Azmyth.Editor
 
             BackColor = Color.White;
 
-            Tool = Tool.Drawing;
             ToolShape = ToolShape.Point;
             ToolSize = 40;
 
@@ -166,7 +148,6 @@ namespace Azmyth.Editor
             m_debugForegroundBrush = new SolidBrush(Color.FromArgb(192, Color.Black));
             m_originBrush = new SolidBrush(Color.FromArgb(128, Color.Orange));
         }
-
 
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -210,7 +191,6 @@ namespace Azmyth.Editor
             cellX = (int)m_viewport.Left;
             cellY = (int)m_viewport.Top;
             totalCells = (int)((m_viewport.Width + 1) * (m_viewport.Height + 1));
-
             
             if (m_world != null)
             {
@@ -269,16 +249,14 @@ namespace Azmyth.Editor
                         }
                     }
 
-                    g.FillRectangle(new SolidBrush(cellColor), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
-
-                    PaintSelection(g, room, cellColor);
-                    //viewport.Inflate(300, 300);
-                    //List<Item> items = m_quadTree.Query(viewport);
-
-                    //foreach (Item i in items)
-                    //{
-                    //     e.Graphics.FillRectangle(new SolidBrush(i.Color), new RectangleF(i.Rectangle.X * m_cellWidth, i.Rectangle.Y * m_cellHeight, m_cellWidth, m_cellHeight));
-                    //}
+                    if(!IsSelected(room))
+                    {
+                        g.FillRectangle(new SolidBrush(cellColor), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                    }
+                    else
+                    {
+                        g.FillRectangle(new SolidBrush(Color.FromArgb(255, 255 - cellColor.R, 255 - cellColor.G, 255 - cellColor.B)), new RectangleF(room.GridX * m_cellWidth, room.GridY * m_cellHeight, m_cellWidth, m_cellHeight));        
+                    }
 
                     cellX++;
 
@@ -291,47 +269,59 @@ namespace Azmyth.Editor
             }
         }
 
-        private void PaintSelection(Graphics g, Room room, Color cellColor)
+        public bool IsSelected(int x, int y)
         {
+            
             Rectangle rect;
+            bool isSelected = false;
             Point selection = m_selectedCellLocation;
             int selectionWidth = (int)(m_selectionSize / (m_cellWidth * m_scale));
             int selectionHeight = (int)(m_selectionSize / (m_cellHeight * m_scale));
+
             switch (m_selectionShape)
             {
                 case ToolShape.Square:
-                    selection.Offset((selectionWidth) / -2, (selectionHeight) / -2);
+                    selection.Offset(((selectionWidth + 1) / -2), ((selectionHeight + 1) / -2));
                     rect = new Rectangle(selection, new Size(selectionWidth + 1, selectionHeight + 1));
 
-                    if (rect.IntersectsWith(new Rectangle((int)room.GridX, (int)room.GridY, 1, 1)))
+                    if (rect.IntersectsWith(new Rectangle(x, y, 1, 1)))
                     {
-                        g.FillRectangle(new SolidBrush(Color.FromArgb(255, 255 - cellColor.R, 255 - cellColor.G, 255 - cellColor.B)), new RectangleF(room.GridX * m_cellWidth, room.GridY * m_cellHeight, m_cellWidth, m_cellHeight));
+                        isSelected = true;
                     }
                     break;
                 case ToolShape.Circle:
-                    using (GraphicsPath myPath = new GraphicsPath())
+                    selection.Offset(((selectionWidth + 2) / -2), ((selectionHeight + 2) / -2));
+                    rect = new Rectangle(selection, new Size(selectionWidth + 1, selectionHeight + 1));
+                    
+                    m_graphicsPath.Reset();
+                    m_graphicsPath.AddEllipse(rect);
+
+                    if (m_graphicsPath.IsVisible(new Point(x, y)))
                     {
-                        selection.Offset(((selectionWidth + 2) / -2), ((selectionHeight + 2) / -2));
-                        rect = new Rectangle(selection, new Size(selectionWidth  +1, selectionHeight + 1));
-
-                        myPath.AddEllipse(rect);
-
-                        if (myPath.IsVisible(new Point((int)room.GridX, (int)room.GridY)))
-                        {
-                            g.FillRectangle(new SolidBrush(Color.FromArgb(255, 255 - cellColor.R, 255 - cellColor.G, 255 - cellColor.B)), new RectangleF(room.GridX * m_cellWidth, room.GridY * m_cellHeight, m_cellWidth, m_cellHeight));
-                        }
+                        isSelected = true;    
                     }
                     break;
                 case ToolShape.Point:
                     rect = new Rectangle(selection, new Size(1, 1));
 
-                    if (rect.IntersectsWith(new Rectangle((int)room.GridX, (int)room.GridY, 1, 1)))
+                    if (rect.IntersectsWith(new Rectangle(x, y, 1, 1)))
                     {
-                        g.FillRectangle(new SolidBrush(Color.FromArgb(255, 255 - cellColor.R, 255 - cellColor.G, 255 - cellColor.B)), new RectangleF(room.GridX * m_cellWidth, room.GridY * m_cellHeight, m_cellWidth, m_cellHeight));
-
+                        isSelected = true;    
                     }
                     break;
             }
+
+            return isSelected;
+        }
+
+        public bool IsSelected(Point p)
+        {
+            return IsSelected(p.X, p.Y);
+        }
+
+        public bool IsSelected(Room room)
+        {
+            return IsSelected(room.GridX, room.GridY);
         }
 
         private void UpdateCellLocations(Graphics g)
@@ -370,40 +360,24 @@ namespace Azmyth.Editor
 
         private void PaintHighlightedCell(Graphics g)
         {
-            switch (Tool)
-            {
-                case Tool.Selection:
-                {
-                    g.FillRectangle(m_highlightedCellBrush,
-                        m_highlightedCellLocation.X * m_cellWidth,
-                        m_highlightedCellLocation.Y * m_cellHeight,
-                        m_cellWidth,
-                        m_cellHeight);
-                    break;
-                }
-                case Tool.Drawing:
-                {
-                    Point mouse = m_mouseLocation;
+            Point mouse = m_mouseLocation;
 
-                    switch (ToolShape)
-                    {
-                        case ToolShape.Circle:
-                            g.ResetTransform();
-                            mouse.Offset(ToolSize / -2, ToolSize / -2);
-                            g.DrawEllipse(new Pen(Color.Black, 3), new Rectangle(mouse, new Size(ToolSize, ToolSize)));
-                            break;
-                        case ToolShape.Point:
-                            g.DrawRectangle(new Pen(Color.Black, 3), m_highlightedCellLocation.X * m_cellWidth,
-                                m_highlightedCellLocation.Y * m_cellHeight, m_cellWidth, m_cellHeight);
-                            break;
-                        case ToolShape.Square:
-                            g.ResetTransform();
-                            mouse.Offset(ToolSize / -2, ToolSize / -2);
-                            g.DrawRectangle(new Pen(Color.Black, 3), new Rectangle(mouse, new Size(ToolSize, ToolSize)));
-                            break;
-                    }
+            switch (ToolShape)
+            {
+                case ToolShape.Circle:
+                    g.ResetTransform();
+                    mouse.Offset(ToolSize / -2, ToolSize / -2);
+                    g.DrawEllipse(new Pen(Color.Black, 3), new Rectangle(mouse, new Size(ToolSize, ToolSize)));
                     break;
-                }  
+                case ToolShape.Point:
+                    g.DrawRectangle(new Pen(Color.Black, 3), m_highlightedCellLocation.X * m_cellWidth,
+                        m_highlightedCellLocation.Y * m_cellHeight, m_cellWidth, m_cellHeight);
+                    break;
+                case ToolShape.Square:
+                    g.ResetTransform();
+                    mouse.Offset(ToolSize / -2, ToolSize / -2);
+                    g.DrawRectangle(new Pen(Color.Black, 3), new Rectangle(mouse, new Size(ToolSize, ToolSize)));
+                    break;
             }
         }
 
@@ -478,11 +452,6 @@ namespace Azmyth.Editor
 
                 m_translateX += dX;
                 m_translateY += dY;
-
-                if(ViewportChanged != null)
-                {
-                    ViewportChanged(this, new CellEventArgs(m_viewport));
-                }
             }
             
             m_previousMouseLocation = e.Location;
@@ -559,8 +528,6 @@ namespace Azmyth.Editor
                     Invalidate();
                 }
             }
-
-
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
@@ -593,49 +560,7 @@ namespace Azmyth.Editor
             // GridControl
             // 
             this.BackColor = System.Drawing.Color.White;
-            this.Enter += new System.EventHandler(this.GridControl_Enter);
-            this.Leave += new System.EventHandler(this.GridControl_Leave);
-            this.MouseCaptureChanged += new System.EventHandler(this.GridControl_MouseCaptureChanged);
-            this.MouseEnter += new System.EventHandler(this.GridControl_MouseEnter);
-            this.MouseLeave += new System.EventHandler(this.GridControl_MouseLeave);
             this.ResumeLayout(false);
-
         }
-
-        private void GridControl_MouseLeave(object sender, EventArgs e)
-        {
-
-        }
-
-        private void GridControl_Leave(object sender, EventArgs e)
-        {
-
-        }
-
-        private void GridControl_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void GridControl_MouseEnter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void GridControl_MouseCaptureChanged(object sender, EventArgs e)
-        {
-           
-        }
-    }
-
-    public class CellEventArgs : EventArgs
-    {
-        public CellEventArgs(System.Drawing.Rectangle cells)
-        {
- 
-            Cells = cells;
-        }
-
-        public System.Drawing.Rectangle Cells { get; set; }
     }
 }

@@ -48,7 +48,7 @@
     <Compile Include="Assets\AssetStore.cs" />
     <Compile Include="Ansi\ColorData.cs" />
     <Compile Include="Ansi\ModifierData.cs" />
-    <Compile Include="Assets\IQuadObject.cs" />
+    <Compile Include="Assets\IHasRect.cs" />
     <Compile Include="Assets\QuadTree.cs" />
     <Compile Include="Procedural\INoise.cs" />
     <Compile Include="Procedural\Markov.cs" />

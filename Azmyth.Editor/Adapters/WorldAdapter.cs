@@ -18,14 +18,27 @@ namespace Azmyth.Editor
         private World m_world;
 
         private float m_coastLine = 0;
-        private float m_shoreLine = 02;
+        private float m_shoreLine = 05;
         private float m_treeLine = 40;
         private float m_snowLine = 50;
         private float m_terrainHeight = 1024;
 
+        [Browsable(false)]
         public MapViewer Map {get; set;}
         private PropertyGrid m_parent;
         
+
+        public string Name
+        {
+            get 
+            { 
+                return m_world.Name;
+            }
+            set 
+            {
+                m_world.Name = value;
+            }
+        }
 
         [Category("Terrain Values")]
         [Editor(typeof(CoastLineEditor), typeof(UITypeEditor))]
@@ -41,7 +54,9 @@ namespace Azmyth.Editor
                 m_world.CoastLine = value;
 
                 if (Map != null)
+                {
                     Map.RepaintMap();
+                }
             }
         }
 
@@ -59,7 +74,9 @@ namespace Azmyth.Editor
                 m_world.ShoreLine = value / 100;
 
                 if (Map != null)
+                {
                     Map.RepaintMap();
+                }
             }
         }
 
@@ -77,7 +94,9 @@ namespace Azmyth.Editor
                 m_world.TreeLine = value / 100;
 
                 if (Map != null)
+                {
                     Map.RepaintMap();
+                }
             }
         }
 
@@ -93,9 +112,11 @@ namespace Azmyth.Editor
             {
                 m_snowLine = value;
                 m_world.SnowLine = value / 100;
-                
+
                 if (Map != null)
+                {
                     Map.RepaintMap();
+                }
             }
         }
 

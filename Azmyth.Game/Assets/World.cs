@@ -29,6 +29,8 @@ namespace Azmyth.Assets
         
         private Random m_random = new Random(500);
 
+        QuadTree<Room> m_rooms = new QuadTree<Room>(new System.Drawing.Size(16, 16), 1);
+
         public float CoastLine
         {
             get { return m_coastLine; }
@@ -88,6 +90,17 @@ namespace Azmyth.Assets
         {
             AssetID = worldID;
 
+            m_rooms.Insert(new Room() { GridX = 0, GridY = 0, Bounds = new System.Drawing.RectangleF(0, 0, 1, 1), Height = 0, m_terrain = TerrainTypes.Black });
+
+            m_rooms.Insert(new Room() { GridX = 1, GridY = 1, Bounds = new System.Drawing.RectangleF(1, 1, 1, 1), Height = 0, m_terrain = TerrainTypes.Black });
+
+            m_rooms.Insert(new Room() { GridX = -1, GridY = -1, Bounds = new System.Drawing.RectangleF(-1, -1, 1, 1), Height = 0, m_terrain = TerrainTypes.Black });
+
+            m_rooms.Insert(new Room() { GridX = 1, GridY = -1, Bounds = new System.Drawing.RectangleF(1, -1, 1, 1), Height = 0, m_terrain = TerrainTypes.Black });
+
+            m_rooms.Insert(new Room() { GridX = -1, GridY = 1, Bounds = new System.Drawing.RectangleF(-1, 1, 1, 1), Height = 0, m_terrain = TerrainTypes.Black });
+
+
             UpdateGenerators();
         }
 
@@ -125,15 +138,14 @@ namespace Azmyth.Assets
             if (room.Height > m_coastLine + ((m_terrainHeight - m_coastLine) * m_snowLine))
                 room.m_terrain = TerrainTypes.Snow;
 
+            if (room.Height > m_coastLine)
+            {
+                if (Math.Abs(m_stones.GetHeight(x, y)) >= .95f)
+                    room.m_terrain = TerrainTypes.Stone;
 
-
-            //if (room.Height > m_coastLine)
-            //{
-            //    if (Math.Abs(m_stones.GetHeight(x, y)) > .99f)
-            //    {
-            //            room.m_terrain = Terrain.Stone;
-            //    }
-            //}
+                if (Math.Floor(m_randomNoise.GetValue(x, y) * 100) < 1)
+                    room.m_terrain = TerrainTypes.Stone;
+            }
 
             if (room.Height > m_coastLine + ((m_terrainHeight - m_coastLine) * m_treeLine))
             {
@@ -166,14 +178,11 @@ namespace Azmyth.Assets
 
             }
 
-            if (room.m_terrain != TerrainTypes.Lava && room.m_terrain != TerrainTypes.Ocean && room.m_terrain != TerrainTypes.River && room.m_terrain != TerrainTypes.Snow && room.m_terrain != TerrainTypes.Ice)
+            foreach (Room r in m_rooms.Query(new System.Drawing.RectangleF(x, y, 1, 1)))
             {
-                if(Math.Abs(m_stones.GetHeight(x, y)) >= .95f)
-                    room.m_terrain = TerrainTypes.Stone;
-
-                if (Math.Floor(m_randomNoise.GetValue(x, y) * 100) < 1)
-                    room.m_terrain = TerrainTypes.Stone;
+                room = r;
             }
+
             return room;
         }
 

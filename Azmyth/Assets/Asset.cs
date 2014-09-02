@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Azmyth.Assets
 {
-    public abstract class Asset : IQuadObject
+    public abstract class Asset : IHasRect
     {
         public string Name { get; set; }
 

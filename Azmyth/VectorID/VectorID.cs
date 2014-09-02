@@ -51,6 +51,12 @@ namespace Azmyth
 
         public static bool operator !=(VectorID id1, VectorID id2)
         {
+            if (id2 == null)
+                return false;
+
+            if (id1 == null)
+                return false;
+
             return !id1.Equals(id2);
         }
 

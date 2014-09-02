@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace Azmyth.Assets
 {
-    public interface IQuadObject
+    public interface IHasRect
     {
         RectangleF Bounds { get; }
         event EventHandler BoundsChanged;

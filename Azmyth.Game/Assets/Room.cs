@@ -9,8 +9,8 @@ namespace Azmyth.Assets
         private float m_height;
         public float m_value;
 
-        public long GridX { get; set; }
-        public long GridY { get; set; }
+        public int GridX { get; set; }
+        public int GridY { get; set; }
 
         private Exit[] _exits = new Exit[(long)Directions.Max];
 
