@@ -33,6 +33,7 @@ namespace Azmyth.Editor
 
             gridControl1.m_world = Assets.Assets.GetWorld(worldID);
             gridControl2.m_world = Assets.Assets.GetWorld(worldID);
+            gridControl3.m_world = Assets.Assets.GetWorld(worldID);
         }
 
         public void SetCellColor(Vector vector, Color color, bool draw = false)
@@ -47,8 +48,14 @@ namespace Azmyth.Editor
 
         public void RepaintMap()
         {
-            gridControl1.Invalidate();
-            gridControl2.Invalidate();
+            if(tabControl1.SelectedTab == tabPage1)
+                gridControl1.Invalidate();
+
+            if (tabControl1.SelectedTab == tabPage2)
+                gridControl2.Invalidate();
+
+            if (tabControl1.SelectedTab == tabPage3)
+                gridControl3.Invalidate();
         }
 
         private void txtName_TextChanged(object sender, EventArgs e)
@@ -60,6 +67,7 @@ namespace Azmyth.Editor
         {
             gridControl1.ToolShape = shape;
             gridControl2.ToolShape = shape;
+            gridControl3.ToolShape = shape;
         }
 
         public event EventHandler<Point> CellHover;

@@ -8,6 +8,8 @@ namespace Azmyth.Assets
         public TerrainTypes m_terrain;
         private float m_height;
         public float m_value;
+        public double m_temp;
+        public double m_tempVal;
 
         public int GridX { get; set; }
         public int GridY { get; set; }

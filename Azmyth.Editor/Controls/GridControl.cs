@@ -23,17 +23,7 @@ namespace Azmyth.Editor
 
     public class GridControl : Control
     {
-        public ToolShape ToolShape
-        {
-            get;
-            set;
-        }
 
-        public int ToolSize
-        {
-            get;
-            set;
-        }
 
         private ToolShape m_selectionShape;
         private int m_selectionSize;
@@ -78,7 +68,22 @@ namespace Azmyth.Editor
         private System.Drawing.Rectangle m_viewport;
 
         private bool m_heightMap;
-        
+        private bool m_tempMap;
+
+        [Browsable(true), Category("Selection Tool")]
+        public ToolShape ToolShape
+        {
+            get;
+            set;
+        }
+
+        [Browsable(true), Category("Selection Tool")]
+        public int ToolSize
+        {
+            get;
+            set;
+        }
+
         [Browsable(true), Category("Appearance")]
         public bool HeightMap
         {
@@ -89,6 +94,20 @@ namespace Azmyth.Editor
             set
             {
                 m_heightMap = value;
+                Invalidate();
+            }
+        }
+
+        [Browsable(true), Category("Appearance")]
+        public bool TempMap
+        {
+            get
+            {
+                return m_tempMap;
+            }
+            set
+            {
+                m_tempMap = value;
                 Invalidate();
             }
         }
@@ -167,13 +186,6 @@ namespace Azmyth.Editor
 
             if (m_showDebug)
             {
-                m_debug["m_cellWidth"] = m_cellWidth;
-                m_debug["m_cellHeight"] = m_cellHeight;
-                m_debug["m_translateY"] = m_translateY;
-                m_debug["m_translateX"] = m_translateX;
-                m_debug["m_rotateAngle"] = m_rotateAngle;
-                m_debug["m_scale"] = m_scale;
-
                 PaintDebug(e.Graphics);
             }
 
@@ -201,7 +213,13 @@ namespace Azmyth.Editor
                     colorPercent = room.Height / m_world.TerrainHeight;
                     rgb = (int)Math.Max(Math.Min(255 * Math.Abs(colorPercent), 255), 0);
 
-                    if (m_heightMap)
+                    if(m_tempMap)
+                    {
+                        colorPercent = (float)(room.m_temp / 50);
+                        rgb = (int)Math.Max(Math.Min(255 * Math.Abs(colorPercent), 255), 0);
+                        cellColor = Color.FromArgb(255, rgb, 0, 255-rgb);
+                    }
+                    else if (m_heightMap)
                     {
                         if (room.Height > m_world.CoastLine)
                         {
@@ -244,18 +262,18 @@ namespace Azmyth.Editor
                                 cellColor = Color.Cyan;
                                 break;
                             case TerrainTypes.Black:
-                                cellColor = Color.White;
+                                cellColor = Color.Yellow;
                                 break;
                         }
                     }
 
-                    if(!IsSelected(room))
+                    if(IsSelected(room))
                     {
-                        g.FillRectangle(new SolidBrush(cellColor), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                        g.FillRectangle(new SolidBrush(Color.FromArgb(255, 255 - cellColor.R, 255 - cellColor.G, 255 - cellColor.B)), new RectangleF(room.GridX * m_cellWidth, room.GridY * m_cellHeight, m_cellWidth, m_cellHeight));        
                     }
                     else
                     {
-                        g.FillRectangle(new SolidBrush(Color.FromArgb(255, 255 - cellColor.R, 255 - cellColor.G, 255 - cellColor.B)), new RectangleF(room.GridX * m_cellWidth, room.GridY * m_cellHeight, m_cellWidth, m_cellHeight));        
+                        g.FillRectangle(new SolidBrush(cellColor), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
                     }
 
                     cellX++;
@@ -271,7 +289,6 @@ namespace Azmyth.Editor
 
         public bool IsSelected(int x, int y)
         {
-            
             Rectangle rect;
             bool isSelected = false;
             Point selection = m_selectedCellLocation;
@@ -339,16 +356,6 @@ namespace Azmyth.Editor
             {
                 m_selectedCellLocation = m_highlightedCellLocation;
             }
-
-            m_debug["m_highlightedCellLocation.X"] = m_highlightedCellLocation.X;
-            m_debug["m_highlightedCellLocation.Y"] = m_highlightedCellLocation.Y;
-            m_debug["m_selectedCellLocation.X"] = m_selectedCellLocation.X;
-            m_debug["m_selectedCellLocation.Y"] = m_selectedCellLocation.Y;
-            m_debug["m_mouseLocation.X"] = m_mouseLocation.X;
-            m_debug["m_mouseLocation.Y"] = m_mouseLocation.Y;
-            m_debug["mouseMatrix"] = String.Join(", ", mouseMatrix.Elements);
-            m_debug["transformedMouseLocation.X"] = transformedMouseLocation.X;
-            m_debug["transformedMouseLocation.Y"] = transformedMouseLocation.Y;
         }
 
         private void PaintBorder(Graphics g)
@@ -401,8 +408,6 @@ namespace Azmyth.Editor
                 g.DrawLine(m_gridPen, bounds.Left, y, bounds.Right, y);
             }
 
-            m_debug["bounds"] = bounds;
-
             Matrix viewportMatrix = g.Transform.Clone();
             Point[] points = new Point[] { new Point(0, 0) };
             viewportMatrix.Invert();
@@ -413,7 +418,6 @@ namespace Azmyth.Editor
             int viewportY = (int)System.Math.Floor(transformedOrigin.Y / m_cellHeight);
 
             m_viewport = new Rectangle(viewportX, viewportY, (int)(bounds.Width / m_cellWidth) + 1, (int)(bounds.Height / m_cellHeight) + 1);
-            m_debug["cellBounds"] = m_viewport;
         }
 
         private void PaintDebug(Graphics g)
@@ -504,8 +508,6 @@ namespace Azmyth.Editor
 
         protected override void OnMouseWheel(MouseEventArgs e)
         {
-            m_debug["e.Delta"] = e.Delta;
-
             int detents = e.Delta / SystemInformation.MouseWheelScrollDelta;
 
             if (ModifierKeys.HasFlag(Keys.Control))
