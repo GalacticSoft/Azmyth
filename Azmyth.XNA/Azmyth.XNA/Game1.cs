@@ -142,8 +142,6 @@ namespace Azmyth.XNA
 
             KeyboardState newState = Keyboard.GetState();
 
-            if (newState.IsKeyDown(Keys.Up))
-                offsetY--;
             // Check to see whether the Spacebar is down.
             //if (newState.IsKeyDown(Keys.Space))
             //{
