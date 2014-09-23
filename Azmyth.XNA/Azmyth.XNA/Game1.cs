@@ -105,6 +105,7 @@ namespace Azmyth.XNA
             texture.SetData(new Color[] { Color.Cyan });
             _textures.Add(TerrainTypes.Ice, texture);
 
+
         }
 
         /// <summary>
@@ -115,7 +116,7 @@ namespace Azmyth.XNA
         {
             // TODO: Unload any non ContentManager content here
         }
-
+        KeyboardState oldState = Keyboard.GetState();
         
         /// <summary>
         /// Allows the game to run logic such as updating the world,
@@ -137,18 +138,49 @@ namespace Azmyth.XNA
                 frameCounter = 0;
             }
 
-            KeyboardState keybState = Keyboard.GetState();
+            
 
-            if (keybState.IsKeyDown(Keys.Left))
+            KeyboardState newState = Keyboard.GetState();
+
+            // Check to see whether the Spacebar is down.
+            //if (newState.IsKeyDown(Keys.Space))
+            //{
+                // Key has just been pressed.
+            //}
+            // Otherwise, check to see whether it was down before.
+            // (and therefore just released)
+            if (oldState.IsKeyDown(Keys.Left) && newState.IsKeyUp(Keys.Left))
+            {
                 offsetX--;
-            if (keybState.IsKeyDown(Keys.Right))
+            }
+
+            if (oldState.IsKeyDown(Keys.Right) && newState.IsKeyUp(Keys.Right))
                 offsetX++;
  
-            if (keybState.IsKeyDown(Keys.Up))
+            if (oldState.IsKeyDown(Keys.Up) && newState.IsKeyUp(Keys.Up))
                 offsetY--;
-            if (keybState.IsKeyDown(Keys.Down))
+
+            if (oldState.IsKeyDown(Keys.Down) && newState.IsKeyUp(Keys.Down))
                 offsetY++;
             
+            if(oldState.IsKeyDown(Keys.OemPlus))
+            {
+                graphics.IsFullScreen = true;
+                graphics.PreferredBackBufferHeight = 1080;
+                graphics.PreferredBackBufferWidth = 1920;
+
+                 graphics.ApplyChanges();
+            }
+            else if(oldState.IsKeyDown(Keys.OemMinus))
+            {
+                graphics.IsFullScreen = false;
+                graphics.PreferredBackBufferHeight = 960;
+                graphics.PreferredBackBufferWidth = 1280;
+
+                graphics.ApplyChanges();
+            }
+
+            oldState = newState;
             base.Update(gameTime);
         }
 
@@ -160,38 +192,41 @@ namespace Azmyth.XNA
         {
             GraphicsDevice.Clear(Color.Black);
 
-
             spriteBatch.Begin(SpriteSortMode.Immediate, null,null,null,null,null,
                 Matrix.CreateTranslation(0, 0, 0));
-
 
             int cellX = GraphicsDevice.Viewport.X;
             int cellY = GraphicsDevice.Viewport.Y;
 
-            int totalCells = ((GraphicsDevice.Viewport.Width / 16) * ((GraphicsDevice.Viewport.Height/16)+1));
+            int totalCells = ((GraphicsDevice.Viewport.Width / 24) * ((GraphicsDevice.Viewport.Height / 24) + 1));
             
             for (int index = 0; index < totalCells; index++)
             {
                 Room room = world.GetRoom(cellX + offsetX, cellY + offsetY);
 
-                spriteBatch.Draw(_textures[room.m_terrain], new Rectangle(cellX * 16, cellY *16, 16,16), Color.White);
+                if (cellX == (GraphicsDevice.Viewport.Width / 24) / 2 && cellY == (GraphicsDevice.Viewport.Height / 24) / 2)
+                    spriteBatch.Draw(_textures[TerrainTypes.Black], new Rectangle(cellX * 24, cellY * 24, 24, 24), Color.White);
+                else
+                    spriteBatch.Draw(_textures[room.m_terrain], new Rectangle(cellX * 24, cellY * 24, 24, 24), Color.White);
                    
                 cellX++;
 
-                if (cellX > (GraphicsDevice.Viewport.Width / 16))
-                    {
-                        cellY++;
-                        cellX = GraphicsDevice.Viewport.X;
-                    }
+                if (cellX > (GraphicsDevice.Viewport.Width / 24))
+                {
+                    cellY++;
+                    cellX = GraphicsDevice.Viewport.X;
+                }
             }
 
             frameCounter++;
+
             string fps = string.Format("fps: {0}", frameRate);
+
             spriteBatch.DrawString(spriteFont, fps, new Vector2(1, 1), Color.Black);
             spriteBatch.DrawString(spriteFont, fps, new Vector2(3, 3), Color.White);
 
-            // TODO: Add your drawing code here
             spriteBatch.End();
+
             base.Draw(gameTime);
         }
 

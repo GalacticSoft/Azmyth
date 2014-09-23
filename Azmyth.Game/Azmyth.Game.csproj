@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Assets\Area.cs" />
     <Compile Include="Assets\Assets.cs" />
+    <Compile Include="Assets\City.cs" />
     <Compile Include="Assets\Terrain.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Assets\Exit.cs" />
