@@ -57,8 +57,8 @@ SOFTWARE.
 <p>
 <table width="100%">
 <tr  width="100%">
-<td width="25%"><center><img src="http://i.imgur.com/H98nfdu.jpg" /></center></td>
-<td width="75%">
+<td ><center><img src="http://i.imgur.com/H98nfdu.jpg" /></center></td>
+<td >
 <strong>Marissa Willow du Bois</strong>
 <br>
 Marissa is an avid programmer and has been developing software for the past sixteen years. She is currently employed as a programmer analyst developing accounting software for the wine industry.
