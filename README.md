@@ -1,25 +1,27 @@
 ## Azmyth
-Azmyth is intended to be a generic game framework used to create flexible RPG and adventure style games. 
+Azmyth is a generic game framework used to create flexible RPG and adventure style games using procedural content generation.  
 
 #### Features include:
+- Extensible Asset system.
 - Terrain generation using Perlin Noise and QuadTrees.
-- Flexible Stat/Attribute System for game entities.
+- Flexible Stat/Attribute system.
 - Markov Chain name/text generator.
  
 #### Planned Features:
 - Biomes
-- Cities/Towns
+- Cities and Economic simulation.
+- Races and Classes
 - Additional Noise generators (Worley, Simpex, etc)
 - Chunk loading
 
-#### Map Editor Screen Shots
+#### Map Editor Screenshots
 - Terrain Map
 ![ScreenShot](http://i.imgur.com/V0Nfvx6.png)
 
 - Height Map
-![ScreenShot](http://i.imgur.com/9lYTbOv.png)
+![ScreenShot](http://i.imgur.com/9lYTbOv.png
 
-- Tempurature Map
+- Temperature Map
 ![ScreenShot](http://i.imgur.com/PQq61hR.png)
 
 #### XNA Demo
