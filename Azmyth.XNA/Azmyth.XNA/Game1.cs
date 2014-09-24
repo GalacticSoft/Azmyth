@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Azmyth.Assets;
 using Azmyth;
+using Azmyth.Procedural;
 
 namespace Azmyth.XNA
 {
@@ -18,7 +19,7 @@ namespace Azmyth.XNA
     /// </summary>
     
     
-    public class Game1 : Microsoft.Xna.Framework.Game
+    public class Azmyth : Microsoft.Xna.Framework.Game
     {
         int frameRate = 0;
         int frameCounter = 0;
@@ -31,8 +32,8 @@ namespace Azmyth.XNA
         SpriteBatch spriteBatch;
         Dictionary<TerrainTypes, Texture2D> _textures = new Dictionary<TerrainTypes, Texture2D>();
         SpriteFont spriteFont;
-
-        public Game1()
+        
+        public Azmyth()
         {
             world = new World();
 
