@@ -55,10 +55,10 @@ SOFTWARE.
 
 #### Author
 <p>
-<table border="" width="100%">
-<tr border="">
-<td border=""><img src="http://i.imgur.com/H98nfdu.jpg" /></td>
-<td border="">
+<table style="border:1px solid black;" width="100%">
+<tr >
+<td ><img src="http://i.imgur.com/H98nfdu.jpg" /></td>
+<td >
 <strong>Marissa Willow du Bois</strong>
 <br>
 E-Mail: marissa@galacticsoft.net
