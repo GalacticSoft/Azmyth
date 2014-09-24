@@ -1,4 +1,4 @@
-# ![Alt text](http://i.imgur.com/0eTNSws.png) Azmyth
+#  Azmyth ![Alt text](http://i.imgur.com/0eTNSws.png)
 Azmyth is a generic game framework used to create flexible RPG and adventure style games using procedural content generation.  
 
 #### Features include:
