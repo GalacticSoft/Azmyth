@@ -61,7 +61,9 @@ SOFTWARE.
 <td width="75%">
 <strong>Marissa Willow du Bois</strong>
 <br>
+<br>
 E-Mail: marissa@galacticsoft.net
+<br>
 <br>
 Homepage: http://www.galacticsoft.net
 </tr>
