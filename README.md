@@ -57,8 +57,8 @@ SOFTWARE.
 <p>
 <table >
 <tr>
-<td width="25%"><img src="http://i.imgur.com/H98nfdu.jpg" width="100%" height="100%" /></td>
-<td width="75%">
+<td><img src="http://i.imgur.com/H98nfdu.jpg" /></td>
+<td>
 Marissa du Bois
 
 marissa@galacticsoft.net
