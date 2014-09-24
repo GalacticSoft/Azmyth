@@ -57,8 +57,8 @@ SOFTWARE.
 <p>
 <table width="100%">
 <tr  width="100%">
-<td ><img src="http://i.imgur.com/H98nfdu.jpg" /></td>
-<td >
+<td width="100%"><img src="http://i.imgur.com/H98nfdu.jpg" /></td>
+<td width="100%">
 <strong>Marissa Willow du Bois</strong>
 <br>
 E-Mail: marissa@galacticsoft.net
