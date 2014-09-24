@@ -19,7 +19,7 @@ Azmyth is a generic game framework used to create flexible RPG and adventure sty
 ![ScreenShot](http://i.imgur.com/V0Nfvx6.png)
 
 - Height Map
-![ScreenShot](http://i.imgur.com/9lYTbOv.png
+![ScreenShot](http://i.imgur.com/9lYTbOv.png)
 
 - Temperature Map
 ![ScreenShot](http://i.imgur.com/PQq61hR.png)
