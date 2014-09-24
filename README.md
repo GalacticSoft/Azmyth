@@ -27,9 +27,6 @@ Azmyth is a generic game framework used to create flexible RPG and adventure sty
 #### XNA Demo
 ![ScreenShot](http://i.imgur.com/ntdXW7l.png)
 
-#### xxxxxxx
-	Created By Marissa du Bois
-
 #### License & Copyright
 
 Copyright (c) 2014 Marissa du Bois
