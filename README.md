@@ -55,14 +55,12 @@ SOFTWARE.
 
 #### Author
 <p>
-<table >
+<table border="0" width="100%">
 <tr>
 <td><img src="http://i.imgur.com/H98nfdu.jpg" /></td>
 <td>
 Marissa du Bois
-
 marissa@galacticsoft.net
-
 http://www.galacticsoft.net
 </tr>
 <p>
