@@ -55,7 +55,7 @@ SOFTWARE.
 
 #### Author
 <p>
-<table style="border:1px solid black;" width="100%">
+<table style="border:0px solid black;" width="100%">
 <tr >
 <td ><img src="http://i.imgur.com/H98nfdu.jpg" /></td>
 <td >
