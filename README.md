@@ -56,7 +56,7 @@ SOFTWARE.
 #### Author
 <p>
 <table style="border:0px solid black;" width="100%">
-<tr style="border:0px solid black;">
+<tr style="border:0px solid black;" width="100%">
 <td style="border:0px solid black;"><img src="http://i.imgur.com/H98nfdu.jpg" /></td>
 <td style="border:0px solid black;">
 <strong>Marissa Willow du Bois</strong>
