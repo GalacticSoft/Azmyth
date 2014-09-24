@@ -28,6 +28,11 @@ Azmyth is a generic game framework used to create flexible RPG and adventure sty
 ![ScreenShot](http://i.imgur.com/ntdXW7l.png)
 
 #### Author
+<table>
+<tr>
+<td><img src="https://www.facebook.com/photo.php?fbid=10201133560598426&l=de096f022f" /></td>
+</tr>
+
 Marissa du Bois
 
 <marissa@galacticsoft.net>
