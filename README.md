@@ -1,16 +1,12 @@
 #  Azmyth ![Alt text](http://i.imgur.com/0eTNSws.png)
 Azmyth is a generic game framework used to create flexible RPG and adventure style games using procedural content generation.  
-
-### Testing:
-
-	Test
 	
 #### Features include:
 - Extensible Asset system.
 - Terrain generation using Perlin Noise and QuadTrees.
 - Flexible Stat/Attribute system.
 - Markov Chain name/text generator.
- 
+
 #### Planned Features:
 - Biomes
 - Cities and Economic simulation.
@@ -30,6 +26,11 @@ Azmyth is a generic game framework used to create flexible RPG and adventure sty
 
 #### XNA Demo
 ![ScreenShot](http://i.imgur.com/ntdXW7l.png)
+
+#### Author
+Marissa du Bois
+<marissa@galacticsoft.net>
+<http://www.galacticsoft.net>
 
 #### License & Copyright
 
