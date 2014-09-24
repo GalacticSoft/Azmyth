@@ -11,7 +11,7 @@ Azmyth is a generic game framework used to create flexible RPG and adventure sty
 - Biomes
 - Cities and Economic simulation.
 - Races and Classes
-- Additional Noise generators (Worley, Simpex, etc)
+- Additional Noise generators (Worley, Simplex, etc)
 - Chunk loading
 
 #### Map Editor Screenshots
