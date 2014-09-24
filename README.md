@@ -27,10 +27,16 @@ Azmyth is a generic game framework used to create flexible RPG and adventure sty
 #### XNA Demo
 ![ScreenShot](http://i.imgur.com/ntdXW7l.png)
 
-#### License
-The MIT License (MIT)
+#### Author
+	Created By: Marissa du Bois
+	E-mail: marissa@galacticsoft.net
+	http://www.galacticsoft.net
+
+#### License & Copyright
 
 Copyright (c) 2014 Marissa du Bois
+
+The MIT License (MIT)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
