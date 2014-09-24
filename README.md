@@ -65,6 +65,6 @@ SOFTWARE.
 <strong>Contact:</strong> marissa@galacticsoft.net
 <br>
 <br>
-<strong>Homepage:</strong> http://www.galacticsoft.net
+<strong>Website:</strong> http://www.galacticsoft.net
 </tr>
 <p>
