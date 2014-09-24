@@ -57,7 +57,7 @@ SOFTWARE.
 <p>
 <table width="100%">
 <tr  width="100%">
-<td ><center><img src="http://i.imgur.com/H98nfdu.jpg" /></center></td>
+<td ><center><img src="http://i.imgur.com/H98nfdu.jpg" height="100%" width="100%" /></center></td>
 <td >
 <strong>Marissa Willow du Bois</strong>
 <br>
