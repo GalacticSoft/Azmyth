@@ -56,13 +56,13 @@ SOFTWARE.
 #### Author
 <p>
 <table border="0" width="100%">
-<tr>
-<td><img src="http://i.imgur.com/H98nfdu.jpg" /></td>
-<td>
-Marissa du Bois
+<tr border="0">
+<td border="0"><img src="http://i.imgur.com/H98nfdu.jpg" /></td>
+<td border="0">
+<strong>Marissa Willow du Bois<strong>
 <br>
-marissa@galacticsoft.net
+E-Mail: marissa@galacticsoft.net
 <br>
-http://www.galacticsoft.net
+Homepage: http://www.galacticsoft.net
 </tr>
 <p>
