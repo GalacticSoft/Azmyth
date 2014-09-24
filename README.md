@@ -55,9 +55,9 @@ SOFTWARE.
 
 #### Author
 <p>
-<table height="50px">
+<table >
 <tr>
-<td width="25%" ><img src="http://i.imgur.com/vmmEZ1S.jpg" width="100%" height="100%" /></td>
+<td width="25%" height="100px"><img src="http://i.imgur.com/vmmEZ1S.jpg" width="100%" height="100%" /></td>
 <td width="75%">
 Marissa du Bois
 
