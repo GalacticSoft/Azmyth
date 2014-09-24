@@ -9,13 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azmyth.Editor", "Azmyth.Edi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azmyth.Game", "Azmyth.Game\Azmyth.Game.csproj", "{3A7174F3-137B-4DD8-B9B3-34C9835314BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfiniteGrid", "InfiniteGrid\InfiniteGrid.csproj", "{C32F7027-89E7-4FAB-A860-AF18572B8F09}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Watch", "Watch\Watch.csproj", "{10B87859-9757-4A34-9F57-EBEC187F50BA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azmyth.XNA", "Azmyth.XNA\Azmyth.XNA\Azmyth.XNA.csproj", "{11E4F401-311B-48DD-BE84-390F9D25BA64}"
 EndProject
-Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "Azmyth.XNAContent", "Azmyth.XNA\Azmyth.XNAContent\Azmyth.XNAContent.contentproj", "{CA45188F-3174-43D7-AE17-43A7EB01D4B2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azmyth.XNAContent", "Azmyth.XNA\Azmyth.XNAContent\Azmyth.XNAContent.contentproj", "{CA45188F-3174-43D7-AE17-43A7EB01D4B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,26 +53,6 @@ Global
 		{3A7174F3-137B-4DD8-B9B3-34C9835314BF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{3A7174F3-137B-4DD8-B9B3-34C9835314BF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{3A7174F3-137B-4DD8-B9B3-34C9835314BF}.Release|x86.ActiveCfg = Release|Any CPU
-		{C32F7027-89E7-4FAB-A860-AF18572B8F09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C32F7027-89E7-4FAB-A860-AF18572B8F09}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C32F7027-89E7-4FAB-A860-AF18572B8F09}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{C32F7027-89E7-4FAB-A860-AF18572B8F09}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{C32F7027-89E7-4FAB-A860-AF18572B8F09}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{C32F7027-89E7-4FAB-A860-AF18572B8F09}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C32F7027-89E7-4FAB-A860-AF18572B8F09}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C32F7027-89E7-4FAB-A860-AF18572B8F09}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{C32F7027-89E7-4FAB-A860-AF18572B8F09}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{C32F7027-89E7-4FAB-A860-AF18572B8F09}.Release|x86.ActiveCfg = Release|Any CPU
-		{10B87859-9757-4A34-9F57-EBEC187F50BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{10B87859-9757-4A34-9F57-EBEC187F50BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{10B87859-9757-4A34-9F57-EBEC187F50BA}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{10B87859-9757-4A34-9F57-EBEC187F50BA}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{10B87859-9757-4A34-9F57-EBEC187F50BA}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{10B87859-9757-4A34-9F57-EBEC187F50BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{10B87859-9757-4A34-9F57-EBEC187F50BA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{10B87859-9757-4A34-9F57-EBEC187F50BA}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{10B87859-9757-4A34-9F57-EBEC187F50BA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{10B87859-9757-4A34-9F57-EBEC187F50BA}.Release|x86.ActiveCfg = Release|Any CPU
 		{11E4F401-311B-48DD-BE84-390F9D25BA64}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{11E4F401-311B-48DD-BE84-390F9D25BA64}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{11E4F401-311B-48DD-BE84-390F9D25BA64}.Debug|Mixed Platforms.Build.0 = Debug|x86
