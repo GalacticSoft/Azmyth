@@ -57,7 +57,7 @@ SOFTWARE.
 <p>
 <table>
 <tr>
-<td><img src="http://i.imgur.com/vmmEZ1S.jpg" width="25%" height="25%" /></td>
+<td><img src="http://i.imgur.com/vmmEZ1S.jpg" width="10%" height="10%" /></td>
 <td>
 Marissa du Bois
 
