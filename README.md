@@ -61,6 +61,8 @@ SOFTWARE.
 <td width="75%">
 <strong>Marissa Willow du Bois</strong>
 <br>
+Marissa is an avid programmer and has been developing software for the past sixteen years. She is currently employed as a programmer analyst developing accounting software for the wine industry.
+<br>
 <br>
 <strong>Contact:</strong> marissa@galacticsoft.net
 <br>
