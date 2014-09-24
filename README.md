@@ -60,7 +60,9 @@ SOFTWARE.
 <td><img src="http://i.imgur.com/H98nfdu.jpg" /></td>
 <td>
 Marissa du Bois
+<br>
 marissa@galacticsoft.net
+<br>
 http://www.galacticsoft.net
 </tr>
 <p>
