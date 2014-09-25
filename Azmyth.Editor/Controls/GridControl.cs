@@ -189,8 +189,21 @@ namespace Azmyth.Editor
                 PaintDebug(e.Graphics);
             }
 
+            e.Graphics.ResetTransform();
+            m = e.Graphics.Transform.Clone();
+            m.Translate(m_translateX, m_translateY);
+            m.Scale(m_scale, m_scale);
+            m.Rotate(m_rotateAngle);
+            e.Graphics.Transform = m;
+            foreach (PointF p in cityNames.Keys)
+            {
+                e.Graphics.DrawString(cityNames[p], m_debugFont, new SolidBrush(Color.White), p);
+            }
+
             PaintBorder(e.Graphics);
         }
+
+        Dictionary<PointF, string> cityNames;
 
         private void PaintCells(Graphics g)
         {
@@ -200,7 +213,7 @@ namespace Azmyth.Editor
             Room room = null;
             Color cellColor = Color.White;
 
-            Dictionary<PointF, string> cityNames = new Dictionary<PointF, string>();
+            cityNames = new Dictionary<PointF, string>();
 
             cellX = (int)m_viewport.Left;
             cellY = (int)m_viewport.Top;
@@ -291,10 +304,6 @@ namespace Azmyth.Editor
                     }
                 }
 
-                foreach(PointF p in cityNames.Keys)
-                {
-                    g.DrawString(cityNames[p], m_debugFont, new SolidBrush(Color.White), p);
-                }
             }
         }
 
