@@ -1,7 +1,8 @@
-using Azmyth.Procedural;
 using System;
-using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using Azmyth.Procedural;
 
 namespace Azmyth.Assets
 {
@@ -32,6 +33,8 @@ namespace Azmyth.Assets
         private Random m_random = new Random(500);
 
         QuadTree<Room> m_rooms = new QuadTree<Room>(new System.Drawing.Size(64, 64), 64);
+
+        private MarkovNameGenerator nameGenerator;
 
         public float CoastLine
         {
@@ -85,15 +88,14 @@ namespace Azmyth.Assets
 
         public World()
         {
+            nameGenerator = new MarkovNameGenerator("Abrielle,Acalia,Adair,Adara,Adriel,Aiyana,Alaire,Alissa,Alixandra,Altair,Amara,Anatola,Anya,Arcadia,Ariadne,Arianwen,Aurelia,Aurelian,Aurelius,Auristela,Avalon,Bastian,Breena,Briallan,Brielle,Briseis,Cambria,Cara,Carys,Caspian,Cassia,Cassiel,Cassiopeia,Cassius,Chaniel,Cora,Corbin,Cyprian,Dagen,Daire,Darius,Destin,Devlin,Devlyn,Drake,Drystan,Eira,Eirian,Eliron,Elysia,Eoin,Evadne,Evanth,Fineas,Finian,Fyodor,Gaerwn,Gareth,Gavriel,Ginerva,Griffin,Guinevere,Hadriel,Hannelore,Hermione,Hesperos,Iagan,Ianthe,Ignacia,Ignatius,Iseult,Isolde,Jessalyn,Kara,Katriel,Kerensa,Korbin,Kyler,Kyra,Kyrielle,Leala,Leila,Leira,Lilith,Liora,Liriene,Liron,Lucien,Lyra,Maia,Marius, Mathieu,Maylea,Meira,Mireille,Mireya,Natania,Neirin,Nerys,Nuriel,Nyfain,Nyssa,Oisin,Oleisa,Oralie,Orinthea,Orion,Orpheus,Ozara,Peregrine,Persephone,Perseus,Petronela,Phelan,Pryderi,Pyralia,Pyralis,Qadira,Quinevere,Quintessa,Raisa,Remus,Renfrew,Rhyan,Rhydderch,Riona,Saira,Saoirse,Sarai,Sarielle,Sebastian,Seraphim,Seraphina,Serian,Sirius,Sorcha,Séverin,Tavish,Tearlach,Terra,Thalia,Thaniel,Theia,Torian,Torin,Tressa,Tristana,Ulyssia,Uriela,Urien,Vanora,Vasilis,Vespera,Xanthus,Xara,Xylia,Yadira,Yakira,Yeira,Yeriel,Yestin,Yseult,Zaira,Zaniel,Zarek,Zephyr,Zora,Zorion".Split(','), 2);
+        
             UpdateGenerators();
         }
 
-        public World(VectorID worldID)
+        public World(VectorID worldID) : this()
         {
             AssetID = worldID;
-
-
-            UpdateGenerators();
         }
 
 
@@ -125,60 +127,70 @@ namespace Azmyth.Assets
                 room.m_value = (float)m_terrain.GetValue(x, y);
 
                 if (room.Height <= m_coastLine)
-                    room.m_terrain = TerrainTypes.Ocean;
+                {
+                    room.Terrain = TerrainTypes.Ocean;
+                }
 
                 if (room.Height > m_coastLine && room.Height <= (m_coastLine + ((m_terrainHeight - m_coastLine) * m_shoreLine)))
-                    room.m_terrain = TerrainTypes.Sand;
+                {
+                    room.Terrain = TerrainTypes.Sand;
+                }
 
                 if (room.Height > m_coastLine + ((m_terrainHeight - m_coastLine) * m_shoreLine))
-                    room.m_terrain = TerrainTypes.Dirt;
+                {
+                    room.Terrain = TerrainTypes.Dirt;
+                }
 
                 if (room.Height > m_coastLine + ((m_terrainHeight - m_coastLine) * m_treeLine))
-                    room.m_terrain = TerrainTypes.Mountain;
+                {
+                    room.Terrain = TerrainTypes.Mountain;
+                }
 
                 if (room.Height > m_coastLine)
                 {
                     if (Math.Abs(m_stones.GetHeight(x, y)) >= .95f)
-                        room.m_terrain = TerrainTypes.Stone;
+                        room.Terrain = TerrainTypes.Stone;
 
                     if (Math.Floor(m_randomNoise.GetValue(x, y) * 100) < 1)
-                        room.m_terrain = TerrainTypes.Stone;
+                        room.Terrain = TerrainTypes.Stone;
                 }
 
                 if (room.Height > m_coastLine + ((m_terrainHeight - m_coastLine) * m_snowLine))
-                    room.m_terrain = TerrainTypes.Snow;
+                {
+                    room.Terrain = TerrainTypes.Snow;
+                }
 
                 if (room.Height > m_coastLine + ((m_terrainHeight - m_coastLine) * m_treeLine))
                 {
                     if (Math.Abs(m_lava.GetHeight(x, y)) >= .99f)
                     {
-                        room.m_terrain = TerrainTypes.Lava;
+                        room.Terrain = TerrainTypes.Lava;
                     }
                 }
 
-                if (room.m_terrain != TerrainTypes.Ocean)
+                if (room.Terrain != TerrainTypes.Ocean)
                 {
-                    if (room.m_terrain != TerrainTypes.Snow)
+                    if (room.Terrain != TerrainTypes.Snow)
                     {
                         if (Math.Abs(m_rivers.GetHeight(x, y)) < m_terrainHeight * .06)
                         {
-                            room.m_terrain = TerrainTypes.Sand;
+                            room.Terrain = TerrainTypes.Sand;
                         }
                         if (Math.Abs(m_rivers.GetHeight(x, y)) < m_terrainHeight * .03)
                         {
-                            room.m_terrain = TerrainTypes.River;
+                            room.Terrain = TerrainTypes.River;
                         }
                     }
                     else
                     {
                         if (Math.Abs(m_rivers.GetHeight(x, y)) < m_terrainHeight * .03)
                         {
-                            room.m_terrain = TerrainTypes.Ice;
+                            room.Terrain = TerrainTypes.Ice;
                         }
                     }
                 }
 
-                if (room.m_terrain != TerrainTypes.Ocean && room.m_terrain != TerrainTypes.River && room.m_terrain != TerrainTypes.Lava)
+                if (room.Terrain != TerrainTypes.Ocean && room.Terrain != TerrainTypes.River && room.Terrain != TerrainTypes.Lava)
                 {
                     if (m_city.GetValue(x, y) * 100 <= .02)
                     {
@@ -188,8 +200,8 @@ namespace Azmyth.Assets
             }
 
             room.m_temp = Math.Abs((int)Math.Round(m_tempurature.GetHeight(x, y), 0));
-            room.m_tempVal =m_tempurature.GetValue(x, y);
-
+            room.m_tempVal = m_tempurature.GetValue(x, y);
+           
             return room;
         }
 
@@ -198,15 +210,23 @@ namespace Azmyth.Assets
             Task.Factory.StartNew(target =>
             {
                 //use thread pool to create city without slowing down creation.
-                m_rooms.Insert(new Room() { GridX = x, GridY = y, Bounds = new System.Drawing.RectangleF(x, y, 1, 1), Height = 0, m_terrain = TerrainTypes.Black });
+                m_rooms.Insert(new Room() 
+                { 
+                    GridX = x, 
+                    GridY = y,
+                    Height = 0,
+                    Terrain = TerrainTypes.City, 
+                    Bounds = new System.Drawing.RectangleF(x, y, 1, 1), 
+                    Name = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(nameGenerator.Next()) 
+                });
 
-                m_rooms.Insert(new Room() { GridX = x + 1, GridY = y + 1, Bounds = new System.Drawing.RectangleF(x + 1, y + 1, 1, 1), Height = 0, m_terrain = TerrainTypes.Black });
+                //m_rooms.Insert(new Room() { GridX = x + 1, GridY = y + 1, Bounds = new System.Drawing.RectangleF(x + 1, y + 1, 1, 1), Height = 0, m_terrain = TerrainTypes.Black });
 
-                m_rooms.Insert(new Room() { GridX = x + -1, GridY = y + -1, Bounds = new System.Drawing.RectangleF(x + -1, y + -1, 1, 1), Height = 0, m_terrain = TerrainTypes.Black });
+                //m_rooms.Insert(new Room() { GridX = x + -1, GridY = y + -1, Bounds = new System.Drawing.RectangleF(x + -1, y + -1, 1, 1), Height = 0, m_terrain = TerrainTypes.Black });
 
-                m_rooms.Insert(new Room() { GridX = x + 1, GridY = y + -1, Bounds = new System.Drawing.RectangleF(x + 1, y + -1, 1, 1), Height = 0, m_terrain = TerrainTypes.Black });
+                //m_rooms.Insert(new Room() { GridX = x + 1, GridY = y + -1, Bounds = new System.Drawing.RectangleF(x + 1, y + -1, 1, 1), Height = 0, m_terrain = TerrainTypes.Black });
 
-                m_rooms.Insert(new Room() { GridX = x + -1, GridY = y + 1, Bounds = new System.Drawing.RectangleF(x + -1, y + 1, 1, 1), Height = 0, m_terrain = TerrainTypes.Black });
+                //m_rooms.Insert(new Room() { GridX = x + -1, GridY = y + 1, Bounds = new System.Drawing.RectangleF(x + -1, y + 1, 1, 1), Height = 0, m_terrain = TerrainTypes.Black });
             }, System.Threading.CancellationToken.None);
         }
 

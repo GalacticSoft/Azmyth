@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Azmyth.Procedural;
 
 namespace Azmyth.Assets
 {
@@ -21,5 +22,6 @@ namespace Azmyth.Assets
     {
         public CitySize CitySize { get; set; }
         private int m_seed = 0;
+        
     }
 }

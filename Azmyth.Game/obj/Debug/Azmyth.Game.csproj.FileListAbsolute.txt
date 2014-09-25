@@ -5,3 +5,10 @@ C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Game\bin\Debug\Azmyth.pdb
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Game\obj\Debug\Azmyth.Game.csprojResolveAssemblyReference.cache
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Game\obj\Debug\Azmyth.Game.dll
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Game\obj\Debug\Azmyth.Game.pdb
+M:\GalacticSoft\Azmyth\Azmyth.Game\bin\Debug\Azmyth.Game.dll
+M:\GalacticSoft\Azmyth\Azmyth.Game\bin\Debug\Azmyth.Game.pdb
+M:\GalacticSoft\Azmyth\Azmyth.Game\bin\Debug\Azmyth.dll
+M:\GalacticSoft\Azmyth\Azmyth.Game\bin\Debug\Azmyth.pdb
+M:\GalacticSoft\Azmyth\Azmyth.Game\obj\Debug\Azmyth.Game.csprojResolveAssemblyReference.cache
+M:\GalacticSoft\Azmyth\Azmyth.Game\obj\Debug\Azmyth.Game.dll
+M:\GalacticSoft\Azmyth\Azmyth.Game\obj\Debug\Azmyth.Game.pdb

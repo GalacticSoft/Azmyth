@@ -21,18 +21,19 @@ namespace Azmyth.XNA
     
     public class Azmyth : Microsoft.Xna.Framework.Game
     {
-        int frameRate = 0;
-        int frameCounter = 0;
-        TimeSpan elapsedTime = TimeSpan.Zero;
+        private int offsetY = 0;
+        private int offsetX = 0;
+        private int frameRate = 0;
+        private int frameCounter = 0;
+       
+        private World world;
+        private SpriteFont spriteFont;
+        private SpriteBatch spriteBatch;
+        private GraphicsDeviceManager graphics;
+        private TimeSpan elapsedTime = TimeSpan.Zero;
+        private KeyboardState oldState = Keyboard.GetState();
+        private Dictionary<TerrainTypes, Texture2D> _textures = new Dictionary<TerrainTypes, Texture2D>();
 
-        int offsetY = 0;
-        int offsetX = 0;
-        World world;
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        Dictionary<TerrainTypes, Texture2D> _textures = new Dictionary<TerrainTypes, Texture2D>();
-        SpriteFont spriteFont;
-        
         public Azmyth()
         {
             world = new World();
@@ -103,10 +104,12 @@ namespace Azmyth.XNA
             _textures.Add(TerrainTypes.Black, texture);
 
             texture = new Texture2D(GraphicsDevice, 1, 1);
+            texture.SetData(new Color[] { Color.Yellow });
+            _textures.Add(TerrainTypes.City, texture);
+
+            texture = new Texture2D(GraphicsDevice, 1, 1);
             texture.SetData(new Color[] { Color.Cyan });
             _textures.Add(TerrainTypes.Ice, texture);
-
-
         }
 
         /// <summary>
@@ -117,7 +120,7 @@ namespace Azmyth.XNA
         {
             // TODO: Unload any non ContentManager content here
         }
-        KeyboardState oldState = Keyboard.GetState();
+       
         
         /// <summary>
         /// Allows the game to run logic such as updating the world,
@@ -138,8 +141,6 @@ namespace Azmyth.XNA
                 frameRate = frameCounter;
                 frameCounter = 0;
             }
-
-            
 
             KeyboardState newState = Keyboard.GetState();
 
@@ -191,6 +192,7 @@ namespace Azmyth.XNA
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            Dictionary<Vector2, string> cityNames = new Dictionary<Vector2, string>();
             GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin(SpriteSortMode.Immediate, null,null,null,null,null,
@@ -208,8 +210,15 @@ namespace Azmyth.XNA
                 if (cellX == (GraphicsDevice.Viewport.Width / 24) / 2 && cellY == (GraphicsDevice.Viewport.Height / 24) / 2)
                     spriteBatch.Draw(_textures[TerrainTypes.Black], new Rectangle(cellX * 24, cellY * 24, 24, 24), Color.White);
                 else
-                    spriteBatch.Draw(_textures[room.m_terrain], new Rectangle(cellX * 24, cellY * 24, 24, 24), Color.White);
-                   
+                {
+                    spriteBatch.Draw(_textures[room.Terrain], new Rectangle(cellX * 24, cellY * 24, 24, 24), Color.White);
+                }
+
+                if(room.Terrain == TerrainTypes.City)
+                {
+                    cityNames.Add(new Vector2((cellX * 24)+24, (cellY * 24)+24), room.Name);
+                }
+                                   
                 cellX++;
 
                 if (cellX > (GraphicsDevice.Viewport.Width / 24))
@@ -219,12 +228,17 @@ namespace Azmyth.XNA
                 }
             }
 
+            foreach(Vector2 p in cityNames.Keys)
+            {
+                spriteBatch.DrawString(spriteFont, cityNames[p], p, Color.Black);
+                spriteBatch.DrawString(spriteFont, cityNames[p], new Vector2(p.X+2, p.Y+2), Color.White); 
+            }
             frameCounter++;
 
             string fps = string.Format("fps: {0}", frameRate);
 
             spriteBatch.DrawString(spriteFont, fps, new Vector2(1, 1), Color.Black);
-            spriteBatch.DrawString(spriteFont, fps, new Vector2(3, 3), Color.White);
+            spriteBatch.DrawString(spriteFont, fps, new Vector2(2, 2), Color.White);
 
             spriteBatch.End();
 

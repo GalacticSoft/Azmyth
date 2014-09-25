@@ -5,7 +5,7 @@ namespace Azmyth.Assets
     public class Room : Asset
     {
 
-        public TerrainTypes m_terrain;
+        private TerrainTypes m_terrain;
         private float m_height;
         public float m_value;
         public double m_temp;
@@ -21,6 +21,13 @@ namespace Azmyth.Assets
             get { return m_height; }
             set { m_height = value;  }
         }
+
+        public TerrainTypes Terrain
+        {
+            get { return m_terrain; }
+            set { m_terrain = value; }
+        }
+
         public Room()
         {
 

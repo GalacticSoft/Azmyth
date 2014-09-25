@@ -19,9 +19,10 @@ namespace Azmyth.Assets
         Lava        = 8,
         Ice         = 9,
         Black       = 10,
+        City        = 11,
     }
 
-    public class Terrain
+    public class Terrains
     {
         private TerrainTypes m_terrainType = TerrainTypes.Ocean;
 

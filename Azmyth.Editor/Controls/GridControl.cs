@@ -200,6 +200,8 @@ namespace Azmyth.Editor
             Room room = null;
             Color cellColor = Color.White;
 
+            Dictionary<PointF, string> cityNames = new Dictionary<PointF, string>();
+
             cellX = (int)m_viewport.Left;
             cellY = (int)m_viewport.Top;
             totalCells = (int)((m_viewport.Width + 1) * (m_viewport.Height + 1));
@@ -232,7 +234,7 @@ namespace Azmyth.Editor
                     }
                     else
                     {
-                        switch (room.m_terrain)
+                        switch (room.Terrain)
                         {
                             case TerrainTypes.Ocean:
                                 cellColor = Color.FromArgb(255, 0, 0, 255 - rgb);
@@ -262,7 +264,11 @@ namespace Azmyth.Editor
                                 cellColor = Color.Cyan;
                                 break;
                             case TerrainTypes.Black:
+                                cellColor = Color.Black;
+                                break;
+                            case TerrainTypes.City:
                                 cellColor = Color.Yellow;
+                                cityNames.Add(new PointF((cellX * m_cellWidth) + m_cellWidth, (cellY * m_cellHeight) + m_cellHeight), room.Name);
                                 break;
                         }
                     }
@@ -283,6 +289,11 @@ namespace Azmyth.Editor
                         cellY++;
                         cellX = (int)m_viewport.Left;
                     }
+                }
+
+                foreach(PointF p in cityNames.Keys)
+                {
+                    g.DrawString(cityNames[p], m_debugFont, new SolidBrush(Color.White), p);
                 }
             }
         }
