@@ -74,7 +74,8 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Azmyth.cs" />
+    <Compile Include="AzmythGame.cs" />
+    <Compile Include="MainMenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
@@ -94,6 +95,10 @@
     <ProjectReference Include="..\Azmyth.XNAContent\Azmyth.XNAContent.contentproj">
       <Name>Azmyth.XNAContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\codergirl\Desktop\GalacticSoft\XnaGUILib\XnaGUILib\XnaGUILib.csproj">
+      <Project>{2a3c4d27-a40c-4dc0-81c1-884badc0c9aa}</Project>
+      <Name>XnaGUILib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -10,7 +10,7 @@ namespace Azmyth.XNA
         /// </summary>
         static void Main(string[] args)
         {
-            using (Azmyth game = new Azmyth())
+            using (AzmythGame game = new AzmythGame())
             {
                 game.Run();
             }

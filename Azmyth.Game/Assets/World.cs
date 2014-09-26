@@ -33,6 +33,7 @@ namespace Azmyth.Assets
         private Random m_random = new Random(500);
 
         QuadTree<Room> m_rooms = new QuadTree<Room>(new System.Drawing.Size(64, 64), 64);
+        QuadTree<City> m_cities = new QuadTree<City>(new System.Drawing.Size(64, 64), 64);
 
         private MarkovNameGenerator nameGenerator;
 
@@ -194,7 +195,8 @@ namespace Azmyth.Assets
                 {
                     if (m_city.GetValue(x, y) * 100 <= .02)
                     {
-                        CreateCity(x, y);
+                        
+                        CreateCity(room);
                     }
                 }
             }
@@ -205,29 +207,43 @@ namespace Azmyth.Assets
             return room;
         }
 
-        public void CreateCity(int x, int y)
+        public void CreateCity(Room room)
         {
-            Task.Factory.StartNew(target =>
+           /// Task.Factory.StartNew(target =>
+            //{
+
+                City city = new City();
+                city.GridX = room.GridX;
+                city.GridY = room.GridY;
+                city.Bounds = new System.Drawing.RectangleF(room.GridX, room.GridY, 1, 1);
+
+                if (room.Terrain == TerrainTypes.Sand)
+                    city.CitySize = CitySize.Port;
+                else
+                    city.CitySize = (CitySize)m_random.Next(1, (int)CitySize.Kingdom + 1);
+
+                city.Name = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(nameGenerator.Next());
+               
+                room.Name = "The " + city.CitySize + " of " + city.Name;
+                room.Terrain = TerrainTypes.City;
+                room.Bounds = new System.Drawing.RectangleF(room.GridX, room.GridY, 1, 1);
+
+                m_rooms.Insert(room);
+                m_cities.Insert(city);
+           // }, System.Threading.CancellationToken.None);
+        }
+
+        public City GetCity(int x, int y)
+        {
+            City city = null;
+            List<City> cities = m_cities.Query(new System.Drawing.RectangleF(x, y, 1, 1));
+
+            if (cities.Count > 0)
             {
-                //use thread pool to create city without slowing down creation.
-                m_rooms.Insert(new Room() 
-                { 
-                    GridX = x, 
-                    GridY = y,
-                    Height = 0,
-                    Terrain = TerrainTypes.City, 
-                    Bounds = new System.Drawing.RectangleF(x, y, 1, 1), 
-                    Name = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(nameGenerator.Next()) 
-                });
+                city = cities[0];
+            }
 
-                //m_rooms.Insert(new Room() { GridX = x + 1, GridY = y + 1, Bounds = new System.Drawing.RectangleF(x + 1, y + 1, 1, 1), Height = 0, m_terrain = TerrainTypes.Black });
-
-                //m_rooms.Insert(new Room() { GridX = x + -1, GridY = y + -1, Bounds = new System.Drawing.RectangleF(x + -1, y + -1, 1, 1), Height = 0, m_terrain = TerrainTypes.Black });
-
-                //m_rooms.Insert(new Room() { GridX = x + 1, GridY = y + -1, Bounds = new System.Drawing.RectangleF(x + 1, y + -1, 1, 1), Height = 0, m_terrain = TerrainTypes.Black });
-
-                //m_rooms.Insert(new Room() { GridX = x + -1, GridY = y + 1, Bounds = new System.Drawing.RectangleF(x + -1, y + 1, 1, 1), Height = 0, m_terrain = TerrainTypes.Black });
-            }, System.Threading.CancellationToken.None);
+            return city;
         }
 
         public override void AddAsset(Asset asset)

@@ -9,13 +9,11 @@ namespace Azmyth.Assets
     public enum CitySize
     {
         None = 0,
-        Camp = 1,
-        Village = 3,
-        Township = 4,
-        Town = 4,
+        Village = 1,
+        Town = 2,
+        City = 3,
+        Kingdom = 4,
         Port = 5,
-        City = 6,
-        Castle = 7
     }
 
     public class City : Area

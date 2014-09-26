@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azmyth.XNA", "Azmyth.XNA\Az
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azmyth.XNAContent", "Azmyth.XNA\Azmyth.XNAContent\Azmyth.XNAContent.contentproj", "{CA45188F-3174-43D7-AE17-43A7EB01D4B2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XnaGUILib", "C:\Users\codergirl\Desktop\GalacticSoft\XnaGUILib\XnaGUILib\XnaGUILib.csproj", "{2A3C4D27-A40C-4DC0-81C1-884BADC0C9AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,16 @@ Global
 		{CA45188F-3174-43D7-AE17-43A7EB01D4B2}.Release|Any CPU.ActiveCfg = Release|x86
 		{CA45188F-3174-43D7-AE17-43A7EB01D4B2}.Release|Mixed Platforms.ActiveCfg = Release|x86
 		{CA45188F-3174-43D7-AE17-43A7EB01D4B2}.Release|x86.ActiveCfg = Release|x86
+		{2A3C4D27-A40C-4DC0-81C1-884BADC0C9AA}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{2A3C4D27-A40C-4DC0-81C1-884BADC0C9AA}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{2A3C4D27-A40C-4DC0-81C1-884BADC0C9AA}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{2A3C4D27-A40C-4DC0-81C1-884BADC0C9AA}.Debug|x86.ActiveCfg = Debug|x86
+		{2A3C4D27-A40C-4DC0-81C1-884BADC0C9AA}.Debug|x86.Build.0 = Debug|x86
+		{2A3C4D27-A40C-4DC0-81C1-884BADC0C9AA}.Release|Any CPU.ActiveCfg = Release|x86
+		{2A3C4D27-A40C-4DC0-81C1-884BADC0C9AA}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{2A3C4D27-A40C-4DC0-81C1-884BADC0C9AA}.Release|Mixed Platforms.Build.0 = Release|x86
+		{2A3C4D27-A40C-4DC0-81C1-884BADC0C9AA}.Release|x86.ActiveCfg = Release|x86
+		{2A3C4D27-A40C-4DC0-81C1-884BADC0C9AA}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

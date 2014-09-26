@@ -15,6 +15,7 @@ namespace Azmyth.Assets
             AddAssetType(typeof(World));
             AddAssetType(typeof(Area));
             AddAssetType(typeof(Room));
+            AddAssetType(typeof(City));
         }
 
         public static VectorID CreateWorld()
@@ -26,6 +27,11 @@ namespace Azmyth.Assets
             world.Name = "World " + world.AssetID.ID;
 
             return  worldID;
+        }
+
+        public static VectorID CreateCity()
+        {
+            return Store.CreateAsset(typeof(City));
         }
 
         public static VectorID CreateArea()
@@ -81,6 +87,11 @@ namespace Azmyth.Assets
         public static Room GetRoom(VectorID roomID)
         {
             return Store[roomID] as Room;
+        }
+
+        public static City GetCity(VectorID cityID)
+        {
+            return Store[cityID] as City;
         }
     }
 }

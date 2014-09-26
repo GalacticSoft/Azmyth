@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Media;
 using Azmyth.Assets;
 using Azmyth;
 using Azmyth.Procedural;
+using XnaGUILib;
 
 namespace Azmyth.XNA
 {
@@ -19,14 +20,14 @@ namespace Azmyth.XNA
     /// </summary>
     
     
-    public class Azmyth : Microsoft.Xna.Framework.Game
+    public class AzmythGame : Microsoft.Xna.Framework.Game
     {
         private int offsetY = 0;
         private int offsetX = 0;
         private int frameRate = 0;
         private int frameCounter = 0;
        
-        private World world;
+        public World World = null;
         private SpriteFont spriteFont;
         private SpriteBatch spriteBatch;
         private GraphicsDeviceManager graphics;
@@ -34,9 +35,11 @@ namespace Azmyth.XNA
         private KeyboardState oldState = Keyboard.GetState();
         private Dictionary<TerrainTypes, Texture2D> _textures = new Dictionary<TerrainTypes, Texture2D>();
 
-        public Azmyth()
+        private MainMenu m_mainMenu;
+
+        public AzmythGame()
         {
-            world = new World();
+            //world = new World();
 
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -50,9 +53,19 @@ namespace Azmyth.XNA
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
             base.Initialize();
+
+            XnaGUIManager.Initialize(this);
+
+
+            m_mainMenu = new MainMenu(this);
+
+
+            XGControl.BkgColor = Color.Black;
+            XGControl.ControlColor = Color.Gray;
+            XGControl.ForeColor = Color.White;
+
+            this.IsMouseVisible = true; // display the GUI
         }
 
         /// <summary>
@@ -61,10 +74,7 @@ namespace Azmyth.XNA
         /// </summary>
         protected override void LoadContent()
         {
-
             spriteFont = Content.Load<SpriteFont>("Font");
-
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             Texture2D texture = new Texture2D(GraphicsDevice, 1, 1);
@@ -118,7 +128,6 @@ namespace Azmyth.XNA
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
         }
        
         
@@ -144,26 +153,34 @@ namespace Azmyth.XNA
 
             KeyboardState newState = Keyboard.GetState();
 
-            // Check to see whether the Spacebar is down.
-            //if (newState.IsKeyDown(Keys.Space))
-            //{
-                // Key has just been pressed.
-            //}
-            // Otherwise, check to see whether it was down before.
-            // (and therefore just released)
+            if (oldState.IsKeyDown(Keys.Escape) && newState.IsKeyUp(Keys.Escape))
+            {
+                if (World != null)
+                {
+                    m_mainMenu.ToggleVisible();
+                }
+
+            }
+
             if (oldState.IsKeyDown(Keys.Left) && newState.IsKeyUp(Keys.Left))
             {
                 offsetX--;
             }
 
             if (oldState.IsKeyDown(Keys.Right) && newState.IsKeyUp(Keys.Right))
+            {
                 offsetX++;
- 
+            }
+
             if (oldState.IsKeyDown(Keys.Up) && newState.IsKeyUp(Keys.Up))
+            {
                 offsetY--;
+            }
 
             if (oldState.IsKeyDown(Keys.Down) && newState.IsKeyUp(Keys.Down))
+            {
                 offsetY++;
+            }
             
             if(oldState.IsKeyDown(Keys.OemPlus))
             {
@@ -183,7 +200,9 @@ namespace Azmyth.XNA
             }
 
             oldState = newState;
+            XnaGUIManager.Update(gameTime);
             base.Update(gameTime);
+            
         }
 
         /// <summary>
@@ -192,58 +211,67 @@ namespace Azmyth.XNA
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            Dictionary<Vector2, string> cityNames = new Dictionary<Vector2, string>();
             GraphicsDevice.Clear(Color.Black);
 
-            spriteBatch.Begin(SpriteSortMode.Immediate, null,null,null,null,null,
-                Matrix.CreateTranslation(0, 0, 0));
+            if (World != null)
+            {
+                Dictionary<Vector2, string> cityNames = new Dictionary<Vector2, string>();
+                
+                spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, null,
+                    Matrix.CreateTranslation(0, 0, 0));
 
-            int cellX = GraphicsDevice.Viewport.X;
-            int cellY = GraphicsDevice.Viewport.Y;
+                int cellX = GraphicsDevice.Viewport.X;
+                int cellY = GraphicsDevice.Viewport.Y;
 
-            int totalCells = ((GraphicsDevice.Viewport.Width / 24) * ((GraphicsDevice.Viewport.Height / 24) + 1));
+                int totalCells = ((GraphicsDevice.Viewport.Width / 24) * ((GraphicsDevice.Viewport.Height / 24) + 1));
+
+                for (int index = 0; index < totalCells; index++)
+                {
+                    Room room = World.GetRoom(cellX + offsetX, cellY + offsetY);
+
+                    if (cellX == (GraphicsDevice.Viewport.Width / 24) / 2 && cellY == (GraphicsDevice.Viewport.Height / 24) / 2)
+                    {
+                        spriteBatch.Draw(_textures[TerrainTypes.Black], new Rectangle(cellX * 24, cellY * 24, 24, 24), Color.White);
+                    }
+                    else
+                    {
+                        spriteBatch.Draw(_textures[room.Terrain], new Rectangle(cellX * 24, cellY * 24, 24, 24), Color.White);
+                    }
+
+                    if (room.Terrain == TerrainTypes.City)
+                    {
+                        cityNames.Add(new Vector2((cellX * 24) + 24, (cellY * 24) + 24), room.Name);
+                    }
+
+                    cellX++;
+
+                    if (cellX > (GraphicsDevice.Viewport.Width / 24))
+                    {
+                        cellY++;
+                        cellX = GraphicsDevice.Viewport.X;
+                    }
+                }
+
+                foreach (Vector2 p in cityNames.Keys)
+                {
+                    spriteBatch.DrawString(spriteFont, cityNames[p], p, Color.Black);
+                }
+
+                frameCounter++;
+
+                string fps = string.Format("fps: {0}", frameRate);
+
+                spriteBatch.DrawString(spriteFont, fps, new Vector2(1, 1), Color.Black);
+                spriteBatch.DrawString(spriteFont, fps, new Vector2(2, 2), Color.White);
+
+                spriteBatch.End();
+            }
+
+            float frameTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             
-            for (int index = 0; index < totalCells; index++)
-            {
-                Room room = world.GetRoom(cellX + offsetX, cellY + offsetY);
-
-                if (cellX == (GraphicsDevice.Viewport.Width / 24) / 2 && cellY == (GraphicsDevice.Viewport.Height / 24) / 2)
-                    spriteBatch.Draw(_textures[TerrainTypes.Black], new Rectangle(cellX * 24, cellY * 24, 24, 24), Color.White);
-                else
-                {
-                    spriteBatch.Draw(_textures[room.Terrain], new Rectangle(cellX * 24, cellY * 24, 24, 24), Color.White);
-                }
-
-                if(room.Terrain == TerrainTypes.City)
-                {
-                    cityNames.Add(new Vector2((cellX * 24)+24, (cellY * 24)+24), room.Name);
-                }
-                                   
-                cellX++;
-
-                if (cellX > (GraphicsDevice.Viewport.Width / 24))
-                {
-                    cellY++;
-                    cellX = GraphicsDevice.Viewport.X;
-                }
-            }
-
-            foreach(Vector2 p in cityNames.Keys)
-            {
-                spriteBatch.DrawString(spriteFont, cityNames[p], p, Color.Black);
-                spriteBatch.DrawString(spriteFont, cityNames[p], new Vector2(p.X+2, p.Y+2), Color.White); 
-            }
-            frameCounter++;
-
-            string fps = string.Format("fps: {0}", frameRate);
-
-            spriteBatch.DrawString(spriteFont, fps, new Vector2(1, 1), Color.Black);
-            spriteBatch.DrawString(spriteFont, fps, new Vector2(2, 2), Color.White);
-
-            spriteBatch.End();
-
+            XnaGUIManager.Draw(frameTime);
+            
             base.Draw(gameTime);
         }
-
     }
 }
