@@ -19,7 +19,7 @@ namespace Azmyth.XNA
     /// <summary>
     /// Azmyth Main Menu
     /// </summary>
-    public class MainMenu : XGControl
+    public class frmMainMenu : XGControl
     {
         public AzmythGame Game;
 
@@ -30,7 +30,7 @@ namespace Azmyth.XNA
         public XGButton btnSettings { get; protected set; }
         public XGButton btnExit { get; protected set; }
 
-        public MainMenu(AzmythGame game)
+        public frmMainMenu(AzmythGame game)
             : base(new Rectangle(0, 0, 300, 300), true)
         {
             Game = game;
@@ -43,12 +43,11 @@ namespace Azmyth.XNA
             btnCreateWorld = new XGButton(new Rectangle(10, 10, 280, 30), "Create World", this.btnCreateWorld_Clicked);
             btnSaveWorld = new XGButton(new Rectangle(10, 50, 280, 30), "Save World", this.btnCreateWorld_Clicked);
             btnLoadWorld = new XGButton(new Rectangle(10, 90, 280, 30), "Load World", this.btnCreateWorld_Clicked);
-            btnSettings = new XGButton(new Rectangle(10, 130, 280, 30), "Settings", this.btnCreateWorld_Clicked);
+            btnSettings = new XGButton(new Rectangle(10, 130, 280, 30), "Settings", this.btnSettings_Clicked);
             btnExit = new XGButton(new Rectangle(10, 170, 280, 30), "Exit", this.btnExit_Clicked);
 
             btnSaveWorld.Enabled = false;
             btnLoadWorld.Enabled = false;
-            btnSettings.Enabled = false;
 
             Children.Add(pnlMain);
             pnlMain.Children.Add(btnCreateWorld);
@@ -62,8 +61,13 @@ namespace Azmyth.XNA
         {
             VectorID worldID = Azmyth.Assets.Assets.CreateWorld();
             Game.World = Azmyth.Assets.Assets.GetWorld(worldID);
+        }
 
-            //ToggleVisible();
+        void btnSettings_Clicked(XGControl sender)
+        {
+            Game.ShowMenu(false);
+            Game.ShowSettings(true);
+
         }
 
         void btnExit_Clicked(XGControl sender)
@@ -71,13 +75,16 @@ namespace Azmyth.XNA
             Game.Exit();
         }
 
-        public void ToggleVisible()
+        public void Show()
         {
-            Visible = !Visible;
-            btnCreateWorld.Enabled = !btnCreateWorld.Enabled;
-            btnExit.Enabled = !btnExit.Enabled;
-            btnSaveWorld.Enabled = false;
-            btnLoadWorld.Enabled = false;
+            this.Enabled = true;
+            this.Visible = true;
+        }
+
+        public void Close()
+        {
+            this.Enabled = false;
+            this.Visible = false;
         }
 
         public override void Update(GameTime gameTime)

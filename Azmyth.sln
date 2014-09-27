@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azmyth.XNA", "Azmyth.XNA\Az
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azmyth.XNAContent", "Azmyth.XNA\Azmyth.XNAContent\Azmyth.XNAContent.contentproj", "{CA45188F-3174-43D7-AE17-43A7EB01D4B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XnaGUILib", "C:\Users\codergirl\Desktop\GalacticSoft\XnaGUILib\XnaGUILib\XnaGUILib.csproj", "{2A3C4D27-A40C-4DC0-81C1-884BADC0C9AA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XnaGUILib", "XnaGUILib\XnaGUILib.csproj", "{2A3C4D27-A40C-4DC0-81C1-884BADC0C9AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

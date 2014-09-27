@@ -1,0 +1,24 @@
+﻿//
+// Change Log for XnaGUILib (XNA Tool GUI Library)
+//
+==================================================================
+9/17/2010
+--------
+-Added keyboard tab/backtab handling in XnaGUIManager to change focus of controls.
+    (tab to next control, backtab to previous control)
+-Added changing checked state using keyboard spacebar
+-Added button click action to spacebar when button has focus
+-Added various methods in XnaGUIManager and XGControl to assist with keyboard tab handling.
+    (see various Activate... methods)
+-Fixed a bug in XGTree that caused firstItem in XGTreeDrawingContext to get out of whack in some cases.
+    (caused improper item to be selected on click)
+==================================================================
+9/20/2010
+---------
+-Modified all Update(...) methods in XnaGUIManager and Controls to take GameTime instead of float frameTime.
+-Added Min/Max range to XGHSlider (see SetRange(...))
+-Added XGLabeledSlider control (uses XGHSlider) adds label on left and value label on right
+-Modified XGButton to fill with ControlDarkColor so that it doesn't look like a Text Box
+-Modified example code to create a tab page class (ToolPage class seperated from ToolWindow class)
+-Modified example code to use new XGLabeledSlider (instead of individual components)
+==================================================================

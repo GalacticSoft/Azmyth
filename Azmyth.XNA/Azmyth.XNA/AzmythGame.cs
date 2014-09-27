@@ -35,8 +35,8 @@ namespace Azmyth.XNA
         private KeyboardState oldState = Keyboard.GetState();
         private Dictionary<TerrainTypes, Texture2D> _textures = new Dictionary<TerrainTypes, Texture2D>();
 
-        private MainMenu m_mainMenu;
-
+        private frmMainMenu m_mainMenu;
+        private frmSettings m_settings;
         public AzmythGame()
         {
             //world = new World();
@@ -58,8 +58,10 @@ namespace Azmyth.XNA
             XnaGUIManager.Initialize(this);
 
 
-            m_mainMenu = new MainMenu(this);
+            m_mainMenu = new frmMainMenu(this);
+            m_settings = new frmSettings(this, graphics);
 
+            ShowSettings(false);
 
             XGControl.BkgColor = Color.Black;
             XGControl.ControlColor = Color.Gray;
@@ -157,7 +159,7 @@ namespace Azmyth.XNA
             {
                 if (World != null)
                 {
-                    m_mainMenu.ToggleVisible();
+                    ShowMenu(!m_showMenu);
                 }
 
             }
@@ -181,23 +183,29 @@ namespace Azmyth.XNA
             {
                 offsetY++;
             }
-            
-            if(oldState.IsKeyDown(Keys.OemPlus))
-            {
-                graphics.IsFullScreen = true;
-                graphics.PreferredBackBufferHeight = 1080;
-                graphics.PreferredBackBufferWidth = 1920;
 
-                 graphics.ApplyChanges();
-            }
-            else if(oldState.IsKeyDown(Keys.OemMinus))
+            if (oldState.IsKeyDown(Keys.OemTilde) && newState.IsKeyUp(Keys.OemTilde))
             {
-                graphics.IsFullScreen = false;
-                graphics.PreferredBackBufferHeight = 960;
-                graphics.PreferredBackBufferWidth = 1280;
-
-                graphics.ApplyChanges();
+                Exit();
             }
+
+
+            //if(oldState.IsKeyDown(Keys.OemPlus))
+            //{
+            //    graphics.IsFullScreen = true;
+            //    graphics.PreferredBackBufferHeight = 1080;
+            //    graphics.PreferredBackBufferWidth = 1920;
+
+            //     graphics.ApplyChanges();
+            //}
+            //else if(oldState.IsKeyDown(Keys.OemMinus))
+            //{
+            //    graphics.IsFullScreen = false;
+            //    graphics.PreferredBackBufferHeight = 960;
+            //    graphics.PreferredBackBufferWidth = 1280;
+
+            //    graphics.ApplyChanges();
+            //}
 
             oldState = newState;
             XnaGUIManager.Update(gameTime);
@@ -272,6 +280,41 @@ namespace Azmyth.XNA
             XnaGUIManager.Draw(frameTime);
             
             base.Draw(gameTime);
+        }
+
+        private bool m_showMenu = true;
+        public void ShowMenu(bool blnShow)
+        {
+            m_showMenu = blnShow;
+
+            if(blnShow)
+            {
+                if (m_mainMenu != null)
+                    m_mainMenu.Show();
+            }
+            else
+            {
+                if (m_mainMenu != null)
+                    m_mainMenu.Close();
+            }
+        }
+
+
+        private bool m_showSettings = false;
+        public void ShowSettings(bool blnShow)
+        {
+            m_showSettings = blnShow;
+
+            if (blnShow)
+            {
+                if (m_settings != null)
+                    m_settings.Show();
+            }
+            else
+            {
+                if (m_settings!= null)
+                    m_settings.Close();
+            }
         }
     }
 }
