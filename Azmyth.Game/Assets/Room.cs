@@ -10,7 +10,7 @@ namespace Azmyth.Assets
         public float m_value;
         public double m_temp;
         public double m_tempVal;
-
+        public bool HasRock { get; set; }
         public int GridX { get; set; }
         public int GridY { get; set; }
 
@@ -35,6 +35,7 @@ namespace Azmyth.Assets
 
         public Room(VectorID roomID)
         {
+            HasRock = false;
             AssetID = roomID;
         }
 

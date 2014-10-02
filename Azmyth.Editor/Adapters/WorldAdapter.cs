@@ -21,6 +21,7 @@ namespace Azmyth.Editor
         private float m_shoreLine = 05;
         private float m_treeLine = 40;
         private float m_snowLine = 50;
+        private float m_continentSize = 2;
         private float m_terrainHeight = 1024;
 
         [Browsable(false)]
@@ -52,6 +53,26 @@ namespace Azmyth.Editor
             { 
                 m_coastLine = value;
                 m_world.CoastLine = value;
+
+                if (Map != null)
+                {
+                    Map.RepaintMap();
+                }
+            }
+        }
+
+        [Category("Terrain Values")]
+        [Editor(typeof(ContinentSizeEditor), typeof(UITypeEditor))]
+        public float ContinentSize
+        {
+            get 
+            { 
+                return m_continentSize; 
+            }
+            set 
+            { 
+                m_continentSize = value;
+                m_world.ContinentSize = value / 100;
 
                 if (Map != null)
                 {

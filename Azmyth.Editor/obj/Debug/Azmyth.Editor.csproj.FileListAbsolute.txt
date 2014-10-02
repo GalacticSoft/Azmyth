@@ -46,3 +46,4 @@ M:\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.SplitPanel.resource
 M:\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.csproj.GenerateResource.Cache
 M:\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.exe
 M:\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.pdb
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.ContinentSizeScroll.resources

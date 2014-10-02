@@ -189,9 +189,6 @@ namespace Azmyth.Editor
                 PaintDebug(e.Graphics);
             }
 
-
-
-
             PaintBorder(e.Graphics);
         }
 
@@ -240,7 +237,7 @@ namespace Azmyth.Editor
                     {
                         switch (room.Terrain)
                         {
-                            case TerrainTypes.Ocean:
+                            case TerrainTypes.Water:
                                 cellColor = Color.FromArgb(255, 0, 0, 255 - rgb);
                                 break;
                             case TerrainTypes.Dirt:
@@ -249,10 +246,20 @@ namespace Azmyth.Editor
                             case TerrainTypes.Sand:
                                 cellColor = ControlPaint.Light(Color.BurlyWood, colorPercent);
                                 break;
-                            case TerrainTypes.Mountain:
-                                cellColor = ControlPaint.Light(Color.SaddleBrown, colorPercent);
+                            case TerrainTypes.Grass:
+                                RandomNoise rn = new RandomNoise(1);
+
+                                double val = rn.GetValue(cellX, cellY);
+
+                                if (val < .33)
+                                    cellColor = Color.Green;
+                                else if (val < .66)
+                                    cellColor = Color.ForestGreen;
+                                else
+                                    cellColor = Color.DarkGreen;
+                                
                                 break;
-                            case TerrainTypes.Stone:
+                            case TerrainTypes.Mountain:
                                 cellColor = Color.SlateGray;
                                 break;
                             case TerrainTypes.Snow:
@@ -260,9 +267,6 @@ namespace Azmyth.Editor
                                 break;
                             case TerrainTypes.Lava:
                                 cellColor = Color.Red;
-                                break;
-                            case TerrainTypes.River:
-                                cellColor = ControlPaint.Light(Color.Blue, colorPercent);
                                 break;
                             case TerrainTypes.Ice:
                                 cellColor = Color.Cyan;

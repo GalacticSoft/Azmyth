@@ -29,7 +29,9 @@ namespace Azmyth.XNA
         public XGListBox lstResolutions { get; protected set; }
 
         public XGCheckBox chkFullScreen { get; protected set; }
-        
+
+        public XGCheckBox chkSimpleMap { get; protected set; }
+
         public XGButton btnApply { get; protected set; }
         
         public XGButton btnExit { get; protected set; }
@@ -40,12 +42,12 @@ namespace Azmyth.XNA
             Game = game;
             m_graphicsManager = graphics;
 
-            Rectangle = new Rectangle((game.GraphicsDevice.Viewport.Width / 2)-150, (game.GraphicsDevice.Viewport.Height / 2) - 80, 300, 160);
+            Rectangle = new Rectangle((game.GraphicsDevice.Viewport.Width / 2)-150, (game.GraphicsDevice.Viewport.Height / 2) - 120, 300, 240);
 
             XnaGUIManager.Controls.Add(this);
 
-            pnlMain = new XGPanel(new Rectangle(0, 0, 300, 160));
-            lstResolutions = new XGListBox(new Rectangle(10, 10, 280, 70));
+            pnlMain = new XGPanel(new Rectangle(0, 0, 300, 240));
+            lstResolutions = new XGListBox(new Rectangle(10, 10, 280, 150));
 
             foreach (DisplayMode mode in GraphicsAdapter.DefaultAdapter.SupportedDisplayModes)
             {
@@ -54,15 +56,19 @@ namespace Azmyth.XNA
             }
 
             lstResolutions.SelectedIndex = 0;
-            chkFullScreen = new XGCheckBox(new Rectangle(10, 90, 25, 25), "Fullscreen");
+            chkFullScreen = new XGCheckBox(new Rectangle(10, 170, 25, 25), "Fullscreen");
             chkFullScreen.Checked = false;
 
-            btnApply = new XGButton(new Rectangle(300-220, 120, 100, 30), "Apply", this.btnApply_Clicked);
-            btnExit = new XGButton(new Rectangle(300-110, 120, 100, 30), "Exit", this.btnExit_Clicked);
+            chkSimpleMap = new XGCheckBox(new Rectangle(150, 170, 25, 25), "Simple Map");
+            chkSimpleMap.Checked = false;
+
+            btnApply = new XGButton(new Rectangle(300-220, 200, 100, 30), "Apply", this.btnApply_Clicked);
+            btnExit = new XGButton(new Rectangle(300-110, 200, 100, 30), "Exit", this.btnExit_Clicked);
 
             Children.Add(pnlMain);
             pnlMain.Children.Add(lstResolutions);
             pnlMain.Children.Add(chkFullScreen);
+            pnlMain.Children.Add(chkSimpleMap);
             pnlMain.Children.Add(btnApply);
             pnlMain.Children.Add(btnExit);
         }
@@ -87,6 +93,12 @@ namespace Azmyth.XNA
             m_graphicsManager.PreferredBackBufferWidth = int.Parse(lstResolutions.SelectedItem.Value.ToString().Split('x')[0].Trim());
             m_graphicsManager.PreferredBackBufferHeight = int.Parse(lstResolutions.SelectedItem.Value.ToString().Split('x')[1].Trim());
             m_graphicsManager.ApplyChanges();
+
+            if (chkSimpleMap.Checked)
+                Game.MapType = MapType.Simple;
+            else
+                Game.MapType = MapType.Textured;
+
             Show();
         }
 
@@ -98,7 +110,7 @@ namespace Azmyth.XNA
 
         public override void Update(GameTime gameTime)
         {
-            Rectangle = new Rectangle((Game.GraphicsDevice.Viewport.Width / 2) - 150, (Game.GraphicsDevice.Viewport.Height / 2) - 80, 300, 160);
+            Rectangle = new Rectangle((Game.GraphicsDevice.Viewport.Width / 2) - 150, (Game.GraphicsDevice.Viewport.Height / 2) - 120, 300, 240);
             base.Update(gameTime);
         }
     }

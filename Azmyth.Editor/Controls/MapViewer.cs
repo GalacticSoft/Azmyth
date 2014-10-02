@@ -48,6 +48,8 @@ namespace Azmyth.Editor
 
         public void RepaintMap()
         {
+            this.Invalidate();
+
             if(tabControl1.SelectedTab == tabPage1)
                 gridControl1.Invalidate();
 

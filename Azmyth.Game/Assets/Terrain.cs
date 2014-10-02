@@ -8,13 +8,11 @@ namespace Azmyth.Assets
 {
     public enum TerrainTypes
     {
-        Ocean       = 0,
+        Water       = 0,
         Sand        = 1,
         Dirt        = 2,
-        Forest      = 3,
-        River       = 4,
-        Mountain    = 5,
-        Stone       = 6,
+        Grass      = 3,
+        Mountain       = 6,
         Snow        = 7,
         Lava        = 8,
         Ice         = 9,
@@ -24,7 +22,7 @@ namespace Azmyth.Assets
 
     public class Terrains
     {
-        private TerrainTypes m_terrainType = TerrainTypes.Ocean;
+        private TerrainTypes m_terrainType = TerrainTypes.Water;
 
         private bool m_isPassable = true;
         private bool m_isWater = true;

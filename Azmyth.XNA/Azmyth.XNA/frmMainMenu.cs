@@ -60,7 +60,10 @@ namespace Azmyth.XNA
         void btnCreateWorld_Clicked(XGControl sender)
         {
             VectorID worldID = Azmyth.Assets.Assets.CreateWorld();
+
             Game.World = Azmyth.Assets.Assets.GetWorld(worldID);
+
+            Game.World.ShoreLine = .20f;
         }
 
         void btnSettings_Clicked(XGControl sender)

@@ -15,7 +15,8 @@ namespace Azmyth.Assets
         private PerlinNoise m_stones;
         private PerlinNoise m_lava;
         private PerlinNoise m_tempurature;
-        private RandomNoise m_randomNoise;
+        private RandomNoise m_rocks;
+        private RandomNoise m_randomForest;
         private RandomNoise m_city;
 
         private int m_seed = 500;
@@ -37,6 +38,11 @@ namespace Azmyth.Assets
 
         private MarkovNameGenerator nameGenerator;
 
+        public float ContinentSize
+        {
+            get { return m_frequency;  }
+            set { m_frequency = value; UpdateGenerators(); }
+        }
         public float CoastLine
         {
             get { return m_coastLine; }
@@ -129,17 +135,17 @@ namespace Azmyth.Assets
 
                 if (room.Height <= m_coastLine)
                 {
-                    room.Terrain = TerrainTypes.Ocean;
+                    room.Terrain = TerrainTypes.Water;
                 }
 
                 if (room.Height > m_coastLine && room.Height <= (m_coastLine + ((m_terrainHeight - m_coastLine) * m_shoreLine)))
                 {
-                    room.Terrain = TerrainTypes.Sand;
+                    room.Terrain = TerrainTypes.Dirt;
                 }
 
                 if (room.Height > m_coastLine + ((m_terrainHeight - m_coastLine) * m_shoreLine))
                 {
-                    room.Terrain = TerrainTypes.Dirt;
+                    room.Terrain = TerrainTypes.Grass;
                 }
 
                 if (room.Height > m_coastLine + ((m_terrainHeight - m_coastLine) * m_treeLine))
@@ -147,55 +153,64 @@ namespace Azmyth.Assets
                     room.Terrain = TerrainTypes.Mountain;
                 }
 
+                //if (room.Height > m_coastLine + ((m_terrainHeight - m_coastLine) * m_snowLine))
+                //{
+                //    room.Terrain = TerrainTypes.Snow;
+                //}
+
+                ///if (room.Height < m_coastLine + ((m_terrainHeight - m_coastLine) * m_treeLine) && room.Height > m_coastLine && room.Terrain != TerrainTypes.Sand && room.Terrain != TerrainTypes.Stone)
+                //{
+               //     if (m_forest.GetHeight(x, y) > 0)
+               //     {
+              //          room.Terrain = TerrainTypes.Forest;
+              //      }
+              //  }
+
                 if (room.Height > m_coastLine)
                 {
-                    if (Math.Abs(m_stones.GetHeight(x, y)) >= .95f)
-                        room.Terrain = TerrainTypes.Stone;
+                    //if (Math.Abs(m_stones.GetHeight(x, y)) >= .95f)
+                    //    room.Terrain = TerrainTypes.Mountain;
 
-                    if (Math.Floor(m_randomNoise.GetValue(x, y) * 100) < 1)
-                        room.Terrain = TerrainTypes.Stone;
-                }
-
-                if (room.Height > m_coastLine + ((m_terrainHeight - m_coastLine) * m_snowLine))
-                {
-                    room.Terrain = TerrainTypes.Snow;
-                }
-
-                if (room.Height > m_coastLine + ((m_terrainHeight - m_coastLine) * m_treeLine))
-                {
-                    if (Math.Abs(m_lava.GetHeight(x, y)) >= .99f)
+                    if (Math.Floor(m_rocks.GetValue(x, y) * 100) < 1)
                     {
-                        room.Terrain = TerrainTypes.Lava;
+                        room.HasRock = true;
                     }
                 }
+ 
+                //if (room.Height > m_coastLine + ((m_terrainHeight - m_coastLine) * m_treeLine))
+                //{
+                //    if (Math.Abs(m_lava.GetHeight(x, y)) >= .99f)
+                //    {
+                //        room.Terrain = TerrainTypes.Lava;
+                //    }
+                //}
 
-                if (room.Terrain != TerrainTypes.Ocean)
+                if (room.Terrain != TerrainTypes.Water)
                 {
-                    if (room.Terrain != TerrainTypes.Snow)
-                    {
+                    //if (room.Terrain != TerrainTypes.Snow)
+                    //{
                         if (Math.Abs(m_rivers.GetHeight(x, y)) < m_terrainHeight * .06)
                         {
-                            room.Terrain = TerrainTypes.Sand;
+                            room.Terrain = TerrainTypes.Dirt;
                         }
                         if (Math.Abs(m_rivers.GetHeight(x, y)) < m_terrainHeight * .03)
                         {
-                            room.Terrain = TerrainTypes.River;
+                            room.Terrain = TerrainTypes.Water;
                         }
-                    }
-                    else
-                    {
-                        if (Math.Abs(m_rivers.GetHeight(x, y)) < m_terrainHeight * .03)
-                        {
-                            room.Terrain = TerrainTypes.Ice;
-                        }
-                    }
+                    //}
+                    //else
+                    //{
+                    //    if (Math.Abs(m_rivers.GetHeight(x, y)) < m_terrainHeight * .03)
+                    //    {
+                    //        room.Terrain = TerrainTypes.Ice;
+                    //    }
+                    //}
                 }
 
-                if (room.Terrain != TerrainTypes.Ocean && room.Terrain != TerrainTypes.River && room.Terrain != TerrainTypes.Lava)
+                if (room.Terrain != TerrainTypes.Water && room.Terrain != TerrainTypes.Water && room.Terrain != TerrainTypes.Lava)
                 {
                     if (m_city.GetValue(x, y) * 100 <= .02)
                     {
-                        
                         CreateCity(room);
                     }
                 }
@@ -256,14 +271,23 @@ namespace Azmyth.Assets
             base.RemoveAsset(asset);
         }
 
+        public void SaveRoom(Room room)
+        {
+            room.Bounds = new System.Drawing.RectangleF(room.GridX, room.GridY, 1, 1);
+            
+            if(m_rooms.Query(room.Bounds).Count == 0)
+                m_rooms.Insert(room);
+        }
+
         private void UpdateGenerators()
         {
             m_random = new Random(m_seed);
-            m_randomNoise = new RandomNoise(m_seed);
+            m_rocks = new RandomNoise(m_seed);
+            m_randomForest = new RandomNoise(m_seed >> 2);
             m_city = new RandomNoise((m_seed / 3) * 5);
 
             m_terrain = new PerlinNoise(m_persistance, m_frequency, m_terrainHeight, m_octaves, m_seed);
-            m_forest = new PerlinNoise(m_persistance, m_frequency, m_terrainHeight, m_octaves, m_seed);
+            m_forest = new PerlinNoise(m_persistance, m_frequency, m_terrainHeight, 4, m_seed >> 2);
             m_rivers = new PerlinNoise(m_persistance, .02, m_terrainHeight, 2, (m_seed / 5) * 3);
             m_stones = new PerlinNoise(m_persistance, .02, 1, 5, (m_seed / 3) * 7);
             m_lava = new PerlinNoise(m_persistance, m_frequency, 1, 5, (m_seed / 5) * 3);
