@@ -198,7 +198,7 @@ namespace Azmyth.Editor
             float colorPercent;
             int rgb, cellX, cellY, totalCells;
 
-            Room room = null;
+            TerrainTile room = null;
             Color cellColor = Color.White;
 
             Dictionary<PointF, string> cityNames = new Dictionary<PointF, string>();
@@ -259,7 +259,7 @@ namespace Azmyth.Editor
                                     cellColor = Color.DarkGreen;
                                 
                                 break;
-                            case TerrainTypes.Mountain:
+                            case TerrainTypes.Stone:
                                 cellColor = Color.SlateGray;
                                 break;
                             case TerrainTypes.Snow:
@@ -277,7 +277,7 @@ namespace Azmyth.Editor
                             case TerrainTypes.City:
                                 cellColor = Color.Yellow;
 
-                                City city = m_world.GetCity(cellX, cellY);
+                                //City city = m_world.GetCity(cellX, cellY);
 
                                 cityNames.Add(new PointF((cellX * m_cellWidth) + m_cellWidth, (cellY * m_cellHeight) + m_cellHeight), room.Name);
                                 break;
@@ -360,7 +360,7 @@ namespace Azmyth.Editor
             return IsSelected(p.X, p.Y);
         }
 
-        public bool IsSelected(Room room)
+        public bool IsSelected(TerrainTile room)
         {
             return IsSelected(room.GridX, room.GridY);
         }

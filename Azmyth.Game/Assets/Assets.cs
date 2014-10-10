@@ -14,7 +14,7 @@ namespace Azmyth.Assets
         {
             AddAssetType(typeof(World));
             AddAssetType(typeof(Area));
-            AddAssetType(typeof(Room));
+            AddAssetType(typeof(TerrainTile));
             AddAssetType(typeof(City));
         }
 
@@ -71,7 +71,7 @@ namespace Azmyth.Assets
 
         public static VectorID CreateRoom()
         {
-            return Store.CreateAsset(typeof(Room));
+            return Store.CreateAsset(typeof(TerrainTile));
         }
 
         public static World GetWorld(VectorID worldID)
@@ -84,9 +84,9 @@ namespace Azmyth.Assets
             return Store[areaID] as Area;
         }
 
-        public static Room GetRoom(VectorID roomID)
+        public static TerrainTile GetRoom(VectorID roomID)
         {
-            return Store[roomID] as Room;
+            return Store[roomID] as TerrainTile;
         }
 
         public static City GetCity(VectorID cityID)

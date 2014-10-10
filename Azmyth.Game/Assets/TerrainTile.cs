@@ -1,8 +1,10 @@
 using Azmyth.Game;
+using System.Collections.Generic;
+using System.Drawing;
 
 namespace Azmyth.Assets
 {
-    public class Room : Asset
+    public class TerrainTile : Asset
     {
 
         private TerrainTypes m_terrain;
@@ -13,6 +15,8 @@ namespace Azmyth.Assets
         public bool HasRock { get; set; }
         public int GridX { get; set; }
         public int GridY { get; set; }
+
+        public Dictionary<Vector, TerrainTile> Neighbors = null;
 
         private Exit[] _exits = new Exit[(long)Directions.Max];
 
@@ -28,12 +32,12 @@ namespace Azmyth.Assets
             set { m_terrain = value; }
         }
 
-        public Room()
+        public TerrainTile()
         {
 
         }
 
-        public Room(VectorID roomID)
+        public TerrainTile(VectorID roomID)
         {
             HasRock = false;
             AssetID = roomID;

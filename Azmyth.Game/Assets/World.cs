@@ -33,8 +33,10 @@ namespace Azmyth.Assets
         
         private Random m_random = new Random(500);
 
-        QuadTree<Room> m_rooms = new QuadTree<Room>(new System.Drawing.Size(64, 64), 64);
-        QuadTree<City> m_cities = new QuadTree<City>(new System.Drawing.Size(64, 64), 64);
+        //QuadTree<TerrainTile> m_rooms = new QuadTree<TerrainTile>(new System.Drawing.Size(64, 64), 64);
+        //QuadTree<City> m_cities = new QuadTree<City>(new System.Drawing.Size(64, 64), 64);
+
+        private QuadTree<TerrainChunk> m_terrainChunks = new QuadTree<TerrainChunk>(new System.Drawing.Size(100, 100), 100);
 
         private MarkovNameGenerator nameGenerator;
 
@@ -114,18 +116,18 @@ namespace Azmyth.Assets
             UpdateGenerators();
         }
 
-        public Room GetRoom(int x, int y)
+        public TerrainTile GetRoom(int x, int y)
         {
-            Room room = null;
-            List<Room> rooms = m_rooms.Query(new System.Drawing.RectangleF(x, y, 1, 1));
+            TerrainTile room = null;
+            //List<TerrainTile> rooms = m_rooms.Query(new System.Drawing.RectangleF(x, y, 1, 1));
 
-            if(rooms.Count > 0)
+            //if(rooms.Count > 0)
+            //{
+           //     room = rooms[0];
+            //}
+           // else
             {
-                room = rooms[0];
-            }
-            else
-            {
-                room = new Room();
+                room = new TerrainTile();
 
                 room.GridX = x;
                 room.GridY = y;
@@ -150,7 +152,7 @@ namespace Azmyth.Assets
 
                 if (room.Height > m_coastLine + ((m_terrainHeight - m_coastLine) * m_treeLine))
                 {
-                    room.Terrain = TerrainTypes.Mountain;
+                    room.Terrain = TerrainTypes.Stone;
                 }
 
                 //if (room.Height > m_coastLine + ((m_terrainHeight - m_coastLine) * m_snowLine))
@@ -211,18 +213,18 @@ namespace Azmyth.Assets
                 {
                     if (m_city.GetValue(x, y) * 100 <= .02)
                     {
-                        CreateCity(room);
+                        //CreateCity(room);
                     }
                 }
             }
 
             room.m_temp = Math.Abs((int)Math.Round(m_tempurature.GetHeight(x, y), 0));
             room.m_tempVal = m_tempurature.GetValue(x, y);
-           
+
             return room;
         }
 
-        public void CreateCity(Room room)
+        public void CreateCity(TerrainTile room)
         {
            /// Task.Factory.StartNew(target =>
             //{
@@ -243,40 +245,33 @@ namespace Azmyth.Assets
                 room.Terrain = TerrainTypes.City;
                 room.Bounds = new System.Drawing.RectangleF(room.GridX, room.GridY, 1, 1);
 
-                m_rooms.Insert(room);
-                m_cities.Insert(city);
+                //m_rooms.Insert(room);
+                //m_cities.Insert(city);
            // }, System.Threading.CancellationToken.None);
         }
 
-        public City GetCity(int x, int y)
+        public TerrainChunk LoadChunk(System.Drawing.RectangleF chunkBounds)
         {
-            City city = null;
-            List<City> cities = m_cities.Query(new System.Drawing.RectangleF(x, y, 1, 1));
+            TerrainChunk chunk = null;
+            List<TerrainChunk> chunks = m_terrainChunks.Query(chunkBounds);
 
-            if (cities.Count > 0)
+            if (chunks.Count == 0)
             {
-                city = cities[0];
+                chunk = new TerrainChunk(chunkBounds, this);
+
+                m_terrainChunks.Insert(chunk);
+            }
+            else
+            {
+                chunk = chunks[0];
             }
 
-            return city;
+            return chunk;
         }
 
-        public override void AddAsset(Asset asset)
+        public List<TerrainChunk> GetChunks(System.Drawing.RectangleF bounds)
         {
-            base.AddAsset(asset);
-        }
-
-        public override void RemoveAsset(Asset asset)
-        {
-            base.RemoveAsset(asset);
-        }
-
-        public void SaveRoom(Room room)
-        {
-            room.Bounds = new System.Drawing.RectangleF(room.GridX, room.GridY, 1, 1);
-            
-            if(m_rooms.Query(room.Bounds).Count == 0)
-                m_rooms.Insert(room);
+            return m_terrainChunks.Query(bounds);
         }
 
         private void UpdateGenerators()

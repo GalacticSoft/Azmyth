@@ -105,7 +105,7 @@ namespace Azmyth.Editor
 
         private void areaView_CellHover(object sender, Point e)
         {
-            Room r = Assets.Assets.GetWorld(((GridControl)sender).m_world.AssetID).GetRoom(e.X, e.Y);
+            TerrainTile r = Assets.Assets.GetWorld(((GridControl)sender).m_world.AssetID).GetRoom(e.X, e.Y);
 
 
             Output(r.Height.ToString());

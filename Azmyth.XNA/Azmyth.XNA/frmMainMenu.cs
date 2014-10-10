@@ -64,6 +64,7 @@ namespace Azmyth.XNA
             Game.World = Azmyth.Assets.Assets.GetWorld(worldID);
 
             Game.World.ShoreLine = .20f;
+            Game.TerrainManager = new TerrainManager(Game);
         }
 
         void btnSettings_Clicked(XGControl sender)

@@ -151,7 +151,7 @@ namespace Azmyth.Assets
 
         private System.Drawing.RectangleF m_bounds = new System.Drawing.RectangleF();
 
-        public System.Drawing.RectangleF Bounds
+        public virtual System.Drawing.RectangleF Bounds
         {
             get { return m_bounds; }
             set 
@@ -162,7 +162,7 @@ namespace Azmyth.Assets
 
                 if(boundsChanged != null)
                 {
-                    boundsChanged.BeginInvoke(this, new EventArgs(), null, null);
+                    //boundsChanged.BeginInvoke(this, new EventArgs(), null, null);
                 }
             }
         }

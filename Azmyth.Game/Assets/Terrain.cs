@@ -12,7 +12,7 @@ namespace Azmyth.Assets
         Sand        = 1,
         Dirt        = 2,
         Grass      = 3,
-        Mountain       = 6,
+        Stone       = 6,
         Snow        = 7,
         Lava        = 8,
         Ice         = 9,
