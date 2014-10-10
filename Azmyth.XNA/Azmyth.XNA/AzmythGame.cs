@@ -18,72 +18,39 @@ namespace Azmyth.XNA
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    
-    public enum MapType
-    {
-        Simple,
-        Textured,
-        Fancy,
-    }
-
-    public enum GameState
-    {
-        MainMenu,
-        Menu,
-        Playing,
-        Paused,
-        Exit,
-    }
-
     public class AzmythGame : Microsoft.Xna.Framework.Game
     {
-        private int m_offsetY = 0;
-        private int m_offsetX = 0;
         private int m_frameRate = 0;
         private int m_frameCounter = 0;
 
-        private int m_cellSize = 32;
-
-        Texture2D m_characterTexture;
         public World World = null;
-        private SpriteFont m_spriteFont;
-        private SpriteBatch m_spriteBatch;
-        private GraphicsDeviceManager m_graphics;
-        private TimeSpan m_elapsedTime = TimeSpan.Zero;
-        private MouseState m_lastMouseState = Mouse.GetState();
-        private KeyboardState m_lastKeyboardState = Keyboard.GetState();
-        private Dictionary<TerrainTypes, Texture2D> m_cellColors = new Dictionary<TerrainTypes, Texture2D>();
-        private Dictionary<TerrainTypes, List<Texture2D>> m_cellTextures = new Dictionary<TerrainTypes, List<Texture2D>>();
 
         private frmMainMenu m_mainMenu;
         private frmSettings m_settings;
         private frmRightPanel m_rightPanel;
-        
-        RandomNoise m_randomNoise = new RandomNoise(1);
 
-        private MapType m_mapType = MapType.Textured;
+        private SpriteFont m_spriteFont;
+        private SpriteBatch m_spriteBatch;
+        private Texture2D m_characterTexture;
+        private TerrainManager m_terrainManager;
+        private GraphicsDeviceManager m_graphics;
+        private TimeSpan m_elapsedTime = TimeSpan.Zero;
+        private RandomNoise m_randomNoise = new RandomNoise(1);
+        private MouseState m_lastMouseState = Mouse.GetState();
+        private KeyboardState m_lastKeyboardState = Keyboard.GetState();
 
-        private Dictionary<Vector2, string> cityNames = new Dictionary<Vector2, string>();
+        private int m_cellSize = 32;
 
-
-        public TerrainManager TerrainManager;
-
-        public MapType MapType
+        public TerrainManager TerrainManager
         {
-            get { return m_mapType; }
-            set { m_mapType = value; }
+            get { return m_terrainManager; }
+            set { m_terrainManager = value; }
         }
-
         public AzmythGame()
         {
             m_graphics = new GraphicsDeviceManager(this);
 
             Content.RootDirectory = "Content";
-
-            foreach(TerrainTypes type in Enum.GetValues(typeof(TerrainTypes)))
-            {
-                m_cellTextures.Add(type, new List<Texture2D>());
-            }
         }
 
         /// <summary>
@@ -121,216 +88,18 @@ namespace Azmyth.XNA
         {
             m_spriteFont = Content.Load<SpriteFont>("Font");
             m_spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            LoadTextures();
-            LoadSimpleTextures(); 
-        }
-
-        private void LoadTextures()
-        {
-            Texture2D texture;
-
             m_characterTexture = Content.Load<Texture2D>("Character1");
-
-            //texture = Content.Load<Texture2D>("Ocean");
-            //m_cellTextures[TerrainTypes.Water].Add(texture);
-            //texture = Content.Load<Texture2D>("WaterDirtLeft");
-            //m_cellTextures[TerrainTypes.Water].Add(texture);
-            //texture = Content.Load<Texture2D>("WaterDirtRight");
-            //m_cellTextures[TerrainTypes.Water].Add(texture);
-            //texture = Content.Load<Texture2D>("WaterDirtTop");
-            //m_cellTextures[TerrainTypes.Water].Add(texture);
-            //texture = Content.Load<Texture2D>("WaterDirtBottom");
-            //m_cellTextures[TerrainTypes.Water].Add(texture);
-            //texture = Content.Load<Texture2D>("WaterDirtTopLeft");
-            //m_cellTextures[TerrainTypes.Water].Add(texture);
-            //texture = Content.Load<Texture2D>("WaterDirtTopRight");
-            //m_cellTextures[TerrainTypes.Water].Add(texture);
-            //texture = Content.Load<Texture2D>("WaterDirtBottomLeft");
-            //m_cellTextures[TerrainTypes.Water].Add(texture);
-            //texture = Content.Load<Texture2D>("WaterDirtBottomRight");
-            //m_cellTextures[TerrainTypes.Water].Add(texture);
-            //texture = Content.Load<Texture2D>("WaterDirtTopRightCorner");
-            //m_cellTextures[TerrainTypes.Water].Add(texture);
-            //texture = Content.Load<Texture2D>("WaterDirtTopLeftCorner");
-            //m_cellTextures[TerrainTypes.Water].Add(texture);
-            //texture = Content.Load<Texture2D>("WaterDirtBottomLeftCorner");
-            //m_cellTextures[TerrainTypes.Water].Add(texture);
-            //texture = Content.Load<Texture2D>("WaterDirtBottomRightCorner");
-
-            //m_cellTextures[TerrainTypes.Water].Add(texture);
-            //texture = Content.Load<Texture2D>("Dirt1");
-            //m_cellTextures[TerrainTypes.Dirt].Add(texture);
-            //texture = Content.Load<Texture2D>("Dirt2");
-            //m_cellTextures[TerrainTypes.Dirt].Add(texture);
-
-            //texture = Content.Load<Texture2D>("ForestDirtLeft");
-            //m_cellTextures[TerrainTypes.Dirt].Add(texture);
-
-            //texture = Content.Load<Texture2D>("ForestDirtRight");
-            //m_cellTextures[TerrainTypes.Dirt].Add(texture);
-
-            //texture = Content.Load<Texture2D>("ForestDirtTop");
-            //m_cellTextures[TerrainTypes.Dirt].Add(texture);
-
-            //texture = Content.Load<Texture2D>("ForestDirtBottom");
-            //m_cellTextures[TerrainTypes.Dirt].Add(texture);
-
-            //texture = Content.Load<Texture2D>("ForestDirtTopRight");
-            //m_cellTextures[TerrainTypes.Dirt].Add(texture);
-
-            //texture = Content.Load<Texture2D>("ForestDirtTopLeft");
-            //m_cellTextures[TerrainTypes.Dirt].Add(texture);
-
-            //texture = Content.Load<Texture2D>("ForestDirtBottomRight");
-            //m_cellTextures[TerrainTypes.Dirt].Add(texture);
-
-            //texture = Content.Load<Texture2D>("ForestDirtBottomLeft");
-            //m_cellTextures[TerrainTypes.Dirt].Add(texture);
-
-            //texture = Content.Load<Texture2D>("ForestDirtTopRightCorner");
-            //m_cellTextures[TerrainTypes.Dirt].Add(texture);
-
-            //texture = Content.Load<Texture2D>("ForestDirtTopLeftCorner");
-            //m_cellTextures[TerrainTypes.Dirt].Add(texture);
-
-            //texture = Content.Load<Texture2D>("ForestDirtBottomRightCorner");
-            //m_cellTextures[TerrainTypes.Dirt].Add(texture);
-
-            //texture = Content.Load<Texture2D>("ForestDirtBottomLeftCorner");
-            //m_cellTextures[TerrainTypes.Dirt].Add(texture);
-
-            //texture = Content.Load<Texture2D>("Stone1");
-            //m_cellTextures[TerrainTypes.Stone].Add(texture);
-
-            ////texture = Content.Load<Texture2D>("Stone2");
-            ////_cellTextures[TerrainTypes.Stone].Add(texture);
-
-            ////texture = Content.Load<Texture2D>("Stone3");
-            ////_cellTextures[TerrainTypes.Stone].Add(texture);
-
-            //texture = Content.Load<Texture2D>("Forest1");
-            //m_cellTextures[TerrainTypes.Grass].Add(texture);
-
-            //texture = Content.Load<Texture2D>("Forest2");
-            //m_cellTextures[TerrainTypes.Grass].Add(texture);
-
-            //texture = Content.Load<Texture2D>("ForestStoneRight");
-            //m_cellTextures[TerrainTypes.Grass].Add(texture);
-
-            //texture = Content.Load<Texture2D>("ForestStoneLeft");
-            //m_cellTextures[TerrainTypes.Grass].Add(texture);
-
-            //texture = Content.Load<Texture2D>("ForestStoneTop");
-            //m_cellTextures[TerrainTypes.Grass].Add(texture);
-
-            //texture = Content.Load<Texture2D>("ForestStoneBottom");
-            //m_cellTextures[TerrainTypes.Grass].Add(texture);
-
-            //texture = Content.Load<Texture2D>("ForestStoneTopLeftCorner");
-            //m_cellTextures[TerrainTypes.Grass].Add(texture);
-
-            //texture = Content.Load<Texture2D>("ForestStoneTopRightCorner");
-            //m_cellTextures[TerrainTypes.Grass].Add(texture);
-
-            //texture = Content.Load<Texture2D>("ForestStoneBottomRightCorner");
-            //m_cellTextures[TerrainTypes.Grass].Add(texture);
-
-            //texture = Content.Load<Texture2D>("ForestStoneBottomLeftCorner");
-            //m_cellTextures[TerrainTypes.Grass].Add(texture);
-
-            //texture = Content.Load<Texture2D>("ForestStoneBottomRight");
-            //m_cellTextures[TerrainTypes.Grass].Add(texture);
-
-            //texture = Content.Load<Texture2D>("ForestStoneBottomLeft");
-            //m_cellTextures[TerrainTypes.Grass].Add(texture);
-
-            //texture = Content.Load<Texture2D>("ForestStoneTopRight");
-            //m_cellTextures[TerrainTypes.Grass].Add(texture);
-
-            //texture = Content.Load<Texture2D>("ForestStoneTopLeft");
-            //m_cellTextures[TerrainTypes.Grass].Add(texture);
-
-            //texture = Content.Load<Texture2D>("Sand");
-            //m_cellTextures[TerrainTypes.Sand].Add(texture);
-
-            //texture = Content.Load<Texture2D>("Lava");
-            //m_cellTextures[TerrainTypes.Lava].Add(texture);
-
-            //texture = Content.Load<Texture2D>("Ice");
-            //m_cellTextures[TerrainTypes.Ice].Add(texture);
-
-            //texture = Content.Load<Texture2D>("Snow");
-            //m_cellTextures[TerrainTypes.Snow].Add(texture);
-
-            //texture = Content.Load<Texture2D>("StoneRock");
-            //_cellTextures[TerrainTypes.StoneRock].Add(texture);
-
-            //texture = Content.Load<Texture2D>("ForestRock");
-            //_cellTextures[TerrainTypes.ForestRock].Add(texture);
-
-            //texture = Content.Load<Texture2D>("DirtRock");
-            //_cellTextures[TerrainTypes.DirtRock].Add(texture);
         }
 
-        private void LoadSimpleTextures()
-        {
-            Texture2D texture = new Texture2D(GraphicsDevice, 1, 1);
-            //texture.SetData(new Color[] { Color.Blue });
-            //m_cellColors.Add(TerrainTypes.Water, texture);
-
-            //texture = new Texture2D(GraphicsDevice, 1, 1);
-            //texture.SetData(new Color[] { Color.Brown });
-            //m_cellColors.Add(TerrainTypes.Dirt, texture);
-
-            //texture = new Texture2D(GraphicsDevice, 1, 1);
-            //texture.SetData(new Color[] { Color.White });
-            //m_cellColors.Add(TerrainTypes.Snow, texture);
-
-            //texture = new Texture2D(GraphicsDevice, 1, 1);
-            //texture.SetData(new Color[] { Color.SandyBrown });
-            //m_cellColors.Add(TerrainTypes.Sand, texture);
-
-            //texture = new Texture2D(GraphicsDevice, 1, 1);
-            //texture.SetData(new Color[] { Color.Gray });
-            //m_cellColors.Add(TerrainTypes.Stone, texture);
-
-            //texture = new Texture2D(GraphicsDevice, 1, 1);
-            //texture.SetData(new Color[] { Color.Red });
-            //m_cellColors.Add(TerrainTypes.Lava, texture);
-
-            //texture = new Texture2D(GraphicsDevice, 1, 1);
-            //texture.SetData(new Color[] { Color.Black });
-            //m_cellColors.Add(TerrainTypes.Black, texture);
-
-            //texture = new Texture2D(GraphicsDevice, 1, 1);
-            //texture.SetData(new Color[] { Color.Yellow });
-            //m_cellColors.Add(TerrainTypes.City, texture);
-
-            //texture = new Texture2D(GraphicsDevice, 1, 1);
-            //texture.SetData(new Color[] { Color.Cyan });
-            //m_cellColors.Add(TerrainTypes.Ice, texture);
-
-            //texture = new Texture2D(GraphicsDevice, 1, 1);
-            //texture.SetData(new Color[] { Color.Green });
-            //m_cellColors.Add(TerrainTypes.Grass, texture);
-
-            //texture = new Texture2D(GraphicsDevice, 1, 1);
-            //texture.SetData(new Color[] { Color.LightGray });
-            //texture = Content.Load<Texture2D>("Rock");
-            //_cellColors.Add(TerrainTypes.DirtRock, texture);
-            //_cellColors.Add(TerrainTypes.StoneRock, texture);
-           // _cellColors.Add(TerrainTypes.ForestRock, texture);
-        }
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
         /// all content.
         /// </summary>
         protected override void UnloadContent()
         {
+
         }
        
-        
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -351,19 +120,6 @@ namespace Azmyth.XNA
                 m_elapsedTime -= TimeSpan.FromSeconds(1);
                 m_frameRate = m_frameCounter;
                 m_frameCounter = 0;
-            }
-
-            if(m_lastMouseState.LeftButton == ButtonState.Pressed && newMouseState.LeftButton == ButtonState.Released)
-            {
-                if (m_mainMenu.Visible == false && m_settings.Visible == false)
-                {
-                    if (m_mapType == XNA.MapType.Simple)
-                        m_mapType = XNA.MapType.Textured;
-                    else if (m_mapType == XNA.MapType.Textured)
-                        m_mapType = XNA.MapType.Fancy;
-                    else
-                        m_mapType = XNA.MapType.Simple;
-                }
             }
 
             if (m_lastKeyboardState.IsKeyDown(Keys.Escape) && newKeyboardState.IsKeyUp(Keys.Escape))

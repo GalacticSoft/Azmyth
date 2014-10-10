@@ -30,8 +30,6 @@ namespace Azmyth.XNA
 
         public XGCheckBox chkFullScreen { get; protected set; }
 
-        public XGCheckBox chkSimpleMap { get; protected set; }
-
         public XGButton btnApply { get; protected set; }
         
         public XGButton btnExit { get; protected set; }
@@ -59,16 +57,12 @@ namespace Azmyth.XNA
             chkFullScreen = new XGCheckBox(new Rectangle(10, 170, 25, 25), "Fullscreen");
             chkFullScreen.Checked = false;
 
-            chkSimpleMap = new XGCheckBox(new Rectangle(150, 170, 25, 25), "Simple Map");
-            chkSimpleMap.Checked = false;
-
             btnApply = new XGButton(new Rectangle(300-220, 200, 100, 30), "Apply", this.btnApply_Clicked);
             btnExit = new XGButton(new Rectangle(300-110, 200, 100, 30), "Exit", this.btnExit_Clicked);
 
             Children.Add(pnlMain);
             pnlMain.Children.Add(lstResolutions);
             pnlMain.Children.Add(chkFullScreen);
-            pnlMain.Children.Add(chkSimpleMap);
             pnlMain.Children.Add(btnApply);
             pnlMain.Children.Add(btnExit);
         }
@@ -93,11 +87,6 @@ namespace Azmyth.XNA
             m_graphicsManager.PreferredBackBufferWidth = int.Parse(lstResolutions.SelectedItem.Value.ToString().Split('x')[0].Trim());
             m_graphicsManager.PreferredBackBufferHeight = int.Parse(lstResolutions.SelectedItem.Value.ToString().Split('x')[1].Trim());
             m_graphicsManager.ApplyChanges();
-
-            if (chkSimpleMap.Checked)
-                Game.MapType = MapType.Simple;
-            else
-                Game.MapType = MapType.Textured;
 
             Show();
         }
