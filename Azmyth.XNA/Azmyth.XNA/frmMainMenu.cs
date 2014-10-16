@@ -59,19 +59,19 @@ namespace Azmyth.XNA
 
         void btnCreateWorld_Clicked(XGControl sender)
         {
-            VectorID worldID = Azmyth.Assets.Assets.CreateWorld();
+            //VectorID worldID = Azmyth.Assets.Assets.CreateWorld();
 
-            Game.World = Azmyth.Assets.Assets.GetWorld(worldID);
+            //Game.World = Azmyth.Assets.Assets.GetWorld(worldID);
 
-            Game.World.ShoreLine = .20f;
-            Game.TerrainManager = new TerrainManager(Game);
+           // Game.World.ShoreLine = .20f;
+            //Game.TerrainManager = new TerrainManager(Game);
+
+            Game.State = GameState.CreateWorld;
         }
 
         void btnSettings_Clicked(XGControl sender)
         {
-            Game.ShowMenu(false);
-            Game.ShowSettings(true);
-
+            Game.State = GameState.Settings;
         }
 
         void btnExit_Clicked(XGControl sender)

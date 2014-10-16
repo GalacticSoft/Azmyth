@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Azmyth.Procedural;
+using System.Drawing;
 
 namespace Azmyth.Assets
 {
@@ -25,6 +26,7 @@ namespace Azmyth.Assets
         private float m_frequency = 0.02f; // continent size.
         private int m_octaves = 2; //Roughness
 
+        private int m_chunkSize = 32;
 
         private float m_coastLine = 0.00f;
         private float m_shoreLine = 0.05f;
@@ -32,6 +34,8 @@ namespace Azmyth.Assets
         private float m_snowLine = 0.50f;
         
         private Random m_random = new Random(500);
+
+        private RectangleF m_spawnArea = new RectangleF(0, 0, 1, 1);
 
         //QuadTree<TerrainTile> m_rooms = new QuadTree<TerrainTile>(new System.Drawing.Size(64, 64), 64);
         //QuadTree<City> m_cities = new QuadTree<City>(new System.Drawing.Size(64, 64), 64);
@@ -45,6 +49,7 @@ namespace Azmyth.Assets
             get { return m_frequency;  }
             set { m_frequency = value; UpdateGenerators(); }
         }
+
         public float CoastLine
         {
             get { return m_coastLine; }
@@ -107,7 +112,6 @@ namespace Azmyth.Assets
             AssetID = worldID;
         }
 
-
         public World(VectorID vectorID, int seed)
         {
             AssetID = vectorID;
@@ -116,141 +120,133 @@ namespace Azmyth.Assets
             UpdateGenerators();
         }
 
-        public TerrainTile GetRoom(int x, int y)
+        public TerrainTile LoadTile(int x, int y)
         {
-            TerrainTile room = null;
-            //List<TerrainTile> rooms = m_rooms.Query(new System.Drawing.RectangleF(x, y, 1, 1));
+            TerrainTile tile = null;
 
-            //if(rooms.Count > 0)
-            //{
-           //     room = rooms[0];
-            //}
-           // else
+            tile = new TerrainTile();
+
+            tile.GridX = x;
+            tile.GridY = y;
+
+            tile.Height = (float)Math.Round(m_terrain.GetHeight(x, y));
+            tile.m_value = (float)m_terrain.GetValue(x, y);
+
+            if (tile.Height <= m_coastLine)
             {
-                room = new TerrainTile();
-
-                room.GridX = x;
-                room.GridY = y;
-
-                room.Height = (float)Math.Round(m_terrain.GetHeight(x, y));
-                room.m_value = (float)m_terrain.GetValue(x, y);
-
-                if (room.Height <= m_coastLine)
-                {
-                    room.Terrain = TerrainTypes.Water;
-                }
-
-                if (room.Height > m_coastLine && room.Height <= (m_coastLine + ((m_terrainHeight - m_coastLine) * m_shoreLine)))
-                {
-                    room.Terrain = TerrainTypes.Dirt;
-                }
-
-                if (room.Height > m_coastLine + ((m_terrainHeight - m_coastLine) * m_shoreLine))
-                {
-                    room.Terrain = TerrainTypes.Grass;
-                }
-
-                if (room.Height > m_coastLine + ((m_terrainHeight - m_coastLine) * m_treeLine))
-                {
-                    room.Terrain = TerrainTypes.Stone;
-                }
-
-                //if (room.Height > m_coastLine + ((m_terrainHeight - m_coastLine) * m_snowLine))
-                //{
-                //    room.Terrain = TerrainTypes.Snow;
-                //}
-
-                ///if (room.Height < m_coastLine + ((m_terrainHeight - m_coastLine) * m_treeLine) && room.Height > m_coastLine && room.Terrain != TerrainTypes.Sand && room.Terrain != TerrainTypes.Stone)
-                //{
-               //     if (m_forest.GetHeight(x, y) > 0)
-               //     {
-              //          room.Terrain = TerrainTypes.Forest;
-              //      }
-              //  }
-
-                if (room.Height > m_coastLine)
-                {
-                    //if (Math.Abs(m_stones.GetHeight(x, y)) >= .95f)
-                    //    room.Terrain = TerrainTypes.Mountain;
-
-                    if (Math.Floor(m_rocks.GetValue(x, y) * 100) < 1)
-                    {
-                        room.HasRock = true;
-                    }
-                }
- 
-                //if (room.Height > m_coastLine + ((m_terrainHeight - m_coastLine) * m_treeLine))
-                //{
-                //    if (Math.Abs(m_lava.GetHeight(x, y)) >= .99f)
-                //    {
-                //        room.Terrain = TerrainTypes.Lava;
-                //    }
-                //}
-
-                if (room.Terrain != TerrainTypes.Water)
-                {
-                    //if (room.Terrain != TerrainTypes.Snow)
-                    //{
-                        if (Math.Abs(m_rivers.GetHeight(x, y)) < m_terrainHeight * .06)
-                        {
-                            room.Terrain = TerrainTypes.Dirt;
-                        }
-                        if (Math.Abs(m_rivers.GetHeight(x, y)) < m_terrainHeight * .03)
-                        {
-                            room.Terrain = TerrainTypes.Water;
-                        }
-                    //}
-                    //else
-                    //{
-                    //    if (Math.Abs(m_rivers.GetHeight(x, y)) < m_terrainHeight * .03)
-                    //    {
-                    //        room.Terrain = TerrainTypes.Ice;
-                    //    }
-                    //}
-                }
-
-                if (room.Terrain != TerrainTypes.Water && room.Terrain != TerrainTypes.Water && room.Terrain != TerrainTypes.Lava)
-                {
-                    if (m_city.GetValue(x, y) * 100 <= .02)
-                    {
-                        //CreateCity(room);
-                    }
-                }
+                tile.Terrain = TerrainTypes.Water;
             }
 
-            room.m_temp = Math.Abs((int)Math.Round(m_tempurature.GetHeight(x, y), 0));
-            room.m_tempVal = m_tempurature.GetValue(x, y);
+            if (tile.Height > m_coastLine && tile.Height <= (m_coastLine + ((m_terrainHeight - m_coastLine) * m_shoreLine)))
+            {
+                tile.Terrain = TerrainTypes.Dirt;
+            }
 
-            return room;
-        }
+            if (tile.Height > m_coastLine + ((m_terrainHeight - m_coastLine) * m_shoreLine))
+            {
+                tile.Terrain = TerrainTypes.Grass;
+            }
 
-        public void CreateCity(TerrainTile room)
-        {
-           /// Task.Factory.StartNew(target =>
+            if (tile.Height > m_coastLine + ((m_terrainHeight - m_coastLine) * m_treeLine))
+            {
+                tile.Terrain = TerrainTypes.Stone;
+            }
+
+            //if (room.Height > m_coastLine + ((m_terrainHeight - m_coastLine) * m_snowLine))
             //{
+            //    room.Terrain = TerrainTypes.Snow;
+            //}
 
-                City city = new City();
-                city.GridX = room.GridX;
-                city.GridY = room.GridY;
-                city.Bounds = new System.Drawing.RectangleF(room.GridX, room.GridY, 1, 1);
+            ///if (room.Height < m_coastLine + ((m_terrainHeight - m_coastLine) * m_treeLine) && room.Height > m_coastLine && room.Terrain != TerrainTypes.Sand && room.Terrain != TerrainTypes.Stone)
+            //{
+            //     if (m_forest.GetHeight(x, y) > 0)
+            //     {
+            //          room.Terrain = TerrainTypes.Forest;
+            //      }
+            //  }
 
-                if (room.Terrain == TerrainTypes.Sand)
-                    city.CitySize = CitySize.Port;
-                else
-                    city.CitySize = (CitySize)m_random.Next(1, (int)CitySize.Kingdom + 1);
+            if (tile.Height > m_coastLine)
+            {
+                //if (Math.Abs(m_stones.GetHeight(x, y)) >= .95f)
+                //    room.Terrain = TerrainTypes.Mountain;
 
-                city.Name = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(nameGenerator.Next());
-               
-                room.Name = "The " + city.CitySize + " of " + city.Name;
-                room.Terrain = TerrainTypes.City;
-                room.Bounds = new System.Drawing.RectangleF(room.GridX, room.GridY, 1, 1);
+                if (Math.Floor(m_rocks.GetValue(x, y) * 100) < 1)
+                {
+                    tile.HasRock = true;
+                }
+            }
+ 
+            //if (room.Height > m_coastLine + ((m_terrainHeight - m_coastLine) * m_treeLine))
+            //{
+            //    if (Math.Abs(m_lava.GetHeight(x, y)) >= .99f)
+            //    {
+            //        room.Terrain = TerrainTypes.Lava;
+            //    }
+            //}
 
-                //m_rooms.Insert(room);
-                //m_cities.Insert(city);
-           // }, System.Threading.CancellationToken.None);
+            if (tile.Terrain != TerrainTypes.Water)
+            {
+                //if (room.Terrain != TerrainTypes.Snow)
+                //{
+                    if (Math.Abs(m_rivers.GetHeight(x, y)) < m_terrainHeight * .06)
+                    {
+                        tile.Terrain = TerrainTypes.Dirt;
+                    }
+                    if (Math.Abs(m_rivers.GetHeight(x, y)) < m_terrainHeight * .03)
+                    {
+                        tile.Terrain = TerrainTypes.Water;
+                    }
+                //}
+                //else
+                //{
+                //    if (Math.Abs(m_rivers.GetHeight(x, y)) < m_terrainHeight * .03)
+                //    {
+                //        room.Terrain = TerrainTypes.Ice;
+                //    }
+                //}
+            }
+
+            //if (tile.Terrain != TerrainTypes.Water && tile.Terrain != TerrainTypes.Water && tile.Terrain != TerrainTypes.Lava)
+            //{
+            //    if (m_city.GetValue(x, y) * 100 <= .02)
+            //    {
+            //        //CreateCity(room);
+            //    }
+            //}
+
+            tile.m_temp = Math.Abs((int)Math.Round(m_tempurature.GetHeight(x, y), 0));
+            tile.m_tempVal = m_tempurature.GetValue(x, y);
+
+            return tile;
         }
 
-        public TerrainChunk LoadChunk(System.Drawing.RectangleF chunkBounds)
+        //public void CreateCity(TerrainTile room)
+        //{
+        //   /// Task.Factory.StartNew(target =>
+        //    //{
+
+        //        City city = new City();
+        //        city.GridX = room.GridX;
+        //        city.GridY = room.GridY;
+        //        city.Bounds = new System.Drawing.RectangleF(room.GridX, room.GridY, 1, 1);
+
+        //        if (room.Terrain == TerrainTypes.Sand)
+        //            city.CitySize = CitySize.Port;
+        //        else
+        //            city.CitySize = (CitySize)m_random.Next(1, (int)CitySize.Kingdom + 1);
+
+        //        city.Name = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(nameGenerator.Next());
+               
+        //        room.Name = "The " + city.CitySize + " of " + city.Name;
+        //        room.Terrain = TerrainTypes.City;
+        //        room.Bounds = new System.Drawing.RectangleF(room.GridX, room.GridY, 1, 1);
+
+        //        //m_rooms.Insert(room);
+        //        //m_cities.Insert(city);
+        //   // }, System.Threading.CancellationToken.None);
+        //}
+
+        public TerrainChunk LoadChunk(RectangleF chunkBounds)
         {
             TerrainChunk chunk = null;
             List<TerrainChunk> chunks = m_terrainChunks.Query(chunkBounds);
@@ -269,9 +265,19 @@ namespace Azmyth.Assets
             return chunk;
         }
 
-        public List<TerrainChunk> GetChunks(System.Drawing.RectangleF bounds)
+        public List<TerrainChunk> GetChunks(RectangleF bounds)
         {
             return m_terrainChunks.Query(bounds);
+        }
+
+        public void CreateSpawn()
+        {
+
+        }
+
+        public long TypeCount(TerrainTypes type, RectangleF bounds)
+        {
+            return 0;
         }
 
         private void UpdateGenerators()

@@ -211,7 +211,7 @@ namespace Azmyth.Editor
             {
                 for (int index = 0; index < totalCells; index++)
                 {
-                    room = m_world.GetRoom(cellX, cellY);
+                    room = m_world.LoadTile(cellX, cellY);
 
                     colorPercent = room.Height / m_world.TerrainHeight;
                     rgb = (int)Math.Max(Math.Min(255 * Math.Abs(colorPercent), 255), 0);

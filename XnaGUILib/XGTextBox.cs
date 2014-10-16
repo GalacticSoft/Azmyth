@@ -216,6 +216,17 @@ namespace XnaGUILib
 
             Vector2 textPos = GetTextPosition();
 
+            Rectangle rects = ToScreen(Rectangle);
+
+            XnaGUIManager.spriteBatch.End();
+            XnaGUIManager.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, new RasterizerState() { ScissorTestEnable = true });
+            
+            Rectangle oldScissor = XnaGUIManager.spriteBatch.GraphicsDevice.ScissorRectangle;
+            Rectangle scissorRect = rects;
+            scissorRect.Inflate(-4, -4);
+
+            XnaGUIManager.spriteBatch.GraphicsDevice.ScissorRectangle = scissorRect;
+
             XnaGUIManager.spriteBatch.DrawString(XnaGUIManager.spriteFont, Text, textPos, ThisForeColor);
 
             if (XnaGUIManager.GetFocusControl() == this && blinkOn)
@@ -223,10 +234,13 @@ namespace XnaGUILib
                 string text = TextLeftOfIndex();
                 Vector2 size = XnaGUIManager.spriteFont.MeasureString(text);
                 size.Y = XnaGUIManager.spriteFont.MeasureString("A").Y;
-                Rectangle rect = new Rectangle((int )textPos.X + (int )size.X, (int )textPos.Y+1, 1, (int)size.Y-2);
+                Rectangle rect = new Rectangle((int)textPos.X + (int)size.X, (int)textPos.Y + 1, 1, (int)size.Y - 2);
                 XnaGUIManager.spriteBatch.Draw(XnaGUIManager.whiteTex, rect, ThisForeColor);
             }
 
+            XnaGUIManager.spriteBatch.End();
+            XnaGUIManager.spriteBatch.GraphicsDevice.ScissorRectangle = oldScissor;
+            XnaGUIManager.spriteBatch.Begin();
         }
     }
 }

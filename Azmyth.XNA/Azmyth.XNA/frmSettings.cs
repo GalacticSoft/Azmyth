@@ -69,8 +69,7 @@ namespace Azmyth.XNA
 
         void btnExit_Clicked(XGControl sender)
         {
-            Game.ShowSettings(false);
-            Game.ShowMenu(true);
+            Game.State = GameState.MainMenu;
         }
 
         public void Show()
