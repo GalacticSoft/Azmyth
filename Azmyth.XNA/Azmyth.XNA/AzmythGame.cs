@@ -15,58 +15,60 @@ using XnaGUILib;
 
 namespace Azmyth.XNA
 {
-    public enum GameState
-    {
-        None,
-        Loading,
-        Intro,
-        MainMenu,
-        CreateWorld,
-        Settings,
-        Playing,
 
+    public enum GameStates
+    {
+        None = 0,
+        Loading = 1,
+        Intro = 2,
+        MainMenu = 3,
+        CreateWorld = 4,
+        Settings = 5,
+        Playing = 6,
+        Max = 6,
     }
 
-    public enum MenuState
-    {
-        MainMenu,
-        SystemMenu,
-        NewWorld,
-    }
     /// <summary>
     /// This is the main type for your game
     /// </summary>
     public class AzmythGame : Microsoft.Xna.Framework.Game
     {
-        public GameState State = GameState.None;
+        private World m_world = null;
+        private Vector2 m_playerPosition = Vector2.Zero;
+
+        private int m_cellSize = 32;
         private int m_frameRate = 0;
         private int m_frameCounter = 0;
-        private World m_world = null;
 
+        public StateMachine<GameStates> m_stateManager;
 
-
+        //Forms
         private frmMainMenu m_mainMenu;
         private frmSettings m_settings;
         private frmCreateWorld m_createWorld;
-
+        private XGMiniMap m_miniMap;
         //private frmRightPanel m_rightPanel;
 
-        private SpriteFont m_spriteFont;
-        private SpriteBatch m_spriteBatch;
-        private Texture2D m_logoTexture;
-        private Texture2D m_characterTexture;
+        //Components
         private TerrainManager m_terrainManager;
         private GraphicsDeviceManager m_graphics;
-        private TimeSpan m_elapsedTime = TimeSpan.Zero;
-        private RandomNoise m_randomNoise = new RandomNoise(1);
-        private MouseState m_lastMouseState = Mouse.GetState();
-        private KeyboardState m_lastKeyboardState = Keyboard.GetState();
 
-        private int m_cellSize = 32;
+        //Sprites
+        private SpriteFont m_spriteFont;
+        private SpriteBatch m_spriteBatch;
 
+        //Textures
+        private Texture2D m_logoTexture;
+        private Texture2D m_characterTexture;
+
+        //Songs
+        private Song m_introSong;
+
+        //Timespans
         private TimeSpan m_lastTime;
+        private TimeSpan m_elapsedTime = TimeSpan.Zero;
 
-        Song m_introSong;
+        private RandomNoise m_randomNoise = new RandomNoise(1);
 
         public World World
         {
@@ -78,6 +80,10 @@ namespace Azmyth.XNA
             {
                 m_world = value;
                 m_terrainManager.World = value;
+                m_playerPosition.Y = 0;
+                m_playerPosition.X = 0;
+
+
             }
         }
 
@@ -93,16 +99,16 @@ namespace Azmyth.XNA
             }
         }
 
-       
-
         public AzmythGame()
         {
-            State = GameState.Loading;
+            m_stateManager = new StateMachine<GameStates>();
+
+            m_stateManager.SetState(GameStates.Loading);
 
             m_graphics = new GraphicsDeviceManager(this);
             m_terrainManager = new TerrainManager(this);
 
-            this.Components.Add(m_terrainManager);
+            Components.Add(m_terrainManager);
 
             Content.RootDirectory = "Content";
         }
@@ -116,26 +122,13 @@ namespace Azmyth.XNA
         protected override void Initialize()
         {
             base.Initialize();
-            
+
+            InputManager.Initialize();
+
             XnaGUIManager.Initialize(this);
-            XnaGUIManager.spriteFont = Content.Load<SpriteFont>("Fonts/guiFont"); ;
-           
-            //this.IsFixedTimeStep = true;
-            
-            m_mainMenu = new frmMainMenu(this);
-            m_settings = new frmSettings(this, m_graphics);
-            m_createWorld = new frmCreateWorld(this);
-            //m_rightPanel = new frmRightPanel(this, m_graphics);
+            XnaGUIManager.spriteFont = Content.Load<SpriteFont>("Fonts/guiFont");
 
             m_spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            ShowMenu(false);
-            ShowSettings(false);
-            ShowCreateWorld(false);
-
-            XGControl.BkgColor = Color.Black;
-            XGControl.ControlColor = Color.Gray;
-            XGControl.ForeColor = Color.White;
             
             this.IsMouseVisible = true; // display the GUI
         }
@@ -150,14 +143,15 @@ namespace Azmyth.XNA
 
             MediaPlayer.IsRepeating = true;
 
-            MediaPlayer.Play(m_introSong);
+            //MediaPlayer.Play(m_introSong);
 
             m_spriteFont = Content.Load<SpriteFont>("Fonts/Font");
             m_characterTexture = Content.Load<Texture2D>("Character1");
             m_logoTexture = Content.Load<Texture2D>("logo");
+
             m_terrainManager.LoadContent();
 
-            State = GameState.Intro;
+            m_stateManager.SetState(GameStates.Intro);
         }
 
         /// <summary>
@@ -176,18 +170,14 @@ namespace Azmyth.XNA
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            KeyboardState newKeyboardState = Keyboard.GetState();
-            MouseState newMouseState = Mouse.GetState();
+            base.Update(gameTime);
+            InputManager.Update(gameTime);
+
 
             if(m_lastTime == null)
                 m_lastTime = gameTime.TotalGameTime;
 
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-            {
-                Exit();
-            }
-
-            if (m_lastKeyboardState.IsKeyDown(Keys.OemTilde) && newKeyboardState.IsKeyUp(Keys.OemTilde))
+            if (InputManager.PadPressed(PlayerIndex.One, Buttons.Back) || InputManager.KeyReleased(Keys.OemTilde))
             {
                 Exit();
             }
@@ -201,63 +191,106 @@ namespace Azmyth.XNA
                 m_frameCounter = 0;
             }
 
-            switch(State)
+            switch(m_stateManager.State)
             {
-                case GameState.MainMenu:
+                case GameStates.Intro:
+                    ShowMiniMap(false);
                     ShowCreateWorld(false);
                     ShowSettings(false);
-                    ShowMenu(true);
+                    ShowMenu(false);
 
-                    if (m_lastKeyboardState.IsKeyDown(Keys.Escape) && newKeyboardState.IsKeyUp(Keys.Escape))
+                    if (InputManager.AnyKeyPressed() || InputManager.PadPressed(PlayerIndex.One, Buttons.Start) || InputManager.PadPressed(PlayerIndex.One, Buttons.A))
                     {
-                        State = GameState.Playing;
-                    } 
-                    break;
-                case GameState.Intro:
-                    if (m_lastKeyboardState.IsKeyDown(Keys.Enter) && newKeyboardState.IsKeyUp(Keys.Enter))
-                    {
-                        State = GameState.MainMenu;
-                    } 
+                        m_stateManager.SetState(GameStates.MainMenu);
+                    }
 
-                    if(World == null || gameTime.TotalGameTime.Subtract(m_lastTime).Seconds >= 5)
+                    if (World == null || gameTime.TotalGameTime.Subtract(m_lastTime).Seconds >= 5)
                     {
                         World = new World(new VectorID(1, 1), new Random().Next(500, 9999));
 
                         m_terrainManager.LoadChunk(0, 0);
 
-                        m_terrainManager.ShowGrid = false;
-
                         m_lastTime = gameTime.TotalGameTime;
                     }
                     break;
-                case GameState.Settings:
-                    ShowCreateWorld(false);
-                    ShowSettings(true);
-                    ShowMenu(false);
-                    break;
-                case GameState.CreateWorld:
-                    ShowCreateWorld(true);
-                    ShowSettings(false);
-                    ShowMenu(false);
-                    break;
-                case GameState.Playing:
+                case GameStates.MainMenu:
+                    ShowMiniMap(false);
                     ShowCreateWorld(false);
                     ShowSettings(false);
-                    ShowMenu(false);
-                    
-                    if (m_lastKeyboardState.IsKeyDown(Keys.Escape) && newKeyboardState.IsKeyUp(Keys.Escape))
+                    ShowMenu(true);
+
+                    if (InputManager.PadPressed(PlayerIndex.One, Buttons.B))
                     {
-                        State = GameState.MainMenu;
-                    }    
+                        m_stateManager.PrevState();
+                    }
+
+                    if (InputManager.KeyPressed(Keys.Escape) || InputManager.PadPressed(PlayerIndex.One, Buttons.Start))
+                    {
+                        if(m_stateManager.LastState == GameStates.Playing)
+                            m_stateManager.SetState(GameStates.Playing);
+                    }
+                    break;
+                case GameStates.Settings:
+                    ShowMiniMap(false);
+                    ShowCreateWorld(false);
+                    ShowMenu(false);
+                    ShowSettings(true);
+
+                    if(InputManager.PadPressed(PlayerIndex.One, Buttons.B))
+                    {
+                        m_stateManager.PrevState();
+                    }
+                    break;
+                case GameStates.CreateWorld:
+                    ShowSettings(false);
+                    ShowMenu(false);
+                    ShowCreateWorld(true);
+
+                    if (InputManager.PadPressed(PlayerIndex.One, Buttons.B))
+                    {
+                        
+                        m_stateManager.PrevState();
+                    }
+                    break;
+                case GameStates.Playing:
+                    ShowCreateWorld(false);
+                    ShowSettings(false);
+                    ShowMenu(false);
+                    ShowMiniMap(true);
+
+                    XnaGUIManager.Activate(false);
+
+                    if (InputManager.KeyPressed(Keys.Escape) || InputManager.PadPressed(PlayerIndex.One, Buttons.Start))
+                    {
+                        m_stateManager.SetState(GameStates.MainMenu);
+                    }
+
+                    if (InputManager.KeyPressed(Keys.W) || InputManager.ThumbUpPressed(PlayerIndex.One, ThumbSticks.Left))
+                    {
+                        m_playerPosition = Vector2.Transform(m_playerPosition, Matrix.CreateTranslation(0, -1, 0)); 
+                    }
+
+                    if (InputManager.KeyPressed(Keys.S) || InputManager.ThumbDownPressed(PlayerIndex.One, ThumbSticks.Left))
+                    {
+                        m_playerPosition = Vector2.Transform(m_playerPosition, Matrix.CreateTranslation(0, 1, 0));
+                    }
+
+                    if (InputManager.KeyPressed(Keys.A) || InputManager.ThumbLeftPressed(PlayerIndex.One, ThumbSticks.Left))
+                    {
+                        m_playerPosition = Vector2.Transform(m_playerPosition, Matrix.CreateTranslation(-1, 0, 0));
+                    }
+
+                    if (InputManager.KeyPressed(Keys.D) || InputManager.ThumbRightPressed(PlayerIndex.One, ThumbSticks.Left))
+                    {
+                        m_playerPosition = Vector2.Transform(m_playerPosition, Matrix.CreateTranslation(1, 0, 0));
+                    }
+
+                    m_miniMap.CenterTile((int)m_playerPosition.X, (int)m_playerPosition.Y);
+                    m_terrainManager.CenterTile((int)m_playerPosition.X, (int)m_playerPosition.Y);
                     break;
             }
 
-            m_lastMouseState = newMouseState;
-            m_lastKeyboardState = newKeyboardState;
-
             XnaGUIManager.Update(gameTime);
-
-            base.Update(gameTime);
         }
 
         /// <summary>
@@ -279,32 +312,27 @@ namespace Azmyth.XNA
 
             m_terrainManager.Draw(gameTime);
 
-            switch (State)
+            m_spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, null, Matrix.CreateTranslation(0, 0, 0));
+//#if DEBUG
+            string fps = string.Format("fps: {0}", m_frameRate);
+            m_spriteBatch.DrawString(m_spriteFont, fps, new Vector2(1, 1), Color.Black);
+            m_spriteBatch.DrawString(m_spriteFont, fps, new Vector2(2, 2), Color.White);
+//#endif
+            switch (m_stateManager.State)
             {
-                case GameState.MainMenu:
+                case GameStates.MainMenu:
                     break;
-                case GameState.Intro:
-                    m_spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, null, Matrix.CreateTranslation(0, 0, 0));
-
+                case GameStates.Intro:
                     m_spriteBatch.Draw(m_logoTexture, new Rectangle(50, 10, GraphicsDevice.Viewport.Width - 100, GraphicsDevice.Viewport.Height - 20), null, Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 1);
-                    
-                    m_spriteBatch.End();
                     break;
-                case GameState.CreateWorld:
+                case GameStates.CreateWorld:
                     break;
-                case GameState.Playing:
-                    string fps = string.Format("fps: {0}", m_frameRate);
-
-                    m_spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, null, Matrix.CreateTranslation(0, 0, 0));
-
-                    m_spriteBatch.DrawString(m_spriteFont, fps, new Vector2(1, 1), Color.Black);
-                    m_spriteBatch.DrawString(m_spriteFont, fps, new Vector2(2, 2), Color.White);
-
+                case GameStates.Playing:
                     m_spriteBatch.Draw(m_characterTexture, new Rectangle((centerX) * m_cellSize, (centerY) * m_cellSize, m_cellSize, m_cellSize), null, Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 1);
-
-                    m_spriteBatch.End();
                     break;
             }
+
+            m_spriteBatch.End();
 
             m_frameCounter++;
             float frameTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -314,56 +342,111 @@ namespace Azmyth.XNA
             base.Draw(gameTime);
         }
 
-        private bool m_showMenu = true;
         public void ShowMenu(bool blnShow)
         {
-            m_showMenu = blnShow;
-
             if(blnShow)
             {
-                if (m_mainMenu != null)
-                    m_mainMenu.Show();
+                if (m_mainMenu == null)
+                {
+                    m_mainMenu = new frmMainMenu(this);
+
+                    XGControl.BkgColor = Color.Black;
+                    XGControl.ControlColor = Color.Gray;
+                    XGControl.ForeColor = Color.White;
+
+                    XnaGUIManager.Activate(true);
+                }
             }
             else
             {
                 if (m_mainMenu != null)
-                    m_mainMenu.Close();
+                {
+                    XnaGUIManager.Controls.Remove(m_mainMenu);
+
+                    m_mainMenu = null;
+                }
             }
         }
 
-        private bool m_showSettings = false;
         public void ShowSettings(bool blnShow)
         {
-            m_showSettings = blnShow;
-
             if (blnShow)
+            {
+                if (m_settings == null)
+                {
+                    m_settings = new frmSettings(this, m_graphics);
+
+                    XGControl.BkgColor = Color.Black;
+                    XGControl.ControlColor = Color.Gray;
+                    XGControl.ForeColor = Color.White;
+
+                    //XnaGUIManager.Activate(true);
+                }
+            }
+            else
             {
                 if (m_settings != null)
-                    m_settings.Show();
-            }
-            else
-            {
-                if (m_settings!= null)
-                    m_settings.Close();
+                {
+                    XnaGUIManager.Controls.Remove(m_settings);
+
+                    m_settings = null;
+                }
             }
         }
 
-        private bool m_showCreateWorld = false;
         public void ShowCreateWorld(bool blnShow)
         {
-            m_showCreateWorld = blnShow;
-
             if (blnShow)
             {
-                if (m_createWorld != null)
-                    m_createWorld.Show();
+                if (m_createWorld == null)
+                {
+                    m_createWorld = new frmCreateWorld(this);
+
+                    XGControl.BkgColor = Color.Black;
+                    XGControl.ControlColor = Color.Gray;
+                    XGControl.ForeColor = Color.White;
+
+                }
             }
             else
             {
                 if (m_createWorld != null)
-                    m_createWorld.Close();
+                {
+                    XnaGUIManager.Controls.Remove(m_createWorld);
+
+                    m_createWorld = null;
+                    
+                }
             }
         }
+
+        public void ShowMiniMap(bool blnShow)
+        {
+            if (blnShow)
+            {
+                if (m_miniMap == null)
+                {
+                    m_miniMap = new XGMiniMap(new Rectangle(this.GraphicsDevice.Viewport.Width - 210, 10, 200, 200), this.World, 3);
+
+                    XnaGUIManager.Controls.Add(m_miniMap);
+
+                    XGControl.BkgColor = Color.Black;
+                    XGControl.ControlColor = Color.Gray;
+                    XGControl.ForeColor = Color.White;
+                }
+            }
+            else
+            {
+                if (m_miniMap != null)
+                {
+                    XnaGUIManager.Controls.Remove(m_miniMap);
+
+                    m_miniMap = null;
+
+                }
+            }
+        }
+
         //public void DrawSimpleMap(SpriteBatch spriteBatch, TerrainTile room, int x, int y)
         //{
         //    var colorPercent = room.Height / World.TerrainHeight;

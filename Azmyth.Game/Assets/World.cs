@@ -21,7 +21,7 @@ namespace Azmyth.Assets
         private RandomNoise m_city;
 
         private int m_seed = 500;
-        private float m_terrainHeight = 1024;
+        private float m_terrainHeight = 1000;
         private float m_persistance = 1.00f;
         private float m_frequency = 0.02f; // continent size.
         private int m_octaves = 2; //Roughness
@@ -118,6 +118,46 @@ namespace Azmyth.Assets
             m_seed = seed;
 
             UpdateGenerators();
+        }
+
+        public TerrainTypes GetTerrainType(int x, int y)
+        {
+            TerrainTypes terrain = TerrainTypes.Black;
+            double height = Math.Round(m_terrain.GetHeight(x, y));
+
+            if (height <= m_coastLine)
+            {
+                terrain = TerrainTypes.Water;
+            }
+
+            if (height > m_coastLine && height <= (m_coastLine + ((m_terrainHeight - m_coastLine) * m_shoreLine)))
+            {
+                terrain = TerrainTypes.Dirt;
+            }
+
+            if (height > m_coastLine + ((m_terrainHeight - m_coastLine) * m_shoreLine))
+            {
+                terrain = TerrainTypes.Grass;
+            }
+
+            if (height > m_coastLine + ((m_terrainHeight - m_coastLine) * m_treeLine))
+            {
+                terrain = TerrainTypes.Stone;
+            }
+
+            if (terrain != TerrainTypes.Water)
+            {
+                if (Math.Abs(m_rivers.GetHeight(x, y)) < m_terrainHeight * .06)
+                {
+                    terrain = TerrainTypes.Dirt;
+                }
+                if (Math.Abs(m_rivers.GetHeight(x, y)) < m_terrainHeight * .03)
+                {
+                    terrain = TerrainTypes.Water;
+                }
+            }
+
+            return terrain;
         }
 
         public TerrainTile LoadTile(int x, int y)

@@ -41,7 +41,7 @@ namespace Azmyth.XNA
             m_graphicsManager = graphics;
 
             Rectangle = new Rectangle((game.GraphicsDevice.Viewport.Width / 2)-150, (game.GraphicsDevice.Viewport.Height / 2) - 120, 300, 240);
-
+            
             XnaGUIManager.Controls.Add(this);
 
             pnlMain = new XGPanel(new Rectangle(0, 0, 300, 240));
@@ -65,11 +65,13 @@ namespace Azmyth.XNA
             pnlMain.Children.Add(chkFullScreen);
             pnlMain.Children.Add(btnApply);
             pnlMain.Children.Add(btnExit);
+
+            
         }
 
         void btnExit_Clicked(XGControl sender)
         {
-            Game.State = GameState.MainMenu;
+            Game.m_stateManager.SetState(GameStates.MainMenu);
         }
 
         public void Show()

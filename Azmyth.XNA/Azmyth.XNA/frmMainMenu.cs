@@ -46,15 +46,21 @@ namespace Azmyth.XNA
             btnSettings = new XGButton(new Rectangle(10, 130, 280, 30), "Settings", this.btnSettings_Clicked);
             btnExit = new XGButton(new Rectangle(10, 170, 280, 30), "Exit", this.btnExit_Clicked);
 
+            pnlMain.CanFocus = false;
             btnSaveWorld.Enabled = false;
             btnLoadWorld.Enabled = false;
 
             Children.Add(pnlMain);
+
             pnlMain.Children.Add(btnCreateWorld);
             pnlMain.Children.Add(btnSaveWorld);
             pnlMain.Children.Add(btnLoadWorld);
             pnlMain.Children.Add(btnSettings);
             pnlMain.Children.Add(btnExit);
+
+            focusControl = pnlMain;
+
+            this.ActivateFirst();
         }
 
         void btnCreateWorld_Clicked(XGControl sender)
@@ -66,29 +72,17 @@ namespace Azmyth.XNA
            // Game.World.ShoreLine = .20f;
             //Game.TerrainManager = new TerrainManager(Game);
 
-            Game.State = GameState.CreateWorld;
+            Game.m_stateManager.SetState(GameStates.CreateWorld);
         }
 
         void btnSettings_Clicked(XGControl sender)
         {
-            Game.State = GameState.Settings;
+            Game.m_stateManager.SetState(GameStates.Settings);
         }
 
         void btnExit_Clicked(XGControl sender)
         {
             Game.Exit();
-        }
-
-        public void Show()
-        {
-            this.Enabled = true;
-            this.Visible = true;
-        }
-
-        public void Close()
-        {
-            this.Enabled = false;
-            this.Visible = false;
         }
 
         public override void Update(GameTime gameTime)
