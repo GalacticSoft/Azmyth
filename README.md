@@ -27,6 +27,13 @@ Azmyth is a generic game framework used to create flexible RPG and adventure sty
 #### XNA
 ![ScreenShot](http://i.imgur.com/4jJVU4e.png)
 
+- Chunk Loading
+![ScreenShot](http://i.imgur.com/dXJ3UPk.png)
+![ScreenShot](http://i.imgur.com/nkxVyAN.png)
+
+- Mini Map
+![ScreenShot](http://i.imgur.com/9FyRYfY.png)
+![ScreenShot](http://i.imgur.com/zuaQza5.png)
 
 #### License & Copyright
 
