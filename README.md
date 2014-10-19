@@ -75,5 +75,6 @@ Marissa is an avid programmer and has been developing software for the past sixt
 <strong>Contact:</strong> marissa@galacticsoft.net
 <br>
 <strong>Website:</strong> http://www.galacticsoft.net
+</td>
 </tr>
 <p>
