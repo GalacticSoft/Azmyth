@@ -1,45 +1,38 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Azmyth by GalacticSoft</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/respond.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <!--[if lt IE 8]>
-    <link rel="stylesheet" href="stylesheets/ie.css">
-    <![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="Azmyth : Procedural Content Generation">
 
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Azmyth</title>
   </head>
+
   <body>
-      <div id="header">
-        <nav>
-          <li class="fork"><a href="https://github.com/GalacticSoft/Azmyth">View On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/GalacticSoft/Azmyth/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/GalacticSoft/Azmyth/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
-        </nav>
-      </div><!-- end header -->
 
-    <div class="wrapper">
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/GalacticSoft/Azmyth">View on GitHub</a>
 
-      <section>
-        <div id="title">
-          <h1>Azmyth</h1>
-          <p>Procedural Content Generation</p>
-          <hr>
-          <span class="credits left">Project maintained by <a href="https://github.com/GalacticSoft">GalacticSoft</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
-        </div>
+          <h1 id="project_title">Azmyth</h1>
+          <h2 id="project_tagline">Procedural Content Generation</h2>
 
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/GalacticSoft/Azmyth/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/GalacticSoft/Azmyth/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
         <h1>
-<a name="azmyth-" class="anchor" href="#azmyth-"><span class="octicon octicon-link"></span></a>Azmyth <img src="http://i.imgur.com/0eTNSws.png" alt="Alt text">
+<a name="" class="anchor" href="#"><span class="octicon octicon-link"></span></a><img src="http://i.imgur.com/us1Vlfo.png" alt="Alt text">
 </h1>
 
 <p>Azmyth is a generic game framework used to create flexible RPG and adventure style games using procedural content generation.  </p>
@@ -52,7 +45,10 @@
 <li>Terrain generation using Perlin Noise and QuadTrees.</li>
 <li>Flexible Stat/Attribute system.</li>
 <li>Markov Chain name/text generator.</li>
-</ul><h4>
+<li>Chunk loading</li>
+</ul>
+
+<h4>
 <a name="planned-features" class="anchor" href="#planned-features"><span class="octicon octicon-link"></span></a>Planned Features:</h4>
 
 <ul>
@@ -60,9 +56,25 @@
 <li>Cities and Economic simulation.</li>
 <li>Races and Classes</li>
 <li>Additional Noise generators (Worley, Simplex, etc)</li>
-<li>Chunk loading</li>
-</ul><h4>
-<a name="map-editor-screenshots" class="anchor" href="#map-editor-screenshots"><span class="octicon octicon-link"></span></a>Map Editor Screenshots</h4>
+</ul>
+
+<h4>
+<a name="xna" class="anchor" href="#xna"><span class="octicon octicon-link"></span></a>XNA</h4>
+
+<ul>
+<li><p>Intro
+<img src="http://i.imgur.com/4jJVU4e.png" alt="ScreenShot">
+<img src="http://i.imgur.com/kjeI0zo.png" alt="ScreenShot"></p></li>
+<li><p>Chunk Loading
+<img src="http://i.imgur.com/dXJ3UPk.png" alt="ScreenShot">
+<img src="http://i.imgur.com/nkxVyAN.png" alt="ScreenShot"></p></li>
+<li><p>Mini Map
+<img src="http://i.imgur.com/9FyRYfY.png" alt="ScreenShot">
+<img src="http://i.imgur.com/zuaQza5.png" alt="ScreenShot"></p></li>
+</ul>
+
+<h4>
+<a name="gdi" class="anchor" href="#gdi"><span class="octicon octicon-link"></span></a>GDI</h4>
 
 <ul>
 <li><p>Terrain Map
@@ -71,10 +83,7 @@
 <img src="http://i.imgur.com/9lYTbOv.png" alt="ScreenShot"></p></li>
 <li><p>Temperature Map
 <img src="http://i.imgur.com/PQq61hR.png" alt="ScreenShot"></p></li>
-</ul><h4>
-<a name="xna-demo" class="anchor" href="#xna-demo"><span class="octicon octicon-link"></span></a>XNA Demo</h4>
-
-<p><img src="http://i.imgur.com/ntdXW7l.png" alt="ScreenShot"></p>
+</ul>
 
 <h4>
 <a name="license--copyright" class="anchor" href="#license--copyright"><span class="octicon octicon-link"></span></a>License &amp; Copyright</h4>
@@ -112,16 +121,27 @@ SOFTWARE.</p>
 <strong>Marissa Willow du Bois</strong>
 <br>
 Marissa is an avid programmer and has been developing software for the past sixteen years. She is currently employed as a programmer analyst developing accounting software for the wine industry.
-<br><br><strong>Contact:</strong> <a href="mailto:marissa@galacticsoft.net">marissa@galacticsoft.net</a>
-<br><strong>Website:</strong> <a href="http://www.galacticsoft.net">http://www.galacticsoft.net</a>
+<br>
+<br>
+<strong>Contact:</strong> <a href="mailto:marissa@galacticsoft.net">marissa@galacticsoft.net</a>
+<br>
+<strong>Website:</strong> <a href="http://www.galacticsoft.net">http://www.galacticsoft.net</a>
 </td>
 </tr>
 <p></p>
 </table>
       </section>
-
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Azmyth maintained by <a href="https://github.com/GalacticSoft">GalacticSoft</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
     
+
   </body>
 </html>
