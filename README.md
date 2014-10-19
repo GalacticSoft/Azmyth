@@ -14,18 +14,10 @@ Azmyth is a generic game framework used to create flexible RPG and adventure sty
 - Races and Classes
 - Additional Noise generators (Worley, Simplex, etc)
 
-#### Map Editor Screenshots
-- Terrain Map
-![ScreenShot](http://i.imgur.com/V0Nfvx6.png)
-
-- Height Map
-![ScreenShot](http://i.imgur.com/9lYTbOv.png)
-
-- Temperature Map
-![ScreenShot](http://i.imgur.com/PQq61hR.png)
-
 #### XNA
+- Intro
 ![ScreenShot](http://i.imgur.com/4jJVU4e.png)
+![ScreenShot](http://i.imgur.com/kjeI0zo.png)
 
 - Chunk Loading
 ![ScreenShot](http://i.imgur.com/dXJ3UPk.png)
@@ -34,6 +26,16 @@ Azmyth is a generic game framework used to create flexible RPG and adventure sty
 - Mini Map
 ![ScreenShot](http://i.imgur.com/9FyRYfY.png)
 ![ScreenShot](http://i.imgur.com/zuaQza5.png)
+
+#### GDI
+- Terrain Map
+![ScreenShot](http://i.imgur.com/V0Nfvx6.png)
+
+- Height Map
+![ScreenShot](http://i.imgur.com/9lYTbOv.png)
+
+- Temperature Map
+![ScreenShot](http://i.imgur.com/PQq61hR.png)
 
 #### License & Copyright
 
