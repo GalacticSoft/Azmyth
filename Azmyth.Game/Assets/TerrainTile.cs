@@ -8,8 +8,7 @@ namespace Azmyth.Assets
     {
         private World m_world = null;
         private TerrainChunk m_chunk = null;
-        private Dictionary<Directions, TerrainTile> m_mooreNeighbors = null;
-        private Dictionary<Directions, TerrainTile> m_vonNeumanNeighbors = null;
+        private Dictionary<Directions, TerrainTile> m_neighbors = null;
 
         private TerrainTypes m_terrain;
 
@@ -72,15 +71,15 @@ namespace Azmyth.Assets
             }
         }
 
-        public Dictionary<Directions, TerrainTile> MooreNeighbors
+        public Dictionary<Directions, TerrainTile> Neighbors
         {
             get
             {
-                return m_mooreNeighbors;
+                return m_neighbors;
             }
             protected set
             {
-                m_mooreNeighbors = value;
+                m_neighbors = value;
             }
         }
 
@@ -88,11 +87,17 @@ namespace Azmyth.Assets
         {
             get
             {
-                return m_vonNeumanNeighbors;
-            }
-            protected set
-            {
-                m_vonNeumanNeighbors = value;
+                Dictionary<Directions, TerrainTile> neighbors = new Dictionary<Directions, TerrainTile>();
+
+                for (Directions direction = Directions.North; direction < Directions.MaxCardinal; direction += 2)
+                {
+                    if(m_neighbors.ContainsKey(direction))
+                    {
+                        neighbors.Add(direction, m_neighbors[direction]);
+                    }
+                }
+
+                return neighbors;
             }
         }
 
@@ -100,16 +105,13 @@ namespace Azmyth.Assets
         {
             TerrainTile neighbor = null;
 
-            if (direction < Directions.MaxCardinal)
+            if (Neighbors.ContainsKey(direction))
             {
-                if (MooreNeighbors != null)
-                {
-                    neighbor = MooreNeighbors[direction];
-                }
-                else 
-                {
-                    neighbor = LoadNeighbor(direction);
-                }
+                neighbor = Neighbors[direction];
+            }
+            else 
+            {
+                neighbor = LoadNeighbor(direction);
             }
 
             return neighbor;
@@ -129,57 +131,29 @@ namespace Azmyth.Assets
             return neighbor;
         }
 
-        public Dictionary<Directions, TerrainTile> LoadMooreNeighbors()
+        public void UpdateMooreNeighbors()
         {
-            Dictionary<Directions, TerrainTile> neighbors = new Dictionary<Directions, TerrainTile>();
-
-            if(m_chunk != null)
-            {
-                for(Directions direction = Directions.North; direction < Directions.MaxCardinal; direction++)
-                {
-                    neighbors.Add(direction, LoadNeighbor(direction));
-                }
-            }
-
-            return neighbors;
-        }
-
-        public Dictionary<Directions, TerrainTile> LoadVonNeumanNeighbors()
-        {
-            Dictionary<Directions, TerrainTile> neighbors = new Dictionary<Directions, TerrainTile>();
-            
             if (m_chunk != null)
             {
                 for (Directions direction = Directions.North; direction < Directions.MaxCardinal; direction++)
                 {
-                    neighbors.Add(direction, LoadNeighbor(direction));
+                    if (m_neighbors.ContainsKey(direction))
+                        m_neighbors[direction] = LoadNeighbor(direction);
+                    else
+                        m_neighbors.Add(direction, LoadNeighbor(direction));
                 }
             }
-
-            return neighbors;
-        }
-
-
-        public void UpdateNeighbors()
-        {
-            UpdateMooreNeighbors();
-
-            m_vonNeumanNeighbors = new Dictionary<Directions, TerrainTile>();
-
-            m_vonNeumanNeighbors.Add(Directions.North, MooreNeighbors[Directions.North]);
-            m_vonNeumanNeighbors.Add(Directions.East, MooreNeighbors[Directions.East]);
-            m_vonNeumanNeighbors.Add(Directions.South, MooreNeighbors[Directions.South]);
-            m_vonNeumanNeighbors.Add(Directions.West, MooreNeighbors[Directions.West]);
-        }
-
-        public void UpdateMooreNeighbors()
-        {
-            MooreNeighbors = LoadMooreNeighbors();
         }
 
         public void UpdateVonNeumanNeighbors()
         {
-            VonNuemanNeighbors = LoadVonNeumanNeighbors();
+            for (Directions direction = Directions.North; direction < Directions.MaxCardinal; direction += 2)
+            {
+                if (m_neighbors.ContainsKey(direction))
+                    m_neighbors[direction] = LoadNeighbor(direction);
+                else
+                    m_neighbors.Add(direction, LoadNeighbor(direction));
+            }
         }
 
         //private Exit[] _exits = new Exit[(long)Directions.Max];
