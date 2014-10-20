@@ -8,19 +8,21 @@ namespace Azmyth.Assets
 {
     public enum TerrainTypes
     {
-        Water       = 0,
-        Sand        = 1,
-        Dirt        = 2,
-        Grass      = 3,
-        Stone       = 6,
-        Snow        = 7,
-        Lava        = 8,
-        Ice         = 9,
-        Black       = 10,
-        City        = 11,
+        None        = 0,
+        Water       = 1,
+        Sand        = 2,
+        Dirt        = 3,
+        Grass       = 4,
+        Stone       = 5,
+        Snow        = 6,
+        Lava        = 7,
+        Ice         = 8,
+        Black       = 9,
+        City        = 10,
+        River       = 11,
     }
 
-    public class Terrains
+    public class Terrain
     {
         private TerrainTypes m_terrainType = TerrainTypes.Water;
 

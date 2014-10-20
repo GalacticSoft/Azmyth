@@ -121,20 +121,20 @@ namespace Azmyth.Assets
                 bool isNorth = root.Bounds.Y < newChildBounds.Y;
                 bool isWest = root.Bounds.X < newChildBounds.X;
 
-                Direction rootDirection;
+                QuadDirection rootDirection;
                 if (isNorth)
                 {
-                    rootDirection = isWest ? Direction.NW : Direction.NE;
+                    rootDirection = isWest ? QuadDirection.NW : QuadDirection.NE;
                 }
                 else
                 {
-                    rootDirection = isWest ? Direction.SW : Direction.SE;
+                    rootDirection = isWest ? QuadDirection.SW : QuadDirection.SE;
                 }
 
-                float newX = (rootDirection == Direction.NW || rootDirection == Direction.SW)
+                float newX = (rootDirection == QuadDirection.NW || rootDirection == QuadDirection.SW)
                                   ? root.Bounds.X
                                   : root.Bounds.X - root.Bounds.Width;
-                float newY = (rootDirection == Direction.NW || rootDirection == Direction.NE)
+                float newY = (rootDirection == QuadDirection.NW || rootDirection == QuadDirection.NE)
                                   ? root.Bounds.Y
                                   : root.Bounds.Y - root.Bounds.Height;
                 RectangleF newRootBounds = new RectangleF(newX, newY, root.Bounds.Width * 2, root.Bounds.Height * 2);
@@ -256,15 +256,15 @@ namespace Azmyth.Assets
             {
                 if (minLeafSize.Width <= node.Bounds.Width / 2 && minLeafSize.Height <= node.Bounds.Height / 2)
                 {
-                    node[Direction.NW] = new QuadNode(node.Bounds.X, node.Bounds.Y, node.Bounds.Width / 2,
+                    node[QuadDirection.NW] = new QuadNode(node.Bounds.X, node.Bounds.Y, node.Bounds.Width / 2,
                                                       node.Bounds.Height / 2);
-                    node[Direction.NE] = new QuadNode(node.Bounds.X + node.Bounds.Width / 2, node.Bounds.Y,
+                    node[QuadDirection.NE] = new QuadNode(node.Bounds.X + node.Bounds.Width / 2, node.Bounds.Y,
                                                       node.Bounds.Width / 2,
                                                       node.Bounds.Height / 2);
-                    node[Direction.SW] = new QuadNode(node.Bounds.X, node.Bounds.Y + node.Bounds.Height / 2,
+                    node[QuadDirection.SW] = new QuadNode(node.Bounds.X, node.Bounds.Y + node.Bounds.Height / 2,
                                                       node.Bounds.Width / 2,
                                                       node.Bounds.Height / 2);
-                    node[Direction.SE] = new QuadNode(node.Bounds.X + node.Bounds.Width / 2,
+                    node[QuadDirection.SE] = new QuadNode(node.Bounds.X + node.Bounds.Width / 2,
                                                       node.Bounds.Y + node.Bounds.Height / 2,
                                                       node.Bounds.Width / 2, node.Bounds.Height / 2);
 
@@ -310,25 +310,25 @@ namespace Azmyth.Assets
                             AddQuadObjectToNode(node, childObject);
                         }
                     }
-                    if (node[Direction.NW] != null)
+                    if (node[QuadDirection.NW] != null)
                     {
-                        node[Direction.NW].Parent = null;
-                        node[Direction.NW] = null;
+                        node[QuadDirection.NW].Parent = null;
+                        node[QuadDirection.NW] = null;
                     }
-                    if (node[Direction.NE] != null)
+                    if (node[QuadDirection.NE] != null)
                     {
-                        node[Direction.NE].Parent = null;
-                        node[Direction.NE] = null;
+                        node[QuadDirection.NE].Parent = null;
+                        node[QuadDirection.NE] = null;
                     }
-                    if (node[Direction.SW] != null)
+                    if (node[QuadDirection.SW] != null)
                     {
-                        node[Direction.SW].Parent = null;
-                        node[Direction.SW] = null;
+                        node[QuadDirection.SW].Parent = null;
+                        node[QuadDirection.SW] = null;
                     }
-                    if (node[Direction.SE] != null)
+                    if (node[QuadDirection.SE] != null)
                     {
-                        node[Direction.SE].Parent = null;
-                        node[Direction.SE] = null;
+                        node[QuadDirection.SE].Parent = null;
+                        node[QuadDirection.SE] = null;
                     }
 
                     if (node.Parent != null)
@@ -467,19 +467,19 @@ namespace Azmyth.Assets
             public QuadNode Parent { get; internal set; }
 
             private QuadNode[] _nodes = new QuadNode[4];
-            public QuadNode this[Direction direction]
+            public QuadNode this[QuadDirection direction]
             {
                 get
                 {
                     switch (direction)
                     {
-                        case Direction.NW:
+                        case QuadDirection.NW:
                             return _nodes[0];
-                        case Direction.NE:
+                        case QuadDirection.NE:
                             return _nodes[1];
-                        case Direction.SW:
+                        case QuadDirection.SW:
                             return _nodes[2];
-                        case Direction.SE:
+                        case QuadDirection.SE:
                             return _nodes[3];
                         default:
                             return null;
@@ -489,16 +489,16 @@ namespace Azmyth.Assets
                 {
                     switch (direction)
                     {
-                        case Direction.NW:
+                        case QuadDirection.NW:
                             _nodes[0] = value;
                             break;
-                        case Direction.NE:
+                        case QuadDirection.NE:
                             _nodes[1] = value;
                             break;
-                        case Direction.SW:
+                        case QuadDirection.SW:
                             _nodes[2] = value;
                             break;
-                        case Direction.SE:
+                        case QuadDirection.SE:
                             _nodes[3] = value;
                             break;
                     }
@@ -534,7 +534,7 @@ namespace Azmyth.Assets
         }
     }
 
-    public enum Direction : int
+    public enum QuadDirection : int
     {
         NW = 0,
         NE = 1,

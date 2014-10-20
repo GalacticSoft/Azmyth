@@ -286,7 +286,7 @@ namespace Azmyth.Editor
 
                     if(IsSelected(room))
                     {
-                        g.FillRectangle(new SolidBrush(Color.FromArgb(255, 255 - cellColor.R, 255 - cellColor.G, 255 - cellColor.B)), new RectangleF(room.GridX * m_cellWidth, room.GridY * m_cellHeight, m_cellWidth, m_cellHeight));        
+                        g.FillRectangle(new SolidBrush(Color.FromArgb(255, 255 - cellColor.R, 255 - cellColor.G, 255 - cellColor.B)), new RectangleF(room.X * m_cellWidth, room.Y * m_cellHeight, m_cellWidth, m_cellHeight));        
                     }
                     else
                     {
@@ -362,7 +362,7 @@ namespace Azmyth.Editor
 
         public bool IsSelected(TerrainTile room)
         {
-            return IsSelected(room.GridX, room.GridY);
+            return IsSelected(room.X, room.Y);
         }
 
         private void UpdateCellLocations(Graphics g)

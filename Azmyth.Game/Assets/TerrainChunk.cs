@@ -15,6 +15,14 @@ namespace Azmyth.Assets
         private QuadTree<TerrainTile> m_tiles = new QuadTree<TerrainTile>(new Size(64, 64), 64);
         private Dictionary<TerrainTypes, long> m_tileCount = new Dictionary<TerrainTypes,long>();
 
+        public World World
+        {
+            get 
+            { 
+                return m_world; 
+            }
+        }
+
         private TerrainChunk()
         {
             foreach (TerrainTypes t in Enum.GetValues(typeof(TerrainTypes)))
@@ -32,7 +40,7 @@ namespace Azmyth.Assets
                 int cellX = (int)((index / bounds.Height)) + (int)bounds.X;
                 int cellY = (int)((index % bounds.Height)) + (int)bounds.Y;
 
-                TerrainTile tile = world.LoadTile(cellX, cellY);
+                TerrainTile tile = world.LoadTile(cellX, cellY, this);
 
                 tile.Bounds = new RectangleF(cellX, cellY, 1, 1);
 

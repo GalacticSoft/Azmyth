@@ -11,14 +11,6 @@ namespace Azmyth.Game
         MsPerPulse      = 1000 / PulsesPerSec,
     };
 
-    public enum GameStates
-    {
-        Stopped         = 1,
-        Starting        = 2,
-        Started         = 3,
-        Stopping        = 4,
-    };
-
     public enum PlayerStatus 
     {
         None            = 0,
@@ -62,20 +54,7 @@ namespace Azmyth.Game
 
 
 
-    public enum Directions
-    {
-        North           = 0,
-        East            = 1,
-        South           = 2,
-        West            = 3,
-        Northeast       = 4,
-        Northwest       = 5,
-        Southeast       = 6,
-        Southwest       = 7,
-        Up              = 8,
-        Down            = 9,
-        Max             = 10
-    };
+
 
     public enum AbilityTypes
     {

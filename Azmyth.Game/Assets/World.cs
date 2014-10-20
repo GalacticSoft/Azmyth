@@ -163,14 +163,14 @@ namespace Azmyth.Assets
             return terrain;
         }
 
-        public TerrainTile LoadTile(int x, int y)
+        public TerrainTile LoadTile(int x, int y, TerrainChunk chunk = null)
         {
             TerrainTile tile = null;
 
-            tile = new TerrainTile();
+            tile = new TerrainTile(chunk);
 
-            tile.GridX = x;
-            tile.GridY = y;
+            tile.X = x;
+            tile.Y = y;
 
             tile.Height = (float)Math.Round(m_terrain.GetHeight(x, y));
             tile.m_value = (float)m_terrain.GetValue(x, y);
@@ -215,7 +215,7 @@ namespace Azmyth.Assets
 
                 if (Math.Floor(m_rocks.GetValue(x, y) * 100) < 1)
                 {
-                    tile.HasRock = true;
+                    //tile.HasRock = true;
                 }
             }
  
@@ -259,6 +259,27 @@ namespace Azmyth.Assets
 
             tile.m_temp = Math.Abs((int)Math.Round(m_tempurature.GetHeight(x, y), 0));
             tile.m_tempVal = m_tempurature.GetValue(x, y);
+
+            return tile;
+        }
+
+        public TerrainTile GetTile(int x, int y)
+        {
+            TerrainTile tile = null;
+            TerrainChunk chunk = null;
+            RectangleF tileRect = new RectangleF(x, y, 1, 1);
+            List<TerrainChunk> chunks = m_terrainChunks.Query(tileRect);
+
+            if(chunks.Count > 0)
+            {
+                chunk = chunks[0];
+
+                tile = chunk.GetTiles(tileRect)[0];
+            }
+            else
+            {
+                tile = LoadTile(x, y);
+            }
 
             return tile;
         }
