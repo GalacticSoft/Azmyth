@@ -3,7 +3,7 @@ Azmyth is a generic game framework used to create flexible RPG and adventure sty
 	
 #### Features include:
 - Extensible Asset system.
-- Perlin Noise, Simplex Noise, Open Simplex Noise, Simplex Spline Noise, Random Noise
+- Perlin Noise, Simplex Noise, Random Noise
 - Terrain generation using Perlin Noise and QuadTrees.
 - Flexible Stat/Attribute system.
 - Markov Chain name/text generator.
