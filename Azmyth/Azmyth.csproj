@@ -89,7 +89,10 @@
     <Compile Include="Assets\QuadTree.cs" />
     <Compile Include="Procedural\INoise.cs" />
     <Compile Include="Procedural\Markov.cs" />
+    <Compile Include="Procedural\SimplexOpenNoise.cs" />
     <Compile Include="Procedural\RandomNoise.cs" />
+    <Compile Include="Procedural\SimplexNoise.cs" />
+    <Compile Include="Procedural\SimplexSplineNoise.cs" />
     <Compile Include="StateMachine.cs" />
     <Compile Include="Stats\IHasStats.cs" />
     <Compile Include="Stats\IStat.cs" />

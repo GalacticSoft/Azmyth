@@ -113,7 +113,7 @@ namespace Azmyth.Assets
         }
 
         public World(VectorID vectorID, int seed)
-        {
+        { 
             AssetID = vectorID;
             m_seed = seed;
 
@@ -122,13 +122,16 @@ namespace Azmyth.Assets
 
         public TerrainTypes GetTerrainType(int x, int y)
         {
+            //SimplexValueSplineNoise spline = new SimplexValueSplineNoise(m_seed);
+            //OpenSimplexNoise spline = new OpenSimplexNoise(m_seed);
             TerrainTypes terrain = TerrainTypes.Black;
-            double height = Math.Round(m_terrain.GetHeight(x, y));
-
-            if (height <= m_coastLine)
+            double height = Math.Round(m_terrain.GetHeight(x, y));//spline.eval((double)x / 25, (double)y / 25);// ;
+            
+            if (height < 0)
             {
                 terrain = TerrainTypes.Water;
             }
+
 
             if (height > m_coastLine && height <= (m_coastLine + ((m_terrainHeight - m_coastLine) * m_shoreLine)))
             {

@@ -39,5 +39,16 @@ namespace Azmyth.Procedural
             return random.NextDouble();
 
         }
+
+
+        public double GetValue(double x, double y, double z)
+        {
+            throw new NotImplementedException();
+        }
+
+        public double GetValue(double x, double y, double z, double t)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

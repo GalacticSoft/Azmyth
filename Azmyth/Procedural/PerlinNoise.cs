@@ -121,5 +121,16 @@ namespace Azmyth.Procedural
         
             return 1.0 - ((double)t) * 0.931322574615478515625e-9;/// 1073741824.0);
         }
+
+
+        public double GetValue(double x, double y, double z)
+        {
+            throw new NotImplementedException();
+        }
+
+        public double GetValue(double x, double y, double z, double t)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

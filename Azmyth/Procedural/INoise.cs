@@ -9,5 +9,9 @@ namespace Azmyth.Procedural
     public interface INoise
     {
         double GetValue(double x, double y);
+
+        double GetValue(double x, double y, double z);
+
+        double GetValue(double x, double y, double z, double t);
     }
 }
