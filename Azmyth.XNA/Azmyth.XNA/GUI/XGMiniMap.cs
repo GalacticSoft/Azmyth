@@ -72,6 +72,27 @@ namespace XnaGUILib
             m_offsetX += (int)(5 * InputManager.ThumbPosition(PlayerIndex.One, ThumbSticks.Right).X);
             m_offsetY -= (int)(5 * InputManager.ThumbPosition(PlayerIndex.One, ThumbSticks.Right).Y);
 
+            if(InputManager.KeyPressed(Keys.Right))
+            {
+                m_offsetX++;
+            }
+            
+            if(InputManager.KeyPressed(Keys.Left))
+            {
+                m_offsetX--;
+            }
+
+            if(InputManager.KeyPressed(Keys.Up))
+            {
+                m_offsetY--;
+            }
+
+
+            if (InputManager.KeyPressed(Keys.Down))
+            {
+                m_offsetY++;
+            }
+
             base.Update(gameTime);
         }
 
@@ -81,7 +102,6 @@ namespace XnaGUILib
         {
             hiliteTime = 0.1f;
         }
-
 
         public void CenterTile(int x, int y)
         {
