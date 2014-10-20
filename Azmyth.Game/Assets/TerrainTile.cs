@@ -4,13 +4,12 @@ using System.Drawing;
 
 namespace Azmyth.Assets
 {
-    
     public class TerrainTile : Asset
     {
         private World m_world = null;
         private TerrainChunk m_chunk = null;
-        private Dictionary<Vector, TerrainTile> m_mooreNeighbors = null;
-        private Dictionary<Vector, TerrainTile> m_vonNeumanNeighbors = null;
+        private Dictionary<Directions, TerrainTile> m_mooreNeighbors = null;
+        private Dictionary<Directions, TerrainTile> m_vonNeumanNeighbors = null;
 
         private TerrainTypes m_terrain;
 
@@ -73,7 +72,7 @@ namespace Azmyth.Assets
             }
         }
 
-        public Dictionary<Vector, TerrainTile> MooreNeighbors
+        public Dictionary<Directions, TerrainTile> MooreNeighbors
         {
             get
             {
@@ -84,7 +83,8 @@ namespace Azmyth.Assets
                 m_mooreNeighbors = value;
             }
         }
-        public Dictionary<Vector, TerrainTile> VonNuemanNeighbors
+
+        public Dictionary<Directions, TerrainTile> VonNuemanNeighbors
         {
             get
             {
@@ -96,52 +96,90 @@ namespace Azmyth.Assets
             }
         }
 
-        public Dictionary<Vector, TerrainTile> GetMooreNeighbors()
+        public TerrainTile GetNeighbor(Directions direction)
         {
-            Dictionary<Vector, TerrainTile> neighbors = new Dictionary<Vector, TerrainTile>();
+            TerrainTile neighbor = null;
+
+            if (direction < Directions.MaxCardinal)
+            {
+                if (MooreNeighbors != null)
+                {
+                    neighbor = MooreNeighbors[direction];
+                }
+                else 
+                {
+                    neighbor = LoadNeighbor(direction);
+                }
+            }
+
+            return neighbor;
+        }
+
+        public TerrainTile LoadNeighbor(Directions direction)
+        {
+            TerrainTile neighbor = null;
 
             if(m_chunk != null)
             {
-                for(int i = 0; i < (int)Directions.MaxCardinal; i++)
-                {
-                    Vector direction = Direction.GetDirectionVector((Directions)i);
+                Vector directionVector = Direction.GetDirectionVector(direction);
 
-                    neighbors.Add(direction, m_chunk.GetTile(X + direction.X, Y + direction.Y));
+                neighbor = m_chunk.GetTile(X + directionVector.X, Y + directionVector.Y);
+            }
+
+            return neighbor;
+        }
+
+        public Dictionary<Directions, TerrainTile> LoadMooreNeighbors()
+        {
+            Dictionary<Directions, TerrainTile> neighbors = new Dictionary<Directions, TerrainTile>();
+
+            if(m_chunk != null)
+            {
+                for(Directions direction = Directions.North; direction < Directions.MaxCardinal; direction++)
+                {
+                    neighbors.Add(direction, LoadNeighbor(direction));
                 }
             }
 
             return neighbors;
         }
 
-        public Dictionary<Vector, TerrainTile> GetVonNeumanNeighbors()
+        public Dictionary<Directions, TerrainTile> LoadVonNeumanNeighbors()
         {
-            Dictionary<Vector, TerrainTile> neighbors = new Dictionary<Vector, TerrainTile>();
+            Dictionary<Directions, TerrainTile> neighbors = new Dictionary<Directions, TerrainTile>();
             
             if (m_chunk != null)
             {
-                for (int i = 0; i < (int)Directions.MaxCardinal; i += 2)
+                for (Directions direction = Directions.North; direction < Directions.MaxCardinal; direction++)
                 {
-                    Vector direction = Direction.GetDirectionVector((Directions)i);
-
-                    neighbors.Add(direction, m_chunk.GetTile(X + direction.X, Y + direction.Y));
+                    neighbors.Add(direction, LoadNeighbor(direction));
                 }
             }
 
             return neighbors;
         }
 
-        public Dictionary<Vector, TerrainTile> LoadMooreNeighbors()
-        {
-            MooreNeighbors = GetMooreNeighbors();
 
-            return MooreNeighbors;
+        public void UpdateNeighbors()
+        {
+            UpdateMooreNeighbors();
+
+            m_vonNeumanNeighbors = new Dictionary<Directions, TerrainTile>();
+
+            m_vonNeumanNeighbors.Add(Directions.North, MooreNeighbors[Directions.North]);
+            m_vonNeumanNeighbors.Add(Directions.East, MooreNeighbors[Directions.East]);
+            m_vonNeumanNeighbors.Add(Directions.South, MooreNeighbors[Directions.South]);
+            m_vonNeumanNeighbors.Add(Directions.West, MooreNeighbors[Directions.West]);
         }
 
-        public Dictionary<Vector, TerrainTile> LoadVonNeumanNeighbors()
+        public void UpdateMooreNeighbors()
         {
-            VonNuemanNeighbors = GetVonNeumanNeighbors();
+            MooreNeighbors = LoadMooreNeighbors();
+        }
 
-            return VonNuemanNeighbors;
+        public void UpdateVonNeumanNeighbors()
+        {
+            VonNuemanNeighbors = LoadVonNeumanNeighbors();
         }
 
         //private Exit[] _exits = new Exit[(long)Directions.Max];
