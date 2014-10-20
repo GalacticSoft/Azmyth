@@ -27,7 +27,8 @@ namespace Azmyth.Assets
         public TerrainTile(TerrainChunk chunk) 
             : this(new VectorID(0, 0), chunk) { }
 
-        public TerrainTile(VectorID tileID, TerrainChunk chunk) : base(tileID)
+        public TerrainTile(VectorID tileID, TerrainChunk chunk) 
+            : base(tileID)
         {
             m_chunk = chunk;
 
@@ -99,13 +100,13 @@ namespace Azmyth.Assets
         {
             Dictionary<Vector, TerrainTile> neighbors = new Dictionary<Vector, TerrainTile>();
 
-            if(m_world != null)
+            if(m_chunk != null)
             {
                 for(int i = 0; i < (int)Directions.MaxCardinal; i++)
                 {
                     Vector direction = Direction.GetDirectionVector((Directions)i);
 
-                    neighbors.Add(direction, m_world.GetTile(X + direction.X, Y + direction.Y));
+                    neighbors.Add(direction, m_chunk.GetTile(X + direction.X, Y + direction.Y));
                 }
             }
 
@@ -115,12 +116,15 @@ namespace Azmyth.Assets
         public Dictionary<Vector, TerrainTile> GetVonNeumanNeighbors()
         {
             Dictionary<Vector, TerrainTile> neighbors = new Dictionary<Vector, TerrainTile>();
-
-            for (int i = 0; i < (int)Directions.MaxCardinal; i += 2)
+            
+            if (m_chunk != null)
             {
-                Vector direction = Direction.GetDirectionVector((Directions)i);
+                for (int i = 0; i < (int)Directions.MaxCardinal; i += 2)
+                {
+                    Vector direction = Direction.GetDirectionVector((Directions)i);
 
-                neighbors.Add(direction, m_world.GetTile(X + direction.X, Y + direction.Y));
+                    neighbors.Add(direction, m_chunk.GetTile(X + direction.X, Y + direction.Y));
+                }
             }
 
             return neighbors;

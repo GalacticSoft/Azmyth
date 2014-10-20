@@ -53,6 +53,23 @@ namespace Azmyth.Assets
             m_bounds = bounds;
         }
 
+        public TerrainTile GetTile(int x, int y)
+        {
+            TerrainTile tile = null;
+            List<TerrainTile> tiles = m_tiles.Query(new RectangleF(x, y, 1, 1));
+
+            if(tiles.Count > 0)
+            {
+                tile = tiles[0];
+            }
+            else
+            {
+                tile = m_world.GetTile(x, y);
+            }
+
+            return tile;
+        }
+
         public List<TerrainTile> GetTiles()
         {
             return GetTiles(m_bounds);
@@ -76,6 +93,14 @@ namespace Azmyth.Assets
             get 
             { 
                 return m_bounds; 
+            }
+        }
+
+        public TerrainTile this[int x, int y]
+        {
+            get
+            {
+                return GetTile(x, y);
             }
         }
     }
