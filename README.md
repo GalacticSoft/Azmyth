@@ -1,4 +1,4 @@
-#  Azmyth ![Alt text](http://i.imgur.com/0eTNSws.png)
+# ![Alt text](http://i.imgur.com/3ZGERJM.png)
 Azmyth is a generic game framework used to create flexible RPG and adventure style games using procedural content generation.  
 	
 #### Features include:
@@ -6,15 +6,28 @@ Azmyth is a generic game framework used to create flexible RPG and adventure sty
 - Terrain generation using Perlin Noise and QuadTrees.
 - Flexible Stat/Attribute system.
 - Markov Chain name/text generator.
+- Chunk loading
 
 #### Planned Features:
 - Biomes
 - Cities and Economic simulation.
 - Races and Classes
 - Additional Noise generators (Worley, Simplex, etc)
-- Chunk loading
 
-#### Map Editor Screenshots
+#### XNA
+- Intro
+![ScreenShot](http://i.imgur.com/4jJVU4e.png)
+![ScreenShot](http://i.imgur.com/kjeI0zo.png)
+
+- Chunk Loading
+![ScreenShot](http://i.imgur.com/dXJ3UPk.png)
+![ScreenShot](http://i.imgur.com/nkxVyAN.png)
+
+- Mini Map
+![ScreenShot](http://i.imgur.com/9FyRYfY.png)
+![ScreenShot](http://i.imgur.com/zuaQza5.png)
+
+#### GDI
 - Terrain Map
 ![ScreenShot](http://i.imgur.com/V0Nfvx6.png)
 
@@ -23,10 +36,6 @@ Azmyth is a generic game framework used to create flexible RPG and adventure sty
 
 - Temperature Map
 ![ScreenShot](http://i.imgur.com/PQq61hR.png)
-
-#### XNA Demo
-![ScreenShot](http://i.imgur.com/ntdXW7l.png)
-
 
 #### License & Copyright
 
@@ -66,5 +75,6 @@ Marissa is an avid programmer and has been developing software for the past sixt
 <strong>Contact:</strong> marissa@galacticsoft.net
 <br>
 <strong>Website:</strong> http://www.galacticsoft.net
+</td>
 </tr>
 <p>
