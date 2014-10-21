@@ -139,7 +139,7 @@ namespace XnaGUILib
 
                 switch (tile)
                 {
-                    case TerrainTypes.Water:
+                    case TerrainTypes.Ocean:
                         XnaGUIManager.spriteBatch.Draw(XnaGUIManager.whiteTex, ToScreen(bounds), Color.Blue);
                         break;
                     case TerrainTypes.Dirt:

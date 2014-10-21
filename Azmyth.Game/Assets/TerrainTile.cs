@@ -91,9 +91,11 @@ namespace Azmyth.Assets
 
                 for (Directions direction = Directions.North; direction < Directions.MaxCardinal; direction += 2)
                 {
-                    if(m_neighbors.ContainsKey(direction))
+                    TerrainTile neighbor = GetNeighbor(direction);
+
+                    if (neighbor != null)
                     {
-                        neighbors.Add(direction, m_neighbors[direction]);
+                        neighbors.Add(direction, neighbor);
                     }
                 }
 
@@ -131,16 +133,22 @@ namespace Azmyth.Assets
             return neighbor;
         }
 
-        public void UpdateMooreNeighbors()
+        public void UpdateNeighbors() //Moore Neighborhood
         {
             if (m_chunk != null)
             {
                 for (Directions direction = Directions.North; direction < Directions.MaxCardinal; direction++)
                 {
+                    TerrainTile neighbor = LoadNeighbor(direction);
+
                     if (m_neighbors.ContainsKey(direction))
-                        m_neighbors[direction] = LoadNeighbor(direction);
+                    {
+                        m_neighbors[direction] = neighbor;
+                    }
                     else
-                        m_neighbors.Add(direction, LoadNeighbor(direction));
+                    {
+                        m_neighbors.Add(direction, neighbor);
+                    }
                 }
             }
         }
@@ -149,10 +157,16 @@ namespace Azmyth.Assets
         {
             for (Directions direction = Directions.North; direction < Directions.MaxCardinal; direction += 2)
             {
+                TerrainTile neighbor = LoadNeighbor(direction);
+
                 if (m_neighbors.ContainsKey(direction))
-                    m_neighbors[direction] = LoadNeighbor(direction);
+                {
+                    m_neighbors[direction] = neighbor;
+                }
                 else
-                    m_neighbors.Add(direction, LoadNeighbor(direction));
+                {
+                    m_neighbors.Add(direction, neighbor);
+                }
             }
         }
 

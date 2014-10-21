@@ -124,12 +124,12 @@ namespace Azmyth.Assets
         {
             //SimplexValueSplineNoise spline = new SimplexValueSplineNoise(m_seed);
             //OpenSimplexNoise spline = new OpenSimplexNoise(m_seed);
-            TerrainTypes terrain = TerrainTypes.Black;
+            TerrainTypes terrain = TerrainTypes.None;
             double height = Math.Round(m_terrain.GetHeight(x, y));//spline.eval((double)x / 25, (double)y / 25);// ;
             
             if (height < 0)
             {
-                terrain = TerrainTypes.Water;
+                terrain = TerrainTypes.Ocean;
             }
 
 
@@ -148,7 +148,7 @@ namespace Azmyth.Assets
                 terrain = TerrainTypes.Stone;
             }
 
-            if (terrain != TerrainTypes.Water)
+            if (terrain != TerrainTypes.Ocean)
             {
                 if (Math.Abs(m_rivers.GetHeight(x, y)) < m_terrainHeight * .06)
                 {
@@ -156,7 +156,7 @@ namespace Azmyth.Assets
                 }
                 if (Math.Abs(m_rivers.GetHeight(x, y)) < m_terrainHeight * .03)
                 {
-                    terrain = TerrainTypes.Water;
+                    terrain = TerrainTypes.Ocean;
                 }
             }
 
@@ -177,7 +177,7 @@ namespace Azmyth.Assets
 
             if (tile.Height <= m_coastLine)
             {
-                tile.Terrain = TerrainTypes.Water;
+                tile.Terrain = TerrainTypes.Ocean;
             }
 
             if (tile.Height > m_coastLine && tile.Height <= (m_coastLine + ((m_terrainHeight - m_coastLine) * m_shoreLine)))
@@ -227,7 +227,7 @@ namespace Azmyth.Assets
             //    }
             //}
 
-            if (tile.Terrain != TerrainTypes.Water)
+            if (tile.Terrain != TerrainTypes.Ocean)
             {
                 //if (room.Terrain != TerrainTypes.Snow)
                 //{
@@ -237,7 +237,7 @@ namespace Azmyth.Assets
                     }
                     if (Math.Abs(m_rivers.GetHeight(x, y)) < m_terrainHeight * .03)
                     {
-                        tile.Terrain = TerrainTypes.Water;
+                        tile.Terrain = TerrainTypes.Ocean;
                     }
                 //}
                 //else

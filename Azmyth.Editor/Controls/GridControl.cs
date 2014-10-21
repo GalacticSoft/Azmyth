@@ -237,7 +237,7 @@ namespace Azmyth.Editor
                     {
                         switch (room.Terrain)
                         {
-                            case TerrainTypes.Water:
+                            case TerrainTypes.Ocean:
                                 cellColor = Color.FromArgb(255, 0, 0, 255 - rgb);
                                 break;
                             case TerrainTypes.Dirt:
@@ -271,10 +271,10 @@ namespace Azmyth.Editor
                             case TerrainTypes.Ice:
                                 cellColor = Color.Cyan;
                                 break;
-                            case TerrainTypes.Black:
+                            case TerrainTypes.None:
                                 cellColor = Color.Black;
                                 break;
-                            case TerrainTypes.City:
+                            case TerrainTypes.Road:
                                 cellColor = Color.Yellow;
 
                                 //City city = m_world.GetCity(cellX, cellY);
