@@ -24,7 +24,7 @@ namespace Azmyth.Assets
 
     public struct TerrainType
     {
-        public readonly static TerrainType[] Terrain  =
+        public static readonly TerrainType[] Terrain =
         {
             new TerrainType(TerrainTypes.None,  "None",     false,  false,  false,  0.0f),
             new TerrainType(TerrainTypes.Ocean, "Ocean",    true,   true,   false,  0.1f),
