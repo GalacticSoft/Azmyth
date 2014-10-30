@@ -80,4 +80,5 @@ Marissa is an avid programmer and has been developing software for the past sixt
 <strong>Website:</strong> http://www.galacticsoft.net
 </td>
 </tr>
+</table>
 <p>
