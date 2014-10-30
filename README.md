@@ -18,7 +18,8 @@ Azmyth is a generic game framework used to create flexible RPG and adventure sty
 - Dynamic Chunk Loading.
 
 #### Code Sample
-''' csharp
+
+'''csharp
 	//Create World with random seed
 	World world = new World(12345);
 	
