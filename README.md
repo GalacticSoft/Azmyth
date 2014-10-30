@@ -41,24 +41,72 @@ Azmyth is a generic game framework used to create flexible RPG and adventure sty
 
 - Chunk Loading
 
-		public TerrainChunk(RectangleF bounds, World world) : this()
+		/// <summary>
+		/// Loads tiles from world that are contained within chunkBounds
+		/// </summary>
+		/// <param name="world"></param>
+		/// <param name="chunkBounds"></param>
+		public TerrainChunk(World world, RectangleF chunkBounds) : this()
 		{
-		    int totalCells = (int)bounds.Width * (int)bounds.Height;
+		    //Calculate total tiles in chunk
+		    int totalTiles = (int)chunkBounds.Width * (int)chunkBounds.Height;
 		
-		    for (int index = 0; index < totalCells; index++)
+		    //Loop through each tile
+		    for (int index = 0; index < totalTiles; index++)
 		    {
-		    	int cellX = (int)((index / bounds.Height)) + (int)bounds.X;
-		        int cellY = (int)((index % bounds.Height)) + (int)bounds.Y;
+		        //Convert index value into x and y coordinates.
+		        int cellX = (int)((index / chunkBounds.Height)) + (int)chunkBounds.X;
+		        int cellY = (int)((index % chunkBounds.Height)) + (int)chunkBounds.Y;
 		
+		        //Load tile.
 		        TerrainTile tile = world.LoadTile(cellX, cellY, this);
 		
-		        tile.Bounds = new RectangleF(cellX, cellY, 1, 1);
-		
+		        //Insert new tile into chunk QuadTree
 		        m_tiles.Insert(tile);
+		     }
+		
+		     //Assign local variables
+		     m_world = world;
+		     m_bounds = chunkBounds;
+		}
+
+- Chunk Rendering
+
+		/// <summary>
+		/// Draws the loaded chunks visible in the viewport
+		/// </summary>
+		public void Draw()
+		{
+		    //Convert the viewport rectangle into tiles
+		    RectangleF viewportRect = ScreenToTile(new Rectangle(Viewport.X, 
+		        Viewport.Y, Viewport.Width, Viewport.Height));
+		 
+		    //Load only the chunks visible in the viewport. (Includes partial chunks)
+		    List<TerrainChunk> chunks = m_world.GetChunks(viewportRect);
+		
+		    m_spriteBatch.Begin(SpriteSortMode.Deferred, 
+		        null, null, null, null, null, Matrix.CreateTranslation(0, 0, 0));
+		
+		    //Loop through each visible chunk.
+		    foreach (TerrainChunk chunk in chunks)
+		    {
+		        //Load only tiles visible in the viewport. (Includes partial tiles)
+		        List<TerrainTile> tiles = chunk.GetTiles(viewportRect);
+		
+		        //Loop through each visible tile.
+		        foreach (TerrainTile t in tiles)
+		        {
+		            //Draw tile to screen.
+		            m_spriteBatch.Draw(m_cellTextures[t.Terrain], 
+		                TileToScreen(t.Bounds), Color.White);
+		
+		            //Add any additional rendering for tiles here.
+		        }
+		
+		        // Add any additional rendering for chunks here.
 		    }
-		  
-		    m_world = world;
-		    m_bounds = bounds;
+		
+		    m_spriteBatch.End();
 		}
 
 #### XNA
