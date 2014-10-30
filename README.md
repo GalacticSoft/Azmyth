@@ -19,23 +19,25 @@ Azmyth is a generic game framework used to create flexible RPG and adventure sty
 
 #### Code Sample
 
-	//Create World with random seed
-	World world = new World(12345);
-	
-	//Set parameters
-	world.CoastLine = 0.00f;  //Coast starts at height 0
-	world.ShoreLine = 0.05f;  //Shore line is 5% higher than coast line
-	world.TreeLine  = 0.40f;  //Tree line is 40% higher than coast line
-	world.SnowLine  = 0.50f;  //Snow line is 50% higher than coast line
-	
-	//Load 50x50 chunk at tile 0, 0
-	TerrainChunk chunk = world.LoadChunk(new RectangleF(0, 0, 50, 50));
-	
-	//Load 10x10 chunk at tile 5, 6
-	TerrainChunk chunk2 = world.LoadChunk(new RectangleF(5, 6, 10, 10));
-	
-	//Load 100x100 chunk at tile 0, 0
-	TerrainChunk chunk3 = world.LoadChunk(new RectangleF(100, 100, 100, 100));
+<pre style='color:#000020;background:#f6f8ff;'>
+<span style='color:#595979; '>//Create World with random seed</span>
+World world <span style='color:#308080; '>=</span> <span style='color:#200080; font-weight:bold; '>new</span> World<span style='color:#308080; '>(</span><span style='color:#008c00; '>12345</span><span style='color:#308080; '>)</span><span style='color:#406080; '>;</span>
+
+<span style='color:#595979; '>//Set parameters</span>
+world<span style='color:#308080; '>.</span>CoastLine <span style='color:#308080; '>=</span> <span style='color:#008000; '>0.00</span><span style='color:#006600; '>f</span><span style='color:#406080; '>;</span>  <span style='color:#595979; '>//Coast starts at height 0</span>
+world<span style='color:#308080; '>.</span>ShoreLine <span style='color:#308080; '>=</span> <span style='color:#008000; '>0.05</span><span style='color:#006600; '>f</span><span style='color:#406080; '>;</span>  <span style='color:#595979; '>//Shore line is 5% higher than coast line</span>
+world<span style='color:#308080; '>.</span>TreeLine  <span style='color:#308080; '>=</span> <span style='color:#008000; '>0.40</span><span style='color:#006600; '>f</span><span style='color:#406080; '>;</span>  <span style='color:#595979; '>//Tree line is 40% higher than coast line</span>
+world<span style='color:#308080; '>.</span>SnowLine  <span style='color:#308080; '>=</span> <span style='color:#008000; '>0.50</span><span style='color:#006600; '>f</span><span style='color:#406080; '>;</span>  <span style='color:#595979; '>//Snow line is 50% higher than coast line</span>
+
+<span style='color:#595979; '>//Load 50x50 chunk at tile 0, 0</span>
+TerrainChunk chunk <span style='color:#308080; '>=</span> world<span style='color:#308080; '>.</span>LoadChunk<span style='color:#308080; '>(</span><span style='color:#200080; font-weight:bold; '>new</span> RectangleF<span style='color:#308080; '>(</span><span style='color:#008c00; '>0</span><span style='color:#308080; '>,</span> <span style='color:#008c00; '>0</span><span style='color:#308080; '>,</span> <span style='color:#008c00; '>50</span><span style='color:#308080; '>,</span> <span style='color:#008c00; '>50</span><span style='color:#308080; '>)</span><span style='color:#308080; '>)</span><span style='color:#406080; '>;</span>
+
+<span style='color:#595979; '>//Load 10x10 chunk at tile 5, 6</span>
+TerrainChunk chunk2 <span style='color:#308080; '>=</span> world<span style='color:#308080; '>.</span>LoadChunk<span style='color:#308080; '>(</span><span style='color:#200080; font-weight:bold; '>new</span> RectangleF<span style='color:#308080; '>(</span><span style='color:#008c00; '>5</span><span style='color:#308080; '>,</span> <span style='color:#008c00; '>6</span><span style='color:#308080; '>,</span> <span style='color:#008c00; '>10</span><span style='color:#308080; '>,</span> <span style='color:#008c00; '>10</span><span style='color:#308080; '>)</span><span style='color:#308080; '>)</span><span style='color:#406080; '>;</span>
+
+<span style='color:#595979; '>//Load 100x100 chunk at tile 0, 0</span>
+TerrainChunk chunk3 <span style='color:#308080; '>=</span> world<span style='color:#308080; '>.</span>LoadChunk<span style='color:#308080; '>(</span><span style='color:#200080; font-weight:bold; '>new</span> RectangleF<span style='color:#308080; '>(</span><span style='color:#008c00; '>100</span><span style='color:#308080; '>,</span> <span style='color:#008c00; '>100</span><span style='color:#308080; '>,</span> <span style='color:#008c00; '>100</span><span style='color:#308080; '>,</span> <span style='color:#008c00; '>100</span><span style='color:#308080; '>)</span><span style='color:#308080; '>)</span><span style='color:#406080; '>;</span>
+</pre>
 
 #### XNA
 - Intro
