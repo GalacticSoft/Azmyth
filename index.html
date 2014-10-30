@@ -38,7 +38,7 @@
 
 <ul>
 <li>Extensible Asset system.</li>
-<li>Perlin Noise, Simplex Noise, Open Simplex Noise, Simplex Spline Noise, Random Noise</li>
+<li>Perlin Noise, Simplex Noise, Random Noise</li>
 <li>Terrain generation using Perlin Noise and QuadTrees.</li>
 <li>Flexible Stat/Attribute system.</li>
 <li>Markov Chain name/text generator.</li>
@@ -55,6 +55,58 @@
 <li>Additional Noise generators (Worley/Voronoi, Wavelet, etc).</li>
 <li>Procedurally generated NPCS, Items, Quests.</li>
 <li>Dynamic Chunk Loading.</li>
+</ul>
+
+<h4>
+<a name="code-samples" class="anchor" href="#code-samples"><span class="octicon octicon-link"></span></a>Code Samples</h4>
+
+<ul>
+<li>
+<p>Creating a World and Loading Chunks</p>
+
+<pre><code>//Create World with random seed
+World world = new World(12345);
+
+//Set parameters
+world.CoastLine = 0.00f;  //Coast starts at height 0
+world.ShoreLine = 0.05f;  //Shore line is 5% higher than coast line
+world.TreeLine  = 0.40f;  //Tree line is 40% higher than coast line
+world.SnowLine  = 0.50f;  //Snow line is 50% higher than coast line
+
+//Load 50x50 chunk at tile 0, 0
+TerrainChunk chunk = world.LoadChunk(new RectangleF(0, 0, 50, 50));
+
+//Load 10x10 chunk at tile 5, 6
+TerrainChunk chunk2 = world.LoadChunk(new RectangleF(5, 6, 10, 10));
+
+//Load 100x100 chunk at tile 0, 0
+TerrainChunk chunk3 = world.LoadChunk(new RectangleF(100, 100, 100, 100));
+</code></pre>
+</li>
+<li>
+<p>Chunk Loading</p>
+
+<pre><code>public TerrainChunk(RectangleF bounds, World world) : this()
+{
+    int totalCells = (int)bounds.Width * (int)bounds.Height;
+
+    for (int index = 0; index &lt; totalCells; index++)
+    {
+        int cellX = (int)((index / bounds.Height)) + (int)bounds.X;
+        int cellY = (int)((index % bounds.Height)) + (int)bounds.Y;
+
+        TerrainTile tile = world.LoadTile(cellX, cellY, this);
+
+        tile.Bounds = new RectangleF(cellX, cellY, 1, 1);
+
+        m_tiles.Insert(tile);
+    }
+
+    m_world = world;
+    m_bounds = bounds;
+}
+</code></pre>
+</li>
 </ul>
 
 <h4>
@@ -112,8 +164,9 @@ SOFTWARE.</p>
 <h4>
 <a name="author" class="anchor" href="#author"><span class="octicon octicon-link"></span></a>Author</h4>
 
-<p></p><p>
-</p><table width="100%" cellpadding="0" cellspacing="0">
+<p></p><p></p>
+
+<table width="100%" cellpadding="0" cellspacing="0">
 <tr width="100%" height="211px" cellpadding="0" cellspacing="0">
 <td cellpadding="0" cellspacing="0" height="211px" width="135px"><img src="http://i.imgur.com/H98nfdu.jpg"></td>
 <td>
@@ -122,13 +175,14 @@ SOFTWARE.</p>
 Marissa is an avid programmer and has been developing software for the past sixteen years. She is currently employed as a programmer analyst developing accounting software for the wine industry.
 <br>
 <br>
-<strong>Contact:</strong> <a href="mailto:marissa@galacticsoft.net">marissa@galacticsoft.net</a>
+<strong>Contact:</strong> marissa@galacticsoft.net
 <br>
-<strong>Website:</strong> <a href="http://www.galacticsoft.net">http://www.galacticsoft.net</a>
+<strong>Website:</strong> http://www.galacticsoft.net
 </td>
 </tr>
-<p></p>
 </table>
+
+<p></p><p></p>
       </section>
     </div>
     <footer>
