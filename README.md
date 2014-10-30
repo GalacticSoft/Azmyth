@@ -19,7 +19,6 @@ Azmyth is a generic game framework used to create flexible RPG and adventure sty
 
 #### Code Sample
 
-'''csharp
 	//Create World with random seed
 	World world = new World(12345);
 	
@@ -37,7 +36,7 @@ Azmyth is a generic game framework used to create flexible RPG and adventure sty
 	
 	//Load 100x100 chunk at tile 0, 0
 	TerrainChunk chunk3 = world.LoadChunk(new RectangleF(100, 100, 100, 100));
-'''
+
 #### XNA
 - Intro
 ![ScreenShot](http://i.imgur.com/4jJVU4e.png)
