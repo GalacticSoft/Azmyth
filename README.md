@@ -19,45 +19,48 @@ Azmyth is a generic game framework used to create flexible RPG and adventure sty
 
 #### Code Samples
 
-Creating a World and Loading Chunks
-	//Create World with random seed
-	World world = new World(12345);
+- Creating a World and Loading Chunks
+
+		//Create World with random seed
+		World world = new World(12345);
+		
+		//Set parameters
+		world.CoastLine = 0.00f;  //Coast starts at height 0
+		world.ShoreLine = 0.05f;  //Shore line is 5% higher than coast line
+		world.TreeLine  = 0.40f;  //Tree line is 40% higher than coast line
+		world.SnowLine  = 0.50f;  //Snow line is 50% higher than coast line
+		
+		//Load 50x50 chunk at tile 0, 0
+		TerrainChunk chunk = world.LoadChunk(new RectangleF(0, 0, 50, 50));
+		
+		//Load 10x10 chunk at tile 5, 6
+		TerrainChunk chunk2 = world.LoadChunk(new RectangleF(5, 6, 10, 10));
+		
+		//Load 100x100 chunk at tile 0, 0
+		TerrainChunk chunk3 = world.LoadChunk(new RectangleF(100, 100, 100, 100));
 	
-	//Set parameters
-	world.CoastLine = 0.00f;  //Coast starts at height 0
-	world.ShoreLine = 0.05f;  //Shore line is 5% higher than coast line
-	world.TreeLine  = 0.40f;  //Tree line is 40% higher than coast line
-	world.SnowLine  = 0.50f;  //Snow line is 50% higher than coast line
-	
-	//Load 50x50 chunk at tile 0, 0
-	TerrainChunk chunk = world.LoadChunk(new RectangleF(0, 0, 50, 50));
-	
-	//Load 10x10 chunk at tile 5, 6
-	TerrainChunk chunk2 = world.LoadChunk(new RectangleF(5, 6, 10, 10));
-	
-	//Load 100x100 chunk at tile 0, 0
-	TerrainChunk chunk3 = world.LoadChunk(new RectangleF(100, 100, 100, 100));
-	
-Chunk Loading
-	public TerrainChunk(RectangleF bounds, World world) : this()
-	{
-		int totalCells = (int)bounds.Width * (int)bounds.Height;
-	
-	    for (int index = 0; index < totalCells; index++)
-	    {
-	    	int cellX = (int)((index / bounds.Height)) + (int)bounds.X;
-	        int cellY = (int)((index % bounds.Height)) + (int)bounds.Y;
-	
-	        TerrainTile tile = world.LoadTile(cellX, cellY, this);
-	
-	        tile.Bounds = new RectangleF(cellX, cellY, 1, 1);
-	
-	        m_tiles.Insert(tile);
-	    }
-	  
-	    m_world = world;
-	    m_bounds = bounds;
-	}
+- Chunk Loading
+
+		public TerrainChunk(RectangleF bounds, World world) : this()
+		{
+		    int totalCells = (int)bounds.Width * (int)bounds.Height;
+		
+		    for (int index = 0; index < totalCells; index++)
+		    {
+		    	int cellX = (int)((index / bounds.Height)) + (int)bounds.X;
+		        int cellY = (int)((index % bounds.Height)) + (int)bounds.Y;
+		
+		        TerrainTile tile = world.LoadTile(cellX, cellY, this);
+		
+		        tile.Bounds = new RectangleF(cellX, cellY, 1, 1);
+		
+		        m_tiles.Insert(tile);
+		    }
+		  
+		    m_world = world;
+		    m_bounds = bounds;
+		}
+
 #### XNA
 - Intro
 ![ScreenShot](http://i.imgur.com/4jJVU4e.png)
