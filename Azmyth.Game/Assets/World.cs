@@ -112,6 +112,13 @@ namespace Azmyth.Assets
             AssetID = worldID;
         }
 
+        public World(int seed) : this()
+        {
+            m_seed = seed;
+
+            UpdateGenerators();
+        }
+
         public World(VectorID vectorID, int seed)
         { 
             AssetID = vectorID;
@@ -174,6 +181,8 @@ namespace Azmyth.Assets
 
             tile.Height = (float)Math.Round(m_terrain.GetHeight(x, y));
             tile.m_value = (float)m_terrain.GetValue(x, y);
+
+            tile.Bounds = new RectangleF(x, y, 1, 1);
 
             if (tile.Height <= m_coastLine)
             {
@@ -317,7 +326,7 @@ namespace Azmyth.Assets
 
             if (chunks.Count == 0)
             {
-                chunk = new TerrainChunk(chunkBounds, this);
+                chunk = new TerrainChunk(this, chunkBounds);
 
                 m_terrainChunks.Insert(chunk);
             }
