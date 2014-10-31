@@ -17,6 +17,98 @@ Azmyth is a generic game framework used to create flexible RPG and adventure sty
 - Procedurally generated NPCS, Items, Quests.
 - Dynamic Chunk Loading.
 
+#### Code Samples
+
+- Creating a World and Loading Chunks
+
+		//Create World with random seed
+		World world = new World(12345);
+		
+		//Set parameters
+		world.CoastLine = 0.00f;  //Coast starts at height 0
+		world.ShoreLine = 0.05f;  //Shore line is 5% higher than coast line
+		world.TreeLine  = 0.40f;  //Tree line is 40% higher than coast line
+		world.SnowLine  = 0.50f;  //Snow line is 50% higher than coast line
+		
+		//Load 50x50 chunk at tile 0, 0
+		TerrainChunk chunk = world.LoadChunk(new RectangleF(0, 0, 50, 50));
+		
+		//Load 10x10 chunk at tile 5, 6
+		TerrainChunk chunk2 = world.LoadChunk(new RectangleF(5, 6, 10, 10));
+		
+		//Load 100x100 chunk at tile 0, 0
+		TerrainChunk chunk3 = world.LoadChunk(new RectangleF(100, 100, 100, 100));
+
+- Chunk Loading
+
+		/// <summary>
+		/// Loads tiles from world that are contained within chunkBounds
+		/// </summary>
+		/// <param name="world"></param>
+		/// <param name="chunkBounds"></param>
+		public TerrainChunk(World world, RectangleF chunkBounds) : this()
+		{
+		    //Calculate total tiles in chunk
+		    int totalTiles = (int)chunkBounds.Width * (int)chunkBounds.Height;
+		
+		    //Loop through each tile
+		    for (int index = 0; index < totalTiles; index++)
+		    {
+		        //Convert index value into x and y coordinates.
+		        int cellX = (int)((index / chunkBounds.Height)) + (int)chunkBounds.X;
+		        int cellY = (int)((index % chunkBounds.Height)) + (int)chunkBounds.Y;
+		
+		        //Load tile.
+		        TerrainTile tile = world.LoadTile(cellX, cellY, this);
+		
+		        //Insert new tile into chunk QuadTree
+		        m_tiles.Insert(tile);
+		     }
+		
+		     //Assign local variables
+		     m_world = world;
+		     m_bounds = chunkBounds;
+		}
+
+- Chunk Rendering
+
+		/// <summary>
+		/// Draws the loaded chunks visible in the viewport
+		/// </summary>
+		public void Draw()
+		{
+		    //Convert the viewport rectangle into tiles
+		    RectangleF viewportRect = ScreenToTile(new Rectangle(Viewport.X, 
+		        Viewport.Y, Viewport.Width, Viewport.Height));
+		 
+		    //Load only the chunks visible in the viewport. (Includes partial chunks)
+		    List<TerrainChunk> chunks = m_world.GetChunks(viewportRect);
+		
+		    m_spriteBatch.Begin(SpriteSortMode.Deferred, 
+		        null, null, null, null, null, Matrix.CreateTranslation(0, 0, 0));
+		
+		    //Loop through each visible chunk.
+		    foreach (TerrainChunk chunk in chunks)
+		    {
+		        //Load only tiles visible in the viewport. (Includes partial tiles)
+		        List<TerrainTile> tiles = chunk.GetTiles(viewportRect);
+		
+		        //Loop through each visible tile.
+		        foreach (TerrainTile t in tiles)
+		        {
+		            //Draw tile to screen.
+		            m_spriteBatch.Draw(m_cellTextures[t.Terrain], 
+		                TileToScreen(t.Bounds), Color.White);
+		
+		            //Add any additional rendering for tiles here.
+		        }
+		
+		        // Add any additional rendering for chunks here.
+		    }
+		
+		    m_spriteBatch.End();
+		}
+
 #### XNA
 - Intro
 ![ScreenShot](http://i.imgur.com/4jJVU4e.png)
@@ -80,4 +172,5 @@ Marissa is an avid programmer and has been developing software for the past sixt
 <strong>Website:</strong> http://www.galacticsoft.net
 </td>
 </tr>
+</table>
 <p>
