@@ -174,7 +174,7 @@ Marissa is an avid programmer and has been developing software for the past sixt
 <br>
 <a href="http://www.linkedin.com/in/marissadubois">
       
-          <img src="https://static.licdn.com/scds/common/u/img/webpromo/btn_viewmy_160x33.png" width="160" height="33" border="0" alt="View Marissa du Bois's profile on LinkedIn">
+          <img src="https://static.licdn.com/scds/common/u/img/webpromo/btn_viewmy_160x25.png" width="160" height="25" border="0" alt="View Marissa du Bois's profile on LinkedIn">
         
     </a>
 </td>
