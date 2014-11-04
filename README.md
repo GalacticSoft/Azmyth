@@ -1,5 +1,5 @@
 # ![Alt text](http://i.imgur.com/3ZGERJM.png)
-Azmyth is a generic game framework used to create flexible RPG and adventure style games using procedural content generation in C#. It can be used to produce procedurally generate height maps and temperature maps that can be rendered in a variety of ways. It uses QuadTrees and Perlin Noise to generate psuedo-infinite maps in real time. It can also be configured to use different noise algorithms such as Simplex and Value noise. Demos are available in WinForms/GDI+ and XNA.   
+Azmyth is a generic game framework used to create flexible RPG and adventure style games using procedural content generation in C#. It can be used to produce procedurally generated height maps and temperature maps that can be rendered in a variety of ways. It uses QuadTrees and Perlin Noise to generate psuedo-infinite maps in real time. It can also be configured to use different noise algorithms such as Simplex and Value noise. Demos are available in WinForms/GDI+ and XNA.   
 	
 #### Features include:
 - Extensible Asset system.
