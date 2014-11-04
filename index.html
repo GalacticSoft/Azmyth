@@ -54,9 +54,9 @@ Features include:</h4>
 
 <ul>
 <li>Biomes.</li>
-<li>Procedurally generated Cities and Economic simulation.</li>
+<li>Cities and Economic simulation.</li>
 <li>Races and Classes.</li>
-<li>Additional Noise generators (Worley/Voronoi, Wavelet, etc).</li>
+<li>Noise generators (Worley/Voronoi, Wavelet, etc).</li>
 <li>Procedurally generated NPCS, Items, Quests.</li>
 <li>Dynamic Chunk Loading.</li>
 </ul>
@@ -118,77 +118,47 @@ TerrainChunk chunk3 <span style='color:#d2cd86; '>=</span> world<span style='col
      m_world <span style='color:#d2cd86; '>=</span> world<span style='color:#b060b0; '>;</span>
      m_bounds <span style='color:#d2cd86; '>=</span> chunkBounds<span style='color:#b060b0; '>;</span>
 <span style='color:#b060b0; '>}</span>
-
-<!--<code>/// &lt;summary&gt;
-/// Loads tiles from world that are contained within chunkBounds
-/// &lt;/summary&gt;
-/// &lt;param name="world"&gt;&lt;/param&gt;
-/// &lt;param name="chunkBounds"&gt;&lt;/param&gt;
-public TerrainChunk(World world, RectangleF chunkBounds) : this()
-{
-    //Calculate total tiles in chunk
-    int totalTiles = (int)chunkBounds.Width * (int)chunkBounds.Height;
-
-    //Loop through each tile
-    for (int index = 0; index &lt; totalTiles; index++)
-    {
-        //Convert index value into x and y coordinates.
-        int cellX = (int)((index / chunkBounds.Height)) + (int)chunkBounds.X;
-        int cellY = (int)((index % chunkBounds.Height)) + (int)chunkBounds.Y;
-
-        //Load tile.
-        TerrainTile tile = world.LoadTile(cellX, cellY, this);
-
-        //Insert new tile into chunk QuadTree
-        m_tiles.Insert(tile);
-     }
-
-     //Assign local variables
-     m_world = world;
-     m_bounds = chunkBounds;
-}
-</code>--></pre>
+</pre>
 </li>
 <li>
 <p>Chunk Rendering</p>
 
-<pre><code>/// &lt;summary&gt;
-/// Draws the loaded chunks visible in the viewport
-/// &lt;/summary&gt;
-public void Draw()
-{
-    //Convert the viewport rectangle into tiles
-    RectangleF viewportRect = ScreenToTile(new Rectangle(Viewport.X, 
-        Viewport.Y, Viewport.Width, Viewport.Height));
+<pre><span style='color:#9999a9; '>/// &lt;summary></span>
+<span style='color:#9999a9; '>/// Draws the loaded chunks visible in the viewport</span>
+<span style='color:#9999a9; '>/// &lt;/summary></span>
+<span style='color:#e66170; font-weight:bold; '>public</span> <span style='color:#e66170; font-weight:bold; '>void</span> Draw<span style='color:#d2cd86; '>(</span><span style='color:#d2cd86; '>)</span>
+<span style='color:#b060b0; '>{</span>
+    <span style='color:#9999a9; '>//Convert the viewport rectangle into tiles</span>
+    RectangleF viewportRect <span style='color:#d2cd86; '>=</span> ScreenToTile<span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>new</span> Rectangle<span style='color:#d2cd86; '>(</span>Viewport<span style='color:#d2cd86; '>.</span>X<span style='color:#d2cd86; '>,</span> 
+        Viewport<span style='color:#d2cd86; '>.</span>Y<span style='color:#d2cd86; '>,</span> Viewport<span style='color:#d2cd86; '>.</span>Width<span style='color:#d2cd86; '>,</span> Viewport<span style='color:#d2cd86; '>.</span>Height<span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+ 
+    <span style='color:#9999a9; '>//Load only the chunks visible in the viewport. (Includes partial chunks)</span>
+    List<span style='color:#d2cd86; '>&lt;</span>TerrainChunk<span style='color:#d2cd86; '>></span> chunks <span style='color:#d2cd86; '>=</span> m_world<span style='color:#d2cd86; '>.</span>GetChunks<span style='color:#d2cd86; '>(</span>viewportRect<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
 
-    //Load only the chunks visible in the viewport. (Includes partial chunks)
-    List&lt;TerrainChunk&gt; chunks = m_world.GetChunks(viewportRect);
+    m_spriteBatch<span style='color:#d2cd86; '>.</span>Begin<span style='color:#d2cd86; '>(</span>SpriteSortMode<span style='color:#d2cd86; '>.</span>Deferred<span style='color:#d2cd86; '>,</span> 
+        <span style='color:#e66170; font-weight:bold; '>null</span><span style='color:#d2cd86; '>,</span> <span style='color:#e66170; font-weight:bold; '>null</span><span style='color:#d2cd86; '>,</span> <span style='color:#e66170; font-weight:bold; '>null</span><span style='color:#d2cd86; '>,</span> <span style='color:#e66170; font-weight:bold; '>null</span><span style='color:#d2cd86; '>,</span> <span style='color:#e66170; font-weight:bold; '>null</span><span style='color:#d2cd86; '>,</span> Matrix<span style='color:#d2cd86; '>.</span>CreateTranslation<span style='color:#d2cd86; '>(</span><span style='color:#008c00; '>0</span><span style='color:#d2cd86; '>,</span> <span style='color:#008c00; '>0</span><span style='color:#d2cd86; '>,</span> <span style='color:#008c00; '>0</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
 
-    m_spriteBatch.Begin(SpriteSortMode.Deferred, 
-        null, null, null, null, null, Matrix.CreateTranslation(0, 0, 0));
+    <span style='color:#9999a9; '>//Loop through each visible chunk.</span>
+    <span style='color:#e66170; font-weight:bold; '>foreach</span> <span style='color:#d2cd86; '>(</span>TerrainChunk chunk <span style='color:#e66170; font-weight:bold; '>in</span> chunks<span style='color:#d2cd86; '>)</span>
+    <span style='color:#b060b0; '>{</span>
+        <span style='color:#9999a9; '>//Load only tiles visible in the viewport. (Includes partial tiles)</span>
+        List<span style='color:#d2cd86; '>&lt;</span>TerrainTile<span style='color:#d2cd86; '>></span> tiles <span style='color:#d2cd86; '>=</span> chunk<span style='color:#d2cd86; '>.</span>GetTiles<span style='color:#d2cd86; '>(</span>viewportRect<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
 
-    //Loop through each visible chunk.
-    foreach (TerrainChunk chunk in chunks)
-    {
-        //Load only tiles visible in the viewport. (Includes partial tiles)
-        List&lt;TerrainTile&gt; tiles = chunk.GetTiles(viewportRect);
+        <span style='color:#9999a9; '>//Loop through each visible tile.</span>
+        <span style='color:#e66170; font-weight:bold; '>foreach</span> <span style='color:#d2cd86; '>(</span>TerrainTile t <span style='color:#e66170; font-weight:bold; '>in</span> tiles<span style='color:#d2cd86; '>)</span>
+        <span style='color:#b060b0; '>{</span>
+            <span style='color:#9999a9; '>//Draw tile to screen.</span>
+            m_spriteBatch<span style='color:#d2cd86; '>.</span>Draw<span style='color:#d2cd86; '>(</span>m_cellTextures<span style='color:#d2cd86; '>[</span>t<span style='color:#d2cd86; '>.</span>Terrain<span style='color:#d2cd86; '>]</span><span style='color:#d2cd86; '>,</span> 
+                TileToScreen<span style='color:#d2cd86; '>(</span>t<span style='color:#d2cd86; '>.</span>Bounds<span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>,</span> Color<span style='color:#d2cd86; '>.</span>White<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
 
-        //Loop through each visible tile.
-        foreach (TerrainTile t in tiles)
-        {
-            //Draw tile to screen.
-            m_spriteBatch.Draw(m_cellTextures[t.Terrain], 
-                TileToScreen(t.Bounds), Color.White);
+            <span style='color:#9999a9; '>//Add any additional rendering for tiles here.</span>
+        <span style='color:#b060b0; '>}</span>
 
-            //Add any additional rendering for tiles here.
-        }
+        <span style='color:#9999a9; '>// Add any additional rendering for chunks here.</span>
+    <span style='color:#b060b0; '>}</span>
 
-        // Add any additional rendering for chunks here.
-    }
-
-    m_spriteBatch.End();
-}
-</code></pre>
+    m_spriteBatch<span style='color:#d2cd86; '>.</span>End<span style='color:#d2cd86; '>(</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+<span style='color:#b060b0; '>}</span></pre>
 </li>
 </ul>
 
