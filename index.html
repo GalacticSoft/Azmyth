@@ -87,30 +87,39 @@ TerrainChunk chunk2 <span style='color:#d2cd86; '>=</span> world<span style='col
 
 <span style='color:#9999a9; '>//Load 100x100 chunk at tile 0, 0</span>
 TerrainChunk chunk3 <span style='color:#d2cd86; '>=</span> world<span style='color:#d2cd86; '>.</span>LoadChunk<span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>new</span> RectangleF<span style='color:#d2cd86; '>(</span><span style='color:#008c00; '>100</span><span style='color:#d2cd86; '>,</span> <span style='color:#008c00; '>100</span><span style='color:#d2cd86; '>,</span> <span style='color:#008c00; '>100</span><span style='color:#d2cd86; '>,</span> <span style='color:#008c00; '>100</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
-
-<!--<code>//Create World with random seed
-World world = new World(12345);
-
-//Set parameters
-world.CoastLine = 0.00f;  //Coast starts at height 0
-world.ShoreLine = 0.05f;  //Shore line is 5% higher than coast line
-world.TreeLine  = 0.40f;  //Tree line is 40% higher than coast line
-world.SnowLine  = 0.50f;  //Snow line is 50% higher than coast line
-
-//Load 50x50 chunk at tile 0, 0
-TerrainChunk chunk = world.LoadChunk(new RectangleF(0, 0, 50, 50));
-
-//Load 10x10 chunk at tile 5, 6
-TerrainChunk chunk2 = world.LoadChunk(new RectangleF(5, 6, 10, 10));
-
-//Load 100x100 chunk at tile 0, 0
-TerrainChunk chunk3 = world.LoadChunk(new RectangleF(100, 100, 100, 100));
-</code>--></pre>
+</pre>
 </li>
 <li>
 <p>Chunk Loading</p>
 
-<pre><code>/// &lt;summary&gt;
+<pre><span style='color:#9999a9; '>/// &lt;summary></span>
+<span style='color:#9999a9; '>/// Loads tiles from world that are contained within chunkBounds</span>
+<span style='color:#9999a9; '>/// &lt;/summary></span>
+<span style='color:#e66170; font-weight:bold; '>public</span> TerrainChunk<span style='color:#d2cd86; '>(</span>World world<span style='color:#d2cd86; '>,</span> RectangleF chunkBounds<span style='color:#d2cd86; '>)</span> <span style='color:#d2cd86; '>:</span> <span style='color:#e66170; font-weight:bold; '>this</span><span style='color:#d2cd86; '>(</span><span style='color:#d2cd86; '>)</span>
+<span style='color:#b060b0; '>{</span>
+    <span style='color:#9999a9; '>//Calculate total tiles in chunk</span>
+    <span style='color:#e66170; font-weight:bold; '>int</span> totalTiles <span style='color:#d2cd86; '>=</span> <span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>int</span><span style='color:#d2cd86; '>)</span>chunkBounds<span style='color:#d2cd86; '>.</span>Width <span style='color:#d2cd86; '>*</span> <span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>int</span><span style='color:#d2cd86; '>)</span>chunkBounds<span style='color:#d2cd86; '>.</span>Height<span style='color:#b060b0; '>;</span>
+
+    <span style='color:#9999a9; '>//Loop through each tile</span>
+    <span style='color:#e66170; font-weight:bold; '>for</span> <span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>int</span> index <span style='color:#d2cd86; '>=</span> <span style='color:#008c00; '>0</span><span style='color:#b060b0; '>;</span> index <span style='color:#d2cd86; '>&lt;</span> totalTiles<span style='color:#b060b0; '>;</span> index<span style='color:#d2cd86; '>+</span><span style='color:#d2cd86; '>+</span><span style='color:#d2cd86; '>)</span>
+    <span style='color:#b060b0; '>{</span>
+        <span style='color:#9999a9; '>//Convert index value into x and y coordinates.</span>
+        <span style='color:#e66170; font-weight:bold; '>int</span> cellX <span style='color:#d2cd86; '>=</span> <span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>int</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>(</span><span style='color:#d2cd86; '>(</span>index <span style='color:#d2cd86; '>/</span> chunkBounds<span style='color:#d2cd86; '>.</span>Height<span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>)</span> <span style='color:#d2cd86; '>+</span> <span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>int</span><span style='color:#d2cd86; '>)</span>chunkBounds<span style='color:#d2cd86; '>.</span>X<span style='color:#b060b0; '>;</span>
+        <span style='color:#e66170; font-weight:bold; '>int</span> cellY <span style='color:#d2cd86; '>=</span> <span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>int</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>(</span><span style='color:#d2cd86; '>(</span>index <span style='color:#d2cd86; '>%</span> chunkBounds<span style='color:#d2cd86; '>.</span>Height<span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>)</span> <span style='color:#d2cd86; '>+</span> <span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>int</span><span style='color:#d2cd86; '>)</span>chunkBounds<span style='color:#d2cd86; '>.</span>Y<span style='color:#b060b0; '>;</span>
+
+        <span style='color:#9999a9; '>//Load tile.</span>
+        TerrainTile tile <span style='color:#d2cd86; '>=</span> world<span style='color:#d2cd86; '>.</span>LoadTile<span style='color:#d2cd86; '>(</span>cellX<span style='color:#d2cd86; '>,</span> cellY<span style='color:#d2cd86; '>,</span> <span style='color:#e66170; font-weight:bold; '>this</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+
+        <span style='color:#9999a9; '>//Insert new tile into chunk QuadTree</span>
+        m_tiles<span style='color:#d2cd86; '>.</span>Insert<span style='color:#d2cd86; '>(</span>tile<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+     <span style='color:#b060b0; '>}</span>
+
+     <span style='color:#9999a9; '>//Assign local variables</span>
+     m_world <span style='color:#d2cd86; '>=</span> world<span style='color:#b060b0; '>;</span>
+     m_bounds <span style='color:#d2cd86; '>=</span> chunkBounds<span style='color:#b060b0; '>;</span>
+<span style='color:#b060b0; '>}</span>
+
+<!--<code>/// &lt;summary&gt;
 /// Loads tiles from world that are contained within chunkBounds
 /// &lt;/summary&gt;
 /// &lt;param name="world"&gt;&lt;/param&gt;
@@ -138,7 +147,7 @@ public TerrainChunk(World world, RectangleF chunkBounds) : this()
      m_world = world;
      m_bounds = chunkBounds;
 }
-</code></pre>
+</code>--></pre>
 </li>
 <li>
 <p>Chunk Rendering</p>
