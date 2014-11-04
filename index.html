@@ -68,7 +68,27 @@ Features include:</h4>
 <li>
 <p>Creating a World and Loading Chunks</p>
 
-<pre><code>//Create World with random seed
+<pre>
+
+<span style='color:#9999a9; '>//Create World with random seed</span>
+World world <span style='color:#d2cd86; '>=</span> <span style='color:#e66170; font-weight:bold; '>new</span> World<span style='color:#d2cd86; '>(</span><span style='color:#008c00; '>12345</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+
+<span style='color:#9999a9; '>//Set parameters</span>
+world<span style='color:#d2cd86; '>.</span>CoastLine <span style='color:#d2cd86; '>=</span> <span style='color:#009f00; '>0.00</span><span style='color:#006600; '>f</span><span style='color:#b060b0; '>;</span>  <span style='color:#9999a9; '>//Coast starts at height 0</span>
+world<span style='color:#d2cd86; '>.</span>ShoreLine <span style='color:#d2cd86; '>=</span> <span style='color:#009f00; '>0.05</span><span style='color:#006600; '>f</span><span style='color:#b060b0; '>;</span>  <span style='color:#9999a9; '>//Shore line is 5% higher than coast line</span>
+world<span style='color:#d2cd86; '>.</span>TreeLine  <span style='color:#d2cd86; '>=</span> <span style='color:#009f00; '>0.40</span><span style='color:#006600; '>f</span><span style='color:#b060b0; '>;</span>  <span style='color:#9999a9; '>//Tree line is 40% higher than coast line</span>
+world<span style='color:#d2cd86; '>.</span>SnowLine  <span style='color:#d2cd86; '>=</span> <span style='color:#009f00; '>0.50</span><span style='color:#006600; '>f</span><span style='color:#b060b0; '>;</span>  <span style='color:#9999a9; '>//Snow line is 50% higher than coast line</span>
+
+<span style='color:#9999a9; '>//Load 50x50 chunk at tile 0, 0</span>
+TerrainChunk chunk <span style='color:#d2cd86; '>=</span> world<span style='color:#d2cd86; '>.</span>LoadChunk<span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>new</span> RectangleF<span style='color:#d2cd86; '>(</span><span style='color:#008c00; '>0</span><span style='color:#d2cd86; '>,</span> <span style='color:#008c00; '>0</span><span style='color:#d2cd86; '>,</span> <span style='color:#008c00; '>50</span><span style='color:#d2cd86; '>,</span> <span style='color:#008c00; '>50</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+
+<span style='color:#9999a9; '>//Load 10x10 chunk at tile 5, 6</span>
+TerrainChunk chunk2 <span style='color:#d2cd86; '>=</span> world<span style='color:#d2cd86; '>.</span>LoadChunk<span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>new</span> RectangleF<span style='color:#d2cd86; '>(</span><span style='color:#008c00; '>5</span><span style='color:#d2cd86; '>,</span> <span style='color:#008c00; '>6</span><span style='color:#d2cd86; '>,</span> <span style='color:#008c00; '>10</span><span style='color:#d2cd86; '>,</span> <span style='color:#008c00; '>10</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+
+<span style='color:#9999a9; '>//Load 100x100 chunk at tile 0, 0</span>
+TerrainChunk chunk3 <span style='color:#d2cd86; '>=</span> world<span style='color:#d2cd86; '>.</span>LoadChunk<span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>new</span> RectangleF<span style='color:#d2cd86; '>(</span><span style='color:#008c00; '>100</span><span style='color:#d2cd86; '>,</span> <span style='color:#008c00; '>100</span><span style='color:#d2cd86; '>,</span> <span style='color:#008c00; '>100</span><span style='color:#d2cd86; '>,</span> <span style='color:#008c00; '>100</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+
+<!--<code>//Create World with random seed
 World world = new World(12345);
 
 //Set parameters
@@ -85,7 +105,7 @@ TerrainChunk chunk2 = world.LoadChunk(new RectangleF(5, 6, 10, 10));
 
 //Load 100x100 chunk at tile 0, 0
 TerrainChunk chunk3 = world.LoadChunk(new RectangleF(100, 100, 100, 100));
-</code></pre>
+</code>--></pre>
 </li>
 <li>
 <p>Chunk Loading</p>
