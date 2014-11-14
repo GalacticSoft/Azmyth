@@ -134,7 +134,7 @@ namespace Azmyth.Assets
             TerrainTypes terrain = TerrainTypes.None;
             double height = Math.Round(m_terrain.GetHeight(x, y));//spline.eval((double)x / 25, (double)y / 25);// ;
             
-            if (height < 0)
+            if (height <= m_coastLine)
             {
                 terrain = TerrainTypes.Ocean;
             }
@@ -341,11 +341,6 @@ namespace Azmyth.Assets
         public List<TerrainChunk> GetChunks(RectangleF bounds)
         {
             return m_terrainChunks.Query(bounds);
-        }
-
-        public void CreateSpawn()
-        {
-
         }
 
         public long TypeCount(TerrainTypes type, RectangleF bounds)

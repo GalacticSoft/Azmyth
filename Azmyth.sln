@@ -113,6 +113,7 @@ Global
 		{11E4F401-311B-48DD-BE84-390F9D25BA64}.Release x64|x86.ActiveCfg = Release x64|x86
 		{11E4F401-311B-48DD-BE84-390F9D25BA64}.Release x64|x86.Build.0 = Release x64|x86
 		{11E4F401-311B-48DD-BE84-390F9D25BA64}.Release|Any CPU.ActiveCfg = Release|x86
+		{11E4F401-311B-48DD-BE84-390F9D25BA64}.Release|Any CPU.Build.0 = Release|x86
 		{11E4F401-311B-48DD-BE84-390F9D25BA64}.Release|Mixed Platforms.ActiveCfg = Release|x86
 		{11E4F401-311B-48DD-BE84-390F9D25BA64}.Release|Mixed Platforms.Build.0 = Release|x86
 		{11E4F401-311B-48DD-BE84-390F9D25BA64}.Release|x64.ActiveCfg = Release|x86

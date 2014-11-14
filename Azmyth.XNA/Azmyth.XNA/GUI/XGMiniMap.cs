@@ -151,6 +151,10 @@ namespace XnaGUILib
                     case TerrainTypes.Grass:
                         XnaGUIManager.spriteBatch.Draw(XnaGUIManager.whiteTex, ToScreen(bounds), Color.Green);
                         break;
+                    default:
+                        XnaGUIManager.spriteBatch.Draw(XnaGUIManager.whiteTex, ToScreen(bounds), Color.Red);
+                        break;
+
                 }
 
                 if(cellX + m_offsetX == 0 && cellY + m_offsetY==0)
