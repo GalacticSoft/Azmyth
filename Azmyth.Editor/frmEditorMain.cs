@@ -55,17 +55,20 @@ namespace Azmyth.Editor
 
         private void tvwWorld_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            VectorID id = e.Node.Tag as VectorID;
-
-            if (Azmyth.Assets.Assets.Store[id] is World)
+            if (e.Node.Tag != null)
             {
-                WorldAdapter adp = new WorldAdapter(gridProperties, (World)Azmyth.Assets.Assets.Store[id]);
-                adp.Map = tabMain.TabPages[tabMain.TabPages.IndexOfKey(adp.WorldID.ToString())].Controls["av" + adp.WorldID.ID] as MapViewer;
-                gridProperties.SelectedObject = adp;
-                
+                VectorID id = e.Node.Tag as VectorID;
+
+                if (Azmyth.Assets.Assets.Store[id] is World)
+                {
+                    WorldAdapter adp = new WorldAdapter(gridProperties, (World)Azmyth.Assets.Assets.Store[id]);
+                    adp.Map = tabMain.TabPages[tabMain.TabPages.IndexOfKey(adp.WorldID.ToString())].Controls["av" + adp.WorldID.ID] as MapViewer;
+                    gridProperties.SelectedObject = adp;
+
+                }
+                else
+                    gridProperties.SelectedObject = Azmyth.Assets.Assets.Store[id];
             }
-            else
-                gridProperties.SelectedObject = Azmyth.Assets.Assets.Store[id];
         }
 
         private void tvwWorld_DoubleClick(object sender, EventArgs e)

@@ -1,7 +1,3 @@
-C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.pdb
-C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\bin\Debug\Azmyth.Editor.exe.config
-C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\bin\Debug\Azmyth.Editor.exe
-C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\bin\Debug\Azmyth.Editor.pdb
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\bin\Debug\Azmyth.dll
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\bin\Debug\Azmyth.Game.dll
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\bin\Debug\System.Windows.Forms.Ribbon35.dll
@@ -21,7 +17,6 @@ C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Ed
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.Properties.Resources.resources
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.SplitPanel.resources
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.csproj.GenerateResource.Cache
-C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.exe
 M:\GalacticSoft\Azmyth\Azmyth.Editor\bin\Debug\Azmyth.Editor.exe.config
 M:\GalacticSoft\Azmyth\Azmyth.Editor\bin\Debug\Azmyth.Editor.exe
 M:\GalacticSoft\Azmyth\Azmyth.Editor\bin\Debug\Azmyth.Editor.pdb
@@ -47,3 +42,12 @@ M:\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.csproj.GenerateReso
 M:\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.exe
 M:\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.pdb
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.ContinentSizeScroll.resources
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\bin\Debug\AzmythEditor.exe.config
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\bin\Debug\AzmythEditor.exe.manifest
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\bin\Debug\AzmythEditor.application
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\bin\Debug\AzmythEditor.exe
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\bin\Debug\AzmythEditor.pdb
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\AzmythEditor.exe.manifest
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\AzmythEditor.application
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\AzmythEditor.exe
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\AzmythEditor.pdb

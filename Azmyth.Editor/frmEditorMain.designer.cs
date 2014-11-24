@@ -565,7 +565,7 @@
             this.Controls.Add(this.ribbon1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmEditorMain";
-            this.Text = "frmEditorMain";
+            this.Text = "Azmyth Editor";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmEditorMain_FormClosing);
             this.panel1.ResumeLayout(false);

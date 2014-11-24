@@ -15,45 +15,39 @@ namespace Azmyth.Procedural
      *   default seed.
      */
  
-    public class SimplexValueSplineNoise : INoise
+    public class SimplexSplineNoise : Noise
     {
 	    private const double SQUISH_CONSTANT = 0.366025403784439; //(Math.sqrt(2+1)-1)/2;
 	    private const double NORM_CONSTANT = 156;
-        private const long DEFAULT_SEED = 0;
 	
 	    private short[] perm;
-	
-	    public SimplexValueSplineNoise() :  this(DEFAULT_SEED) {
-		   
-	    }
-	
-	    public SimplexValueSplineNoise(short[] perm) {
-		    this.perm = perm;
-	    }
-	
-	    //Initializes the class using a permutation array generated from a 64-bit seed.
-	    //Generates a proper permutation (i.e. doesn't merely perform N successive pair swaps on a base array)
-	    //Uses a simple 64-bit LCG.
-	    public SimplexValueSplineNoise(long seed) {
-		    perm = new short[256];
-		    short[] source = new short[256];
-		    for (short i = 0; i < 256; i++)
-			    source[i] = i;
-		    seed = seed * 6364136223846793005 + 1442695040888963407;
-		    seed = seed * 6364136223846793005 + 1442695040888963407;
-		    seed = seed * 6364136223846793005 + 1442695040888963407;
-		    for (int i = 255; i >= 0; i--) {
-			    seed = seed * 6364136223846793005 + 1442695040888963407;
-			    int r = (int)((seed + 31) % (i + 1));
-			    if (r < 0)
-				    r += (i + 1);
-			    perm[i] = source[r];
-			    source[r] = source[i];
-		    }
-	    }
+
+        //Initializes the class using a permutation array generated from a 64-bit seed.
+        //Generates a proper permutation (i.e. doesn't merely perform N successive pair swaps on a base array)
+        //Uses a simple 64-bit LCG.
+        public SimplexSplineNoise(double persistence, double frequency, double amplitude, int octaves, long seed)
+            : base(persistence, frequency, amplitude, octaves, seed)
+        {
+            perm = new short[256];
+            short[] source = new short[256];
+            for (short i = 0; i < 256; i++)
+                source[i] = i;
+            seed = seed * 6364136223846793005 + 1442695040888963407;
+            seed = seed * 6364136223846793005 + 1442695040888963407;
+            seed = seed * 6364136223846793005 + 1442695040888963407;
+            for (int i = 255; i >= 0; i--)
+            {
+                seed = seed * 6364136223846793005 + 1442695040888963407;
+                int r = (int)((seed + 31) % (i + 1));
+                if (r < 0)
+                    r += (i + 1);
+                perm[i] = source[r];
+                source[r] = source[i];
+            }
+        }
 	
 	    //2D Simplex-Value-Spline Noise.
-	    public double GetValue(double x, double y) {
+	    public override double GetValue(double x, double y) {
 		
 		    //Place input coordinates on triangular grid.
 		    double squishOffset = (x + y) * SQUISH_CONSTANT;
@@ -155,12 +149,12 @@ namespace Azmyth.Procedural
 	    }
 
 
-        public double GetValue(double x, double y, double z)
+        public override double GetValue(double x, double y, double z)
         {
             throw new NotImplementedException();
         }
 
-        public double GetValue(double x, double y, double z, double t)
+        public override double GetValue(double x, double y, double z, double t)
         {
             throw new NotImplementedException();
         }

@@ -5,13 +5,7 @@ using Azmyth.Assets;
 namespace Azmyth.Stats
 {
 
-	public enum StatVector 
-    { 
-        Counter        	= 1,
-        Stat      		= 2,
-        Point          	= 3,
-        Pulse          	= 4,
-    };
+
 
 	public interface IStat
 	{

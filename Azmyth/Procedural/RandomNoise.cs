@@ -19,10 +19,6 @@ namespace Azmyth.Procedural
 
         public double GetValue(double x, double y)
         {
-            //int seed = (int)(x * 28657 + y) * 514229 + m_seed;
-
-            //Random random = new Random((int)(m_seed + (long)x & ((long)x ^ (long)y)));
-
             int result = (int)x;
             result *= 1257787 | 1;
             result += 2796203;
@@ -40,13 +36,17 @@ namespace Azmyth.Procedural
 
         }
 
-
         public double GetValue(double x, double y, double z)
         {
             throw new NotImplementedException();
         }
 
         public double GetValue(double x, double y, double z, double t)
+        {
+            throw new NotImplementedException();
+        }
+
+        public double GetHeight(double x, double y)
         {
             throw new NotImplementedException();
         }

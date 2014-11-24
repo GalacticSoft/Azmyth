@@ -139,9 +139,9 @@ namespace Azmyth.XNA
         /// </summary>
         protected override void LoadContent()
         {
-            m_introSong = Content.Load<Song>("intro");
+           // m_introSong = Content.Load<Song>("intro");
 
-            MediaPlayer.IsRepeating = true;
+            //MediaPlayer.IsRepeating = true;
 
             //MediaPlayer.Play(m_introSong);
 

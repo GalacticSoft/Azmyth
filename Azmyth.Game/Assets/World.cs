@@ -7,71 +7,124 @@ using System.Drawing;
 
 namespace Azmyth.Assets
 {
+
+
     [Serializable]
     public class World : Asset
     {
-        private PerlinNoise m_terrain;
-        private PerlinNoise m_forest;
-        private PerlinNoise m_rivers;
-        private PerlinNoise m_stones;
-        private PerlinNoise m_lava;
-        private PerlinNoise m_tempurature;
-        private RandomNoise m_rocks;
-        private RandomNoise m_randomForest;
-        private RandomNoise m_city;
+        #region Properties
 
-        private int m_seed = 500;
+        // Noise Interface for the terrain.
+        private INoise m_terrain;
+
+        // The noise generation algorithm to use for base terrain.
+        private NoiseTypes m_terrainNoise = NoiseTypes.Perlin;
+
+        // The noise generation algorithm to use for rivers.
+        // Noise Interface for the terrain.
+        private INoise m_rivers;
+
+        // The noise generation algorithm to use for rivers.
+        private NoiseTypes m_riverNoise = NoiseTypes.Perlin;
+
+        private INoise m_tempurature;
+
+        // Random Seed
+        private long m_seed = new Random((int)DateTime.Now.Ticks).Next(1000, 9999);
+
+        // Terrain Height is the approximate maximum value the terrain can be.
         private float m_terrainHeight = 1000;
+
+        // Frequency controls the size of Continents by 
+        // increasing or decreasing the wavelength of the noise.
+        private float m_continentSize = 0.02f;
+
+        // Octaves Increase Roughness by adding noise values together
+        private int m_octaves = 2; 
+
         private float m_persistance = 1.00f;
-        private float m_frequency = 0.02f; // continent size.
-        private int m_octaves = 2; //Roughness
 
-        private int m_chunkSize = 32;
-
+        // Coast starts at height 0
         private float m_coastLine = 0.00f;
+
+        // Shore line is 5% higher than coast line
         private float m_shoreLine = 0.05f;
+
+        // Tree line is 40% higher than coast line
         private float m_treeLine = 0.40f;
+
+        // Snow line is 50% higher than coast line
         private float m_snowLine = 0.50f;
         
-        private Random m_random = new Random(500);
-
-        private RectangleF m_spawnArea = new RectangleF(0, 0, 1, 1);
-
-        //QuadTree<TerrainTile> m_rooms = new QuadTree<TerrainTile>(new System.Drawing.Size(64, 64), 64);
-        //QuadTree<City> m_cities = new QuadTree<City>(new System.Drawing.Size(64, 64), 64);
+        private Random m_random = new Random(92465468);
 
         private QuadTree<TerrainChunk> m_terrainChunks = new QuadTree<TerrainChunk>(new System.Drawing.Size(100, 100), 100);
 
         private MarkovNameGenerator nameGenerator;
 
+        #endregion
+
+        #region Methods
+
         public float ContinentSize
         {
-            get { return m_frequency;  }
-            set { m_frequency = value; UpdateGenerators(); }
+            get 
+            { 
+                return m_continentSize;  
+            }
+            set 
+            { 
+                m_continentSize = value; 
+                Update(); 
+            }
         }
 
         public float CoastLine
         {
-            get { return m_coastLine; }
-            set { m_coastLine = value; }
+            get 
+            { 
+                return m_coastLine; 
+            }
+            set 
+            { 
+                m_coastLine = value; 
+            }
         }
 
         public float TreeLine
         {
-            get { return m_treeLine; }
-            set { m_treeLine = value; }
+            get 
+            { 
+                return m_treeLine; 
+            }
+            set 
+            { 
+                m_treeLine = value; 
+            }
         }
 
         public float SnowLine
         {
-            get { return m_snowLine; }
-            set { m_snowLine = value; }
+            get 
+            { 
+                return m_snowLine; 
+            }
+            set 
+            { 
+                m_snowLine = value; 
+            }
         }
 
         public float ShoreLine
         {
-            get { return m_shoreLine; }
-            set { m_shoreLine = value; }
+            get 
+            { 
+                return m_shoreLine; 
+            }
+            set 
+            { 
+                m_shoreLine = value; 
+            }
         }
 
         public float TerrainHeight
@@ -83,11 +136,11 @@ namespace Azmyth.Assets
             set 
             { 
                 m_terrainHeight = value; 
-                UpdateGenerators(); 
+                Update(); 
             }
         }
 
-        public int Seed
+        public long Seed
         {
             get 
             { 
@@ -96,49 +149,70 @@ namespace Azmyth.Assets
             set 
             { 
                 m_seed = value; 
-                UpdateGenerators(); 
+                Update(); 
             }
         }
 
-        public World()
+        public NoiseTypes TerrainNoise
         {
-            nameGenerator = new MarkovNameGenerator("Abrielle,Acalia,Adair,Adara,Adriel,Aiyana,Alaire,Alissa,Alixandra,Altair,Amara,Anatola,Anya,Arcadia,Ariadne,Arianwen,Aurelia,Aurelian,Aurelius,Auristela,Avalon,Bastian,Breena,Briallan,Brielle,Briseis,Cambria,Cara,Carys,Caspian,Cassia,Cassiel,Cassiopeia,Cassius,Chaniel,Cora,Corbin,Cyprian,Dagen,Daire,Darius,Destin,Devlin,Devlyn,Drake,Drystan,Eira,Eirian,Eliron,Elysia,Eoin,Evadne,Evanth,Fineas,Finian,Fyodor,Gaerwn,Gareth,Gavriel,Ginerva,Griffin,Guinevere,Hadriel,Hannelore,Hermione,Hesperos,Iagan,Ianthe,Ignacia,Ignatius,Iseult,Isolde,Jessalyn,Kara,Katriel,Kerensa,Korbin,Kyler,Kyra,Kyrielle,Leala,Leila,Leira,Lilith,Liora,Liriene,Liron,Lucien,Lyra,Maia,Marius, Mathieu,Maylea,Meira,Mireille,Mireya,Natania,Neirin,Nerys,Nuriel,Nyfain,Nyssa,Oisin,Oleisa,Oralie,Orinthea,Orion,Orpheus,Ozara,Peregrine,Persephone,Perseus,Petronela,Phelan,Pryderi,Pyralia,Pyralis,Qadira,Quinevere,Quintessa,Raisa,Remus,Renfrew,Rhyan,Rhydderch,Riona,Saira,Saoirse,Sarai,Sarielle,Sebastian,Seraphim,Seraphina,Serian,Sirius,Sorcha,Séverin,Tavish,Tearlach,Terra,Thalia,Thaniel,Theia,Torian,Torin,Tressa,Tristana,Ulyssia,Uriela,Urien,Vanora,Vasilis,Vespera,Xanthus,Xara,Xylia,Yadira,Yakira,Yeira,Yeriel,Yestin,Yseult,Zaira,Zaniel,Zarek,Zephyr,Zora,Zorion".Split(','), 2);
-        
-            UpdateGenerators();
+            get 
+            { 
+                return m_terrainNoise; 
+            }
+            set 
+            { 
+                m_terrainNoise = value;
+                Update();
+            }
         }
 
-        public World(VectorID worldID) : this()
+        public NoiseTypes RiverNoise
         {
-            AssetID = worldID;
+            get 
+            { 
+                return m_riverNoise; 
+            }
+            set 
+            { 
+                m_riverNoise = value;
+                Update();
+            }
         }
 
-        public World(int seed) : this()
+        #endregion
+
+        #region Constructors
+
+        public World(VectorID worldID)
+            : this(worldID, new Random((int)DateTime.Now.Ticks).Next(1000, 9999)) { }
+
+        public World(long seed)
+            : this(new VectorID(0, 0), seed) { }
+
+        public World(VectorID vectorID, long seed)
         {
-            m_seed = seed;
+            nameGenerator =
+                new MarkovNameGenerator("Abrielle,Acalia,Adair,Adara,Adriel,Aiyana,Alaire,Alissa,Alixandra,Altair,Amara,Anatola,Anya,Arcadia,Ariadne,Arianwen,Aurelia,Aurelian,Aurelius,Auristela,Avalon,Bastian,Breena,Briallan,Brielle,Briseis,Cambria,Cara,Carys,Caspian,Cassia,Cassiel,Cassiopeia,Cassius,Chaniel,Cora,Corbin,Cyprian,Dagen,Daire,Darius,Destin,Devlin,Devlyn,Drake,Drystan,Eira,Eirian,Eliron,Elysia,Eoin,Evadne,Evanth,Fineas,Finian,Fyodor,Gaerwn,Gareth,Gavriel,Ginerva,Griffin,Guinevere,Hadriel,Hannelore,Hermione,Hesperos,Iagan,Ianthe,Ignacia,Ignatius,Iseult,Isolde,Jessalyn,Kara,Katriel,Kerensa,Korbin,Kyler,Kyra,Kyrielle,Leala,Leila,Leira,Lilith,Liora,Liriene,Liron,Lucien,Lyra,Maia,Marius, Mathieu,Maylea,Meira,Mireille,Mireya,Natania,Neirin,Nerys,Nuriel,Nyfain,Nyssa,Oisin,Oleisa,Oralie,Orinthea,Orion,Orpheus,Ozara,Peregrine,Persephone,Perseus,Petronela,Phelan,Pryderi,Pyralia,Pyralis,Qadira,Quinevere,Quintessa,Raisa,Remus,Renfrew,Rhyan,Rhydderch,Riona,Saira,Saoirse,Sarai,Sarielle,Sebastian,Seraphim,Seraphina,Serian,Sirius,Sorcha,Séverin,Tavish,Tearlach,Terra,Thalia,Thaniel,Theia,Torian,Torin,Tressa,Tristana,Ulyssia,Uriela,Urien,Vanora,Vasilis,Vespera,Xanthus,Xara,Xylia,Yadira,Yakira,Yeira,Yeriel,Yestin,Yseult,Zaira,Zaniel,Zarek,Zephyr,Zora,Zorion".Split(','), 2);
 
-            UpdateGenerators();
-        }
-
-        public World(VectorID vectorID, int seed)
-        { 
             AssetID = vectorID;
             m_seed = seed;
 
-            UpdateGenerators();
+            Update();
         }
+
+        #endregion
+
+        #region Tile Functions
 
         public TerrainTypes GetTerrainType(int x, int y)
         {
-            //SimplexValueSplineNoise spline = new SimplexValueSplineNoise(m_seed);
-            //OpenSimplexNoise spline = new OpenSimplexNoise(m_seed);
             TerrainTypes terrain = TerrainTypes.None;
-            double height = Math.Round(m_terrain.GetHeight(x, y));//spline.eval((double)x / 25, (double)y / 25);// ;
-            
+            double height = Math.Round(m_terrain.GetHeight(x, y));
+
             if (height <= m_coastLine)
             {
                 terrain = TerrainTypes.Ocean;
             }
-
 
             if (height > m_coastLine && height <= (m_coastLine + ((m_terrainHeight - m_coastLine) * m_shoreLine)))
             {
@@ -170,6 +244,7 @@ namespace Azmyth.Assets
             return terrain;
         }
 
+
         public TerrainTile LoadTile(int x, int y, TerrainChunk chunk = null)
         {
             TerrainTile tile = null;
@@ -179,94 +254,14 @@ namespace Azmyth.Assets
             tile.X = x;
             tile.Y = y;
 
-            tile.Height = (float)Math.Round(m_terrain.GetHeight(x, y));
+            tile.Height =  (float)Math.Round(m_terrain.GetHeight(x, y));
             tile.m_value = (float)m_terrain.GetValue(x, y);
 
             tile.Bounds = new RectangleF(x, y, 1, 1);
 
-            if (tile.Height <= m_coastLine)
-            {
-                tile.Terrain = TerrainTypes.Ocean;
-            }
+            tile.Terrain = GetTerrainType(x, y);
 
-            if (tile.Height > m_coastLine && tile.Height <= (m_coastLine + ((m_terrainHeight - m_coastLine) * m_shoreLine)))
-            {
-                tile.Terrain = TerrainTypes.Dirt;
-            }
-
-            if (tile.Height > m_coastLine + ((m_terrainHeight - m_coastLine) * m_shoreLine))
-            {
-                tile.Terrain = TerrainTypes.Grass;
-            }
-
-            if (tile.Height > m_coastLine + ((m_terrainHeight - m_coastLine) * m_treeLine))
-            {
-                tile.Terrain = TerrainTypes.Stone;
-            }
-
-            //if (room.Height > m_coastLine + ((m_terrainHeight - m_coastLine) * m_snowLine))
-            //{
-            //    room.Terrain = TerrainTypes.Snow;
-            //}
-
-            ///if (room.Height < m_coastLine + ((m_terrainHeight - m_coastLine) * m_treeLine) && room.Height > m_coastLine && room.Terrain != TerrainTypes.Sand && room.Terrain != TerrainTypes.Stone)
-            //{
-            //     if (m_forest.GetHeight(x, y) > 0)
-            //     {
-            //          room.Terrain = TerrainTypes.Forest;
-            //      }
-            //  }
-
-            if (tile.Height > m_coastLine)
-            {
-                //if (Math.Abs(m_stones.GetHeight(x, y)) >= .95f)
-                //    room.Terrain = TerrainTypes.Mountain;
-
-                if (Math.Floor(m_rocks.GetValue(x, y) * 100) < 1)
-                {
-                    //tile.HasRock = true;
-                }
-            }
- 
-            //if (room.Height > m_coastLine + ((m_terrainHeight - m_coastLine) * m_treeLine))
-            //{
-            //    if (Math.Abs(m_lava.GetHeight(x, y)) >= .99f)
-            //    {
-            //        room.Terrain = TerrainTypes.Lava;
-            //    }
-            //}
-
-            if (tile.Terrain != TerrainTypes.Ocean)
-            {
-                //if (room.Terrain != TerrainTypes.Snow)
-                //{
-                    if (Math.Abs(m_rivers.GetHeight(x, y)) < m_terrainHeight * .06)
-                    {
-                        tile.Terrain = TerrainTypes.Dirt;
-                    }
-                    if (Math.Abs(m_rivers.GetHeight(x, y)) < m_terrainHeight * .03)
-                    {
-                        tile.Terrain = TerrainTypes.Ocean;
-                    }
-                //}
-                //else
-                //{
-                //    if (Math.Abs(m_rivers.GetHeight(x, y)) < m_terrainHeight * .03)
-                //    {
-                //        room.Terrain = TerrainTypes.Ice;
-                //    }
-                //}
-            }
-
-            //if (tile.Terrain != TerrainTypes.Water && tile.Terrain != TerrainTypes.Water && tile.Terrain != TerrainTypes.Lava)
-            //{
-            //    if (m_city.GetValue(x, y) * 100 <= .02)
-            //    {
-            //        //CreateCity(room);
-            //    }
-            //}
-
-            tile.m_temp = Math.Abs((int)Math.Round(m_tempurature.GetHeight(x, y), 0));
+            tile.m_temp = Math.Abs(Math.Round(m_tempurature.GetHeight(x, y), 0));
             tile.m_tempVal = m_tempurature.GetValue(x, y);
 
             return tile;
@@ -293,31 +288,9 @@ namespace Azmyth.Assets
             return tile;
         }
 
-        //public void CreateCity(TerrainTile room)
-        //{
-        //   /// Task.Factory.StartNew(target =>
-        //    //{
+        #endregion
 
-        //        City city = new City();
-        //        city.GridX = room.GridX;
-        //        city.GridY = room.GridY;
-        //        city.Bounds = new System.Drawing.RectangleF(room.GridX, room.GridY, 1, 1);
-
-        //        if (room.Terrain == TerrainTypes.Sand)
-        //            city.CitySize = CitySize.Port;
-        //        else
-        //            city.CitySize = (CitySize)m_random.Next(1, (int)CitySize.Kingdom + 1);
-
-        //        city.Name = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(nameGenerator.Next());
-               
-        //        room.Name = "The " + city.CitySize + " of " + city.Name;
-        //        room.Terrain = TerrainTypes.City;
-        //        room.Bounds = new System.Drawing.RectangleF(room.GridX, room.GridY, 1, 1);
-
-        //        //m_rooms.Insert(room);
-        //        //m_cities.Insert(city);
-        //   // }, System.Threading.CancellationToken.None);
-        //}
+        #region Chunk Functions
 
         public TerrainChunk LoadChunk(RectangleF chunkBounds)
         {
@@ -343,25 +316,33 @@ namespace Azmyth.Assets
             return m_terrainChunks.Query(bounds);
         }
 
-        public long TypeCount(TerrainTypes type, RectangleF bounds)
+        #endregion
+
+        private void Update()
         {
-            return 0;
-        }
+            m_random = new Random((int)m_seed);
 
-        private void UpdateGenerators()
-        {
-            m_random = new Random(m_seed);
-            m_rocks = new RandomNoise(m_seed);
-            m_randomForest = new RandomNoise(m_seed >> 2);
-            m_city = new RandomNoise((m_seed / 3) * 5);
+            switch(m_terrainNoise)
+            { 
+                case NoiseTypes.Perlin:
+                    m_terrain = new PerlinNoise(m_persistance, m_continentSize, m_terrainHeight, m_octaves, m_seed);
+                    break;
+                case NoiseTypes.Simplex:
+                    m_terrain = new SimplexOpenNoise(m_persistance, m_continentSize, m_terrainHeight, m_octaves, m_seed);
+                    break;
+            }
 
-            m_terrain = new PerlinNoise(m_persistance, m_frequency, m_terrainHeight, m_octaves, m_seed);
-            m_forest = new PerlinNoise(m_persistance, m_frequency, m_terrainHeight, 4, m_seed >> 2);
-            m_rivers = new PerlinNoise(m_persistance, .02, m_terrainHeight, 2, (m_seed / 5) * 3);
-            m_stones = new PerlinNoise(m_persistance, .02, 1, 5, (m_seed / 3) * 7);
-            m_lava = new PerlinNoise(m_persistance, m_frequency, 1, 5, (m_seed / 5) * 3);
+            switch (m_riverNoise)
+            {
+                case NoiseTypes.Perlin:
+                    m_rivers = new PerlinNoise(m_persistance, .02, m_terrainHeight, 2, new Random((int)m_seed).Next(1000, 9999));
+                    break;
+                case NoiseTypes.Simplex:
+                    m_rivers = new SimplexOpenNoise(m_persistance, .02, m_terrainHeight, 2, new Random((int)m_seed).Next(1000, 9999));
+                    break;
+            }
 
-            m_tempurature = new PerlinNoise(m_persistance, m_frequency, 40, m_octaves, (m_seed / 9) * 5);
+            m_tempurature = new PerlinNoise(m_persistance, m_continentSize, 40, m_octaves, (m_seed / 9) * 5);
         }
     }
 }

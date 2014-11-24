@@ -5,56 +5,12 @@ using System.Text;
 
 namespace Azmyth.Procedural
 {
-    public class PerlinNoise : INoise
+    public class PerlinNoise : Noise
     {
-        double     persistence = 0;
-        double     frequency = 0;
-        double     amplitude  = 0;
-        double     octaves = 0;
-        double     randomseed = 0;
+        public PerlinNoise(double persistence, double frequency, double amplitude, int octaves, long seed)
+            : base(persistence, frequency, amplitude, octaves, seed) { }      
 
-        // Constructor
-        PerlinNoise()
-        {
-            persistence = 0;
-            frequency = 0;
-            amplitude  = 0;
-            octaves = 0;
-            randomseed = 0;
-        }
-
-        public PerlinNoise(double _persistence, double _frequency, double _amplitude, int _octaves, int _randomseed)
-        {
-          persistence = _persistence;
-          frequency = _frequency;
-          amplitude  = _amplitude;
-          octaves = _octaves;
-          randomseed = 2 + _randomseed * _randomseed;
-        }
-
-        public double GetHeight(double x, double y) 
-        {
-            return amplitude * Total(x, y);
-        }
-
-        double Total(double i, double j)
-        {
-            //properties of one octave (changing each loop)
-            double t = 0.0f;
-            double _amplitude = 1;
-            double freq = frequency;
-
-            for(int k = 0; k < octaves; k++) 
-            {
-                t += GetValue(j * freq + randomseed, i * freq + randomseed) * _amplitude;
-                _amplitude *= persistence;
-                freq *= 2;
-            }
-
-            return t;
-        }       
-
-        public double GetValue(double x, double y)
+        public override double GetValue(double x, double y)
         {
             int Xint = (int)x;
             int Yint = (int)y;
@@ -123,12 +79,12 @@ namespace Azmyth.Procedural
         }
 
 
-        public double GetValue(double x, double y, double z)
+        public override double GetValue(double x, double y, double z)
         {
             throw new NotImplementedException();
         }
 
-        public double GetValue(double x, double y, double z, double t)
+        public override double GetValue(double x, double y, double z, double t)
         {
             throw new NotImplementedException();
         }

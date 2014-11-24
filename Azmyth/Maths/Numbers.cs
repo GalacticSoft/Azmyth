@@ -6,16 +6,16 @@ namespace Azmyth
     {
         public const double Pi = 3.14159;
 
-        private readonly static Random _random = new Random((int)DateTime.Now.Ticks);
+        private readonly static Random m_random = new Random((int)DateTime.Now.Ticks);
 
         public static int NumberRange(int minValue, int maxValue)
         {
-            return _random.Next(minValue, maxValue);
+            return m_random.Next(minValue, maxValue);
         }
 
         public static float NumberRange(short minValue, short maxValue)
         {
-            return _random.Next(minValue, maxValue);
+            return m_random.Next(minValue, maxValue);
         }
 
         public double GetArea(double radius)

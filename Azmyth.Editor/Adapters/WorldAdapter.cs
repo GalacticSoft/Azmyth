@@ -24,6 +24,9 @@ namespace Azmyth.Editor
         private float m_continentSize = 2;
         private float m_terrainHeight = 1024;
 
+        private NoiseTypes m_terrainNoise = NoiseTypes.Perlin;
+        private NoiseTypes m_riverNoise = NoiseTypes.Perlin;
+
         [Browsable(false)]
         public MapViewer Map {get; set;}
         private PropertyGrid m_parent;
@@ -38,6 +41,44 @@ namespace Azmyth.Editor
             set 
             {
                 m_world.Name = value;
+            }
+        }
+
+        [Category("Noise Types")]
+        public NoiseTypes TerrainNoise
+        {
+            get
+            {
+                return m_terrainNoise;
+            }
+            set
+            {
+                m_terrainNoise = value;
+                m_world.TerrainNoise = value;
+
+                if (Map != null)
+                {
+                    Map.RepaintMap();
+                }
+            }
+        }
+
+        [Category("Noise Types")]
+        public NoiseTypes RiverNoise
+        {
+            get
+            {
+                return m_riverNoise;
+            }
+            set
+            {
+                m_riverNoise = value;
+                m_world.RiverNoise = value;
+
+                if (Map != null)
+                {
+                    Map.RepaintMap();
+                }
             }
         }
 
@@ -147,7 +188,7 @@ namespace Azmyth.Editor
             set { m_world.AssetID = value; }
         }
 
-        public int Seed
+        public long Seed
         {
             get { return m_world.Seed; }
             set { m_world.Seed = value; }

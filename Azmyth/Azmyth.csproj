@@ -87,9 +87,11 @@
     <Compile Include="Ansi\ModifierData.cs" />
     <Compile Include="Assets\IHasRect.cs" />
     <Compile Include="Assets\QuadTree.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Directions.cs" />
     <Compile Include="Procedural\INoise.cs" />
     <Compile Include="Procedural\Markov.cs" />
+    <Compile Include="Procedural\Noise.cs" />
     <Compile Include="Procedural\SimplexOpenNoise.cs" />
     <Compile Include="Procedural\RandomNoise.cs" />
     <Compile Include="Procedural\SimplexNoise.cs" />

@@ -8,6 +8,8 @@ namespace Azmyth.Procedural
 {
     public interface INoise
     {
+        double GetHeight(double x, double y);
+
         double GetValue(double x, double y);
 
         double GetValue(double x, double y, double z);

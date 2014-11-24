@@ -21,7 +21,7 @@ namespace Azmyth.Procedural
  *   will be the same when ported to other languages.
  */
  
-public class SimplexOpenNoise : INoise {
+public class SimplexOpenNoise : Noise {
  
 	private  const double STRETCH_CONSTANT_2D = -0.211324865405187;    //(1/Math.sqrt(2+1)-1)/2;
     private  const double SQUISH_CONSTANT_2D = 0.366025403784439;      //(Math.sqrt(2+1)-1)/2;
@@ -34,50 +34,38 @@ public class SimplexOpenNoise : INoise {
     private  const double NORM_CONSTANT_3D = 103;
     private  const double NORM_CONSTANT_4D = 30;
 	
-	private static  long DEFAULT_SEED = 0;
-	
 	private short[] perm;
 	private short[] permGradIndex3D;
 	
-	public SimplexOpenNoise() : this(DEFAULT_SEED) {
-		
-	}
-	
-	public SimplexOpenNoise(short[] perm) {
-		this.perm = perm;
-		permGradIndex3D = new short[256];
-		
-		for (int i = 0; i < 256; i++) {
-			//Since 3D has 24 gradients, simple bitmask won't work, so precompute modulo array.
-			permGradIndex3D[i] = (short)((perm[i] % (gradients3D.Length / 3)) * 3);
-		}
-	}
-	
-	//Initializes the class using a permutation array generated from a 64-bit seed.
-	//Generates a proper permutation (i.e. doesn't merely perform N successive pair swaps on a base array)
-	//Uses a simple 64-bit LCG.
-	public SimplexOpenNoise(long seed) {
-		perm = new short[256];
-		permGradIndex3D = new short[256];
-		short[] source = new short[256];
-		for (short i = 0; i < 256; i++)
-			source[i] = i;
-		seed = seed * 6364136223846793005 + 1442695040888963407;
-		seed = seed * 6364136223846793005 + 1442695040888963407;
-		seed = seed * 6364136223846793005 + 1442695040888963407;
-		for (int i = 255; i >= 0; i--) {
-			seed = seed * 6364136223846793005 + 1442695040888963407;
-			int r = (int)((seed + 31) % (i + 1));
-			if (r < 0)
-				r += (i + 1);
-			perm[i] = source[r];
-			permGradIndex3D[i] = (short)((perm[i] % (gradients3D.Length / 3)) * 3);
-			source[r] = source[i];
-		}
-	}
-	
+
+    //Initializes the class using a permutation array generated from a 64-bit seed.
+    //Generates a proper permutation (i.e. doesn't merely perform N successive pair swaps on a base array)
+    //Uses a simple 64-bit LCG.
+    public SimplexOpenNoise(double persistence, double frequency, double amplitude, int octaves, long seed)
+            : base(persistence, frequency, amplitude, octaves, seed)
+    {
+        perm = new short[256];
+        permGradIndex3D = new short[256];
+        short[] source = new short[256];
+        for (short i = 0; i < 256; i++)
+            source[i] = i;
+        seed = seed * 6364136223846793005 + 1442695040888963407;
+        seed = seed * 6364136223846793005 + 1442695040888963407;
+        seed = seed * 6364136223846793005 + 1442695040888963407;
+        for (int i = 255; i >= 0; i--)
+        {
+            seed = seed * 6364136223846793005 + 1442695040888963407;
+            int r = (int)((seed + 31) % (i + 1));
+            if (r < 0)
+                r += (i + 1);
+            perm[i] = source[r];
+            permGradIndex3D[i] = (short)((perm[i] % (gradients3D.Length / 3)) * 3);
+            source[r] = source[i];
+        }
+    }
+
 	//2D OpenSimplex (Simplectic) Noise.
-	public double GetValue(double x, double y) {
+	public override double GetValue(double x, double y) {
 	
 		//Place input coordinates onto grid.
 		double stretchOffset = (x + y) * STRETCH_CONSTANT_2D;
@@ -192,7 +180,7 @@ public class SimplexOpenNoise : INoise {
 	}
 	
 	//3D OpenSimplex (Simplectic) Noise.
-	public double GetValue(double x, double y, double z) {
+	public override double GetValue(double x, double y, double z) {
 	
 		//Place input coordinates on simplectic honeycomb.
 		double stretchOffset = (x + y + z) * STRETCH_CONSTANT_3D;
@@ -753,7 +741,7 @@ public class SimplexOpenNoise : INoise {
 	}
 	
 	//4D OpenSimplex (Simplectic) Noise.
-	public double GetValue(double x, double y, double z, double w) {
+	public override double GetValue(double x, double y, double z, double w) {
 	
 		//Place input coordinates on simplectic honeycomb.
 		double stretchOffset = (x + y + z + w) * STRETCH_CONSTANT_4D;
