@@ -51,3 +51,5 @@ C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\AzmythEdi
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\AzmythEditor.application
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\AzmythEditor.exe
 C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\AzmythEditor.pdb
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.frmPGM.resources
+C:\Users\codergirl\Desktop\GalacticSoft\Azmyth\Azmyth.Editor\obj\Debug\Azmyth.Editor.ColorTool.resources

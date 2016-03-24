@@ -8,7 +8,7 @@ using System.Drawing;
 
 namespace Azmyth.Assets
 {
-    public class TerrainChunk : Asset
+    public class TerrainChunk : Asset, IDisposable
     {
         private World m_world = null;
         private RectangleF m_bounds = new RectangleF(0, 0, 0, 0);
@@ -62,6 +62,36 @@ namespace Azmyth.Assets
             m_bounds = chunkBounds;
         }
 
+        /// <summary>
+        /// Loads tiles from world that are contained within chunkBounds
+        /// </summary>
+        /// <param name="world"></param>
+        /// <param name="chunkBounds"></param>
+        public TerrainChunk(World world, int offsetX, int offsetY, int radius)
+            : this()
+        {
+            
+            int x, y;
+
+            for (y = -radius; y <= radius; y++)
+                for (x = -radius; x <= radius; x++)
+                    if ((x * x) + (y * y) <= (radius * radius))
+                    {
+                        //chunkBounds = new System.Drawing.RectangleF(x, y, 1, 1);
+
+                        TerrainTile tile = world.LoadTile(x + offsetX, y + offsetY, this);
+                           
+                       m_tileCount[tile.Terrain]++;
+
+                       //Insert new tile into chunk QuadTree
+                       m_tiles.Insert(tile);
+                    }
+           
+            //Assign local variables
+            m_world = world;
+            m_bounds = new RectangleF(offsetX, offsetY, radius * 2, radius * 2);
+        }
+
         public TerrainTile GetTile(int x, int y)
         {
             TerrainTile tile = null;
@@ -111,6 +141,21 @@ namespace Azmyth.Assets
             {
                 return GetTile(x, y);
             }
+        }
+
+        public void Dispose()
+        {
+            List<QuadTree<TerrainTile>.QuadNode> nodes = m_tiles.GetAllNodes();
+
+            foreach (QuadTree<TerrainTile>.QuadNode node in nodes)
+            {
+                if (node.Objects.Count > 0)
+                {
+                    m_tiles.Remove(node.Objects[0]);
+                }
+            }
+
+            m_tiles = null;
         }
     }
 }

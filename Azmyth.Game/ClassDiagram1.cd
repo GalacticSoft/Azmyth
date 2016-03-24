@@ -3,7 +3,7 @@
   <Class Name="Azmyth.Assets.World">
     <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AEAjAEQAkgAABBAoqUCogIAAIAgAQhAAIIIAAQAFIII=</HashCode>
+      <HashCode>AUQhAAQhAAAAABAgCECIgIAAIAgAAhIAIIIBAQANIII=</HashCode>
       <FileName>Assets\World.cs</FileName>
     </TypeIdentifier>
   </Class>

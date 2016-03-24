@@ -128,6 +128,18 @@
     <Compile Include="Controls\ShoreLineScroll.Designer.cs">
       <DependentUpon>ShoreLineScroll.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmPGM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPGM.Designer.cs">
+      <DependentUpon>frmPGM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ColorTool.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ColorTool.Designer.cs">
+      <DependentUpon>ColorTool.cs</DependentUpon>
+    </Compile>
     <Compile Include="Type Editors\ContinentSizeEditor.cs" />
     <Compile Include="Type Editors\CoastLineEditor.cs" />
     <Compile Include="Type Editors\ShoreLineEditor.cs" />
@@ -222,8 +234,14 @@
     <EmbeddedResource Include="Controls\MapViewer.resx">
       <DependentUpon>MapViewer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmPGM.resx">
+      <DependentUpon>frmPGM.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmMarkov.resx">
       <DependentUpon>frmMarkov.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ColorTool.resx">
+      <DependentUpon>ColorTool.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Grid.resx">
       <DependentUpon>Grid.cs</DependentUpon>

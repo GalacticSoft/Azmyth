@@ -8,8 +8,8 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using Azmyth.Assets;
 using Azmyth;
+using Azmyth.Assets;
 using Azmyth.Procedural;
 using XnaGUILib;
 
@@ -23,9 +23,10 @@ namespace Azmyth.XNA
         Intro = 2,
         MainMenu = 3,
         CreateWorld = 4,
-        Settings = 5,
-        Playing = 6,
-        Max = 6,
+        CreatePlayer = 5,
+        Settings = 6,
+        Playing = 7,
+        Max = 8,
     }
 
     /// <summary>
@@ -33,10 +34,11 @@ namespace Azmyth.XNA
     /// </summary>
     public class AzmythGame : Microsoft.Xna.Framework.Game
     {
+        private PlayerManager m_playerManager = null;
         private World m_world = null;
-        private Vector2 m_playerPosition = Vector2.Zero;
 
-        private int m_cellSize = 32;
+
+        private int m_cellSize = 64;
         private int m_frameRate = 0;
         private int m_frameCounter = 0;
 
@@ -80,10 +82,6 @@ namespace Azmyth.XNA
             {
                 m_world = value;
                 m_terrainManager.World = value;
-                m_playerPosition.Y = 0;
-                m_playerPosition.X = 0;
-
-
             }
         }
 
@@ -99,15 +97,41 @@ namespace Azmyth.XNA
             }
         }
 
+        public PlayerManager PlayerManager
+        {
+            get
+            {
+                return m_playerManager;
+            }
+            set
+            {
+                m_playerManager = value;
+            }
+        }
+
+        public int TileSize
+        {
+            get
+            {
+                return m_cellSize;
+            }
+            set
+            {
+                m_cellSize = value;
+            }
+        }
+
         public AzmythGame()
         {
-            m_stateManager = new StateMachine<GameStates>();
+            m_graphics = new GraphicsDeviceManager(this);
 
+            m_stateManager = new StateMachine<GameStates>();
             m_stateManager.SetState(GameStates.Loading);
 
-            m_graphics = new GraphicsDeviceManager(this);
+            m_playerManager = new PlayerManager(this);
             m_terrainManager = new TerrainManager(this);
 
+            Components.Add(m_playerManager);
             Components.Add(m_terrainManager);
 
             Content.RootDirectory = "Content";
@@ -148,6 +172,8 @@ namespace Azmyth.XNA
             m_spriteFont = Content.Load<SpriteFont>("Fonts/Font");
             m_characterTexture = Content.Load<Texture2D>("Character1");
             m_logoTexture = Content.Load<Texture2D>("logo");
+
+            m_playerManager.LoadContent();
 
             m_terrainManager.LoadContent();
 
@@ -208,7 +234,7 @@ namespace Azmyth.XNA
                     {
                         World = new World(new VectorID(1, 1), new Random().Next(500, 9999));
 
-                        m_terrainManager.LoadChunk(0, 0);
+                        m_terrainManager.UpdateChunks(new Vector2(0, 0));
 
                         m_lastTime = gameTime.TotalGameTime;
                     }
@@ -248,7 +274,16 @@ namespace Azmyth.XNA
 
                     if (InputManager.PadPressed(PlayerIndex.One, Buttons.B))
                     {
-                        
+                        m_stateManager.PrevState();
+                    }
+                    break;
+                case GameStates.CreatePlayer:
+                    ShowSettings(false);
+                    ShowMenu(false);
+                    ShowCreateWorld(false);
+
+                    if (InputManager.PadPressed(PlayerIndex.One, Buttons.B))
+                    {
                         m_stateManager.PrevState();
                     }
                     break;
@@ -267,26 +302,30 @@ namespace Azmyth.XNA
 
                     if (InputManager.KeyPressed(Keys.W) || InputManager.ThumbUpPressed(PlayerIndex.One, ThumbSticks.Left))
                     {
-                        m_playerPosition = Vector2.Transform(m_playerPosition, Matrix.CreateTranslation(0, -1, 0)); 
+                        m_playerManager.Move(Directions.North);
                     }
 
                     if (InputManager.KeyPressed(Keys.S) || InputManager.ThumbDownPressed(PlayerIndex.One, ThumbSticks.Left))
                     {
-                        m_playerPosition = Vector2.Transform(m_playerPosition, Matrix.CreateTranslation(0, 1, 0));
+                        m_playerManager.Move(Directions.South);
                     }
 
                     if (InputManager.KeyPressed(Keys.A) || InputManager.ThumbLeftPressed(PlayerIndex.One, ThumbSticks.Left))
                     {
-                        m_playerPosition = Vector2.Transform(m_playerPosition, Matrix.CreateTranslation(-1, 0, 0));
+                        m_playerManager.Move(Directions.West);
                     }
 
                     if (InputManager.KeyPressed(Keys.D) || InputManager.ThumbRightPressed(PlayerIndex.One, ThumbSticks.Left))
                     {
-                        m_playerPosition = Vector2.Transform(m_playerPosition, Matrix.CreateTranslation(1, 0, 0));
+                        m_playerManager.Move(Directions.East);
                     }
 
-                    m_miniMap.CenterTile((int)m_playerPosition.X, (int)m_playerPosition.Y);
-                    m_terrainManager.CenterTile((int)m_playerPosition.X, (int)m_playerPosition.Y);
+                    m_playerManager.Update(gameTime);
+
+                    m_terrainManager.Update(gameTime);
+
+                    m_miniMap.CenterTile((int)m_playerManager.Position.X, (int)m_playerManager.Position.Y);
+                    
                     break;
             }
 
@@ -312,12 +351,24 @@ namespace Azmyth.XNA
 
             m_terrainManager.Draw(gameTime);
 
+            switch (m_stateManager.State)
+            {
+                case GameStates.Playing:
+                    m_playerManager.Draw(gameTime);
+                    break;
+            }
+
             m_spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, null, Matrix.CreateTranslation(0, 0, 0));
-//#if DEBUG
-            string fps = string.Format("fps: {0}", m_frameRate);
-            m_spriteBatch.DrawString(m_spriteFont, fps, new Vector2(1, 1), Color.Black);
-            m_spriteBatch.DrawString(m_spriteFont, fps, new Vector2(2, 2), Color.White);
-//#endif
+#if DEBUG
+            string debug = "";
+            debug = string.Format("fps: {0}, Nodes: {1}, Chunks: {2}, Tiles: {3}", m_frameRate, m_terrainManager.GetNodeCount(), m_terrainManager.GetChunkCount(), m_terrainManager.GetChunkCount() * m_terrainManager.ChunkSize * m_terrainManager.ChunkSize);
+            m_spriteBatch.DrawString(m_spriteFont, debug, new Vector2(1, 1), Color.Black);
+            m_spriteBatch.DrawString(m_spriteFont, debug, new Vector2(2, 0), Color.White);
+
+            debug = string.Format("X: {0}, Y: {1}, Chunk X: {2}, Chunk Y: {3}", m_playerManager.Position.X, m_playerManager.Position.Y, m_playerManager.GetChunkX(m_terrainManager.ChunkSize).ToString(), m_playerManager.GetChunkY(m_terrainManager.ChunkSize).ToString());
+            m_spriteBatch.DrawString(m_spriteFont, debug, new Vector2(1, GraphicsDevice.Viewport.Height - 24), Color.Black);
+            m_spriteBatch.DrawString(m_spriteFont, debug, new Vector2(2, GraphicsDevice.Viewport.Height - 25), Color.White);
+#endif
             switch (m_stateManager.State)
             {
                 case GameStates.MainMenu:
@@ -326,9 +377,6 @@ namespace Azmyth.XNA
                     m_spriteBatch.Draw(m_logoTexture, new Rectangle(50, 10, GraphicsDevice.Viewport.Width - 100, GraphicsDevice.Viewport.Height - 20), null, Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 1);
                     break;
                 case GameStates.CreateWorld:
-                    break;
-                case GameStates.Playing:
-                    m_spriteBatch.Draw(m_characterTexture, new Rectangle((centerX) * m_cellSize, (centerY) * m_cellSize, m_cellSize, m_cellSize), null, Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 1);
                     break;
             }
 

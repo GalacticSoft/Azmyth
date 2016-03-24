@@ -166,44 +166,10 @@ namespace Azmyth.XNA
 
         void btnCreateWorld_Clicked(XGControl sender)
         {
-            Game.World = m_world;
+           Game.World = m_world;
 
-            Game.TerrainManager.LoadChunk(-1, -2);
-            Game.TerrainManager.LoadChunk(-1, -1);
-            Game.TerrainManager.LoadChunk(-1, 0);
-            Game.TerrainManager.LoadChunk(-1, 1);
-
-            Game.TerrainManager.LoadChunk(0, -2);
-            Game.TerrainManager.LoadChunk(0, -1);
-            Game.TerrainManager.LoadChunk(0, 0);
-            Game.TerrainManager.LoadChunk(0, 1);
-
-            Game.TerrainManager.LoadChunk(1, -2);
-            Game.TerrainManager.LoadChunk(1, -1);
-            Game.TerrainManager.LoadChunk(1, 0);
-            Game.TerrainManager.LoadChunk(1, 1);
-
-            Game.TerrainManager.LoadChunk(2, -2);
-            Game.TerrainManager.LoadChunk(2, -1);
-            Game.TerrainManager.LoadChunk(2, 0);
-            Game.TerrainManager.LoadChunk(2, 1);
-
-            Game.TerrainManager.LoadChunk(3, -2);
-            Game.TerrainManager.LoadChunk(3, -1);
-            Game.TerrainManager.LoadChunk(3, 0);
-            Game.TerrainManager.LoadChunk(3, 1);
-
-            Game.TerrainManager.LoadChunk(-2, -2);
-            Game.TerrainManager.LoadChunk(-2, -1);
-            Game.TerrainManager.LoadChunk(-2, 0);
-            Game.TerrainManager.LoadChunk(-2, 1);
-
-            Game.TerrainManager.LoadChunk(-3, -2);
-            Game.TerrainManager.LoadChunk(-3, -1);
-            Game.TerrainManager.LoadChunk(-3, 0);
-            Game.TerrainManager.LoadChunk(-3, 1);
-
-            Game.m_stateManager.SetState(GameStates.Playing);
+           //Game.TerrainManager.LoadChunk(0, 0);
+           Game.m_stateManager.SetState(GameStates.Playing);
         }
 
         void btnRandomName_Clicked(XGControl sender)
@@ -217,35 +183,18 @@ namespace Azmyth.XNA
 
             m_viewport = Game.GraphicsDevice.Viewport;
 
-            Rectangle = new Rectangle(0, 0, m_viewport.Width - 0, m_viewport.Height - 0);
-            pnlMain.Rectangle = new Rectangle((Rectangle.Width / 2) - 385, (Rectangle.Height / 2) - 205, 770, 420);
-            pnlTitle.Rectangle = new Rectangle((Rectangle.Width / 2) - 275, (Rectangle.Height / 2) - 225, 550, 40);
-            lblTitle.Rectangle = new Rectangle(0, 0, pnlTitle.Rectangle.Width, pnlTitle.Rectangle.Height);
+            Rectangle                = new Rectangle(0, 0, m_viewport.Width, m_viewport.Height);
+            pnlMain.Rectangle        = new Rectangle((Rectangle.Width / 2) - 385, (Rectangle.Height / 2) - 205, 770, 420);
+            pnlTitle.Rectangle       = new Rectangle((Rectangle.Width / 2) - 275, (Rectangle.Height / 2) - 225, 550, 40);
+            lblTitle.Rectangle       = new Rectangle(0, 0, pnlTitle.Rectangle.Width, pnlTitle.Rectangle.Height);
             btnCreateWorld.Rectangle = new Rectangle(pnlMain.Rectangle.Width - 220, pnlMain.Rectangle.Height - 50, 200, 30);
+            lblWorldName.Rectangle   = new Rectangle(pnlMain.Rectangle.Width - 445, 40, 100, 30);
+            txtWorldName.Rectangle   = new Rectangle(pnlMain.Rectangle.Width - 390, 40, 210 , 30);
+            btnRandomName.Rectangle  = new Rectangle(pnlMain.Rectangle.Width - 170, 40, 150, 30);
+            mapMiniMap.Rectangle     = new Rectangle(pnlMain.Rectangle.Width - 270, 100, 250, 250);
 
-            lblWorldName.Rectangle = new Rectangle(pnlMain.Rectangle.Width - 445, 40, 100, 30);
-            txtWorldName.Rectangle = new Rectangle(pnlMain.Rectangle.Width - 390, 40, 210 , 30);
-            btnRandomName.Rectangle = new Rectangle(pnlMain.Rectangle.Width - 170, 40, 150, 30);
-
-            mapMiniMap.Rectangle = new Rectangle(pnlMain.Rectangle.Width - 270, 100, 250, 250);
-
-            if (lstTerrainNoise.SelectedIndex == 0)
-            {
-                m_world.TerrainNoise = NoiseTypes.Perlin;
-            }
-            else
-            {
-                m_world.TerrainNoise = NoiseTypes.Simplex;
-            }
-
-            if (lstRiverNoise.SelectedIndex == 0)
-            {
-                m_world.RiverNoise = NoiseTypes.Perlin;
-            }
-            else
-            {
-                m_world.RiverNoise = NoiseTypes.Simplex;
-            }
+            m_world.TerrainNoise = (NoiseTypes)lstTerrainNoise.SelectedItem.Tag;
+            m_world.RiverNoise   = (NoiseTypes)lstRiverNoise.SelectedItem.Tag;
 
             if (int.TryParse(txtSeed.Text, out seed))
             {

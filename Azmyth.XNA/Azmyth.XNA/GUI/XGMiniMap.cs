@@ -29,6 +29,7 @@ namespace XnaGUILib
         private int m_offsetY = 0;
         World m_world = null;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public XGMiniMap(Rectangle rectangle, World world, int tileSize)
             : base(rectangle, true)
         {

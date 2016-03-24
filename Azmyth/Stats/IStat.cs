@@ -9,27 +9,28 @@ namespace Azmyth.Stats
 
 	public interface IStat
 	{
-		VectorID Vector      	{ get; set; }
+		VectorID ID      	{ get; set; }
 
 		string Name 			{ get;  }
 		string Abbreviation		{ get;  }
 		string Description 		{ get;  }
 
-        double BaseValue     	{ get; set; }
-		double Modifier			{ get; set; }
+        int BaseValue     	{ get; set; }
+        int Modifier { get; set; }
 
-		double MinBase			{ get; set; }
-		double MaxBase			{ get; set; }
+        int MinBase { get; set; }
+        int MaxBase { get; set; }
 
-		double MinMod			{ get; set; }
-		double MaxMod			{ get; set; }
+        int MinMod { get; set; }
+        int MaxMod { get; set; }
 
-		double Minimum			{ get;  }
-		double Maximum			{ get;  }
+        int Minimum { get; }
+        int Maximum { get; }
 
-		double Value			{ get; }
+        int Value { get; }
 
-		string VectorName		{ get; }
+        IStat Clone();
+        void Roll();
 	}
 }
 

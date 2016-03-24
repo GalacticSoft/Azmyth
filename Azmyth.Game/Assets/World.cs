@@ -311,9 +311,57 @@ namespace Azmyth.Assets
             return chunk;
         }
 
-        public List<TerrainChunk> GetChunks(RectangleF bounds)
+        public void UnloadChunk(RectangleF chunkBounds)
         {
-            return m_terrainChunks.Query(bounds);
+            List<TerrainChunk> chunks = m_terrainChunks.Query(chunkBounds);
+
+            if (chunks.Count > 0)
+            {
+                m_terrainChunks.Remove(chunks[0]);
+
+                //chunks[0].Dispose();
+            }
+
+           
+            
+            
+        }
+
+        public int GetNodeCount()
+        {
+            return m_terrainChunks.GetQuadNodeCount();
+        }
+
+        public int GetChunkCount()
+        {
+            return m_terrainChunks.GetQuadObjectCount();
+        }
+
+        public bool IsChunkLoaded(RectangleF chunkBounds)
+        {
+            return (m_terrainChunks.Query(chunkBounds).Count > 0);
+        }
+
+        public List<TerrainChunk> GetChunks(RectangleF chunkBounds)
+        {
+            return m_terrainChunks.Query(chunkBounds);
+        }
+
+        public List<TerrainChunk> GetChunks()
+        {
+            List<TerrainChunk> chunks = new List<TerrainChunk>();
+            List<QuadTree<TerrainChunk>.QuadNode> nodes = m_terrainChunks.GetAllNodes();
+
+            foreach(QuadTree<TerrainChunk>.QuadNode node in nodes)
+            {
+                if (node.Objects.Count > 0) 
+                {
+                    chunks.Add(node.Objects[0]);
+                }
+                
+            }
+
+            return chunks;
         }
 
         #endregion

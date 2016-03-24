@@ -48,6 +48,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <PlatformTarget>x86</PlatformTarget>
     <XnaCompressContent>false</XnaCompressContent>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>pdbonly</DebugType>
@@ -98,6 +99,7 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\frmCreatePlayer.cs" />
     <Compile Include="Forms\frmCreateWorld.cs" />
     <Compile Include="Forms\frmRightPanel.cs" />
     <Compile Include="Forms\frmSettings.cs" />
@@ -117,10 +119,12 @@
     <Compile Include="GUI\XGVScrollbar.cs" />
     <Compile Include="GUI\XnaGUIManager.cs" />
     <Compile Include="InputManager.cs" />
+    <Compile Include="PlayerManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="AzmythGame.cs" />
     <Compile Include="Forms\frmMainMenu.cs" />
+    <Compile Include="Terrain\PlaneManager.cs" />
     <Compile Include="Terrain\TerrainManager.cs" />
     <Compile Include="Terrain\TerrainTexture.cs" />
     <Compile Include="Terrain\TerrainTransition.cs" />

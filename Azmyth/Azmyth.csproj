@@ -70,7 +70,6 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -89,9 +88,11 @@
     <Compile Include="Assets\QuadTree.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Directions.cs" />
+    <Compile Include="Maths\Dice.cs" />
     <Compile Include="Procedural\INoise.cs" />
     <Compile Include="Procedural\Markov.cs" />
     <Compile Include="Procedural\Noise.cs" />
+    <Compile Include="Procedural\ShuffleArray.cs" />
     <Compile Include="Procedural\SimplexOpenNoise.cs" />
     <Compile Include="Procedural\RandomNoise.cs" />
     <Compile Include="Procedural\SimplexNoise.cs" />

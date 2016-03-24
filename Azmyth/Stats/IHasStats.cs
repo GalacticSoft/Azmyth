@@ -7,15 +7,20 @@ namespace Azmyth.Stats
 {
     public interface IHasStats
     {
-        void SetStat(StatVector vector, string name, double baseValue);
-        List<IStat> GetStats();
-        Dictionary<VectorID, IStat> GetStats(StatVector vector);
-        void SetStatMod(StatVector vector, string name, double modifier);
+        int GetValue(VectorID statID);
+
+        void SetValue(VectorID statID, int baseValue);
+
+        void SetModifier(VectorID statID, int modifier);
+
+        void AddModifier(VectorID statID, int modifier);
+
         IStat GetStat(VectorID statID);
-        IStat GetStat(StatVector vector, string name);
+
+        IList<IStat> GetStats();
+
         void AddStat(IStat stat);
+
         void RemoveStat(IStat stat); 
-        void RemoveStats();
-        void RemoveStats(long vector);
     }
 }
