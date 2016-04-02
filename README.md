@@ -110,7 +110,7 @@ Azmyth is a generic game framework used to create flexible RPG and adventure sty
 
 - Dynamic Chunk Loading
 
-                /// <summary>
+		/// <summary>
 		/// Loads Moore Neighborhood of chunks around central chunk specified by X/Y paramters.
 		/// </summary>
 		/// <param name="x">X Origin of central chunk</param>
@@ -158,6 +158,7 @@ Azmyth is a generic game framework used to create flexible RPG and adventure sty
 		                LoadChunk(chunkBounds);
 		            }
 		        }
+		}
 
 		
 #### XNA
