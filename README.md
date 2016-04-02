@@ -109,53 +109,55 @@ Azmyth is a generic game framework used to create flexible RPG and adventure sty
 		}
 
 - Dynamic Chunk Loading
-		
-		/// <summary>
-	        /// Loads Moore Neighborhood of chunks around central chunk specified by X/Y paramters.
-	        /// </summary>
-	        /// <param name="x">X Origin of central chunk</param>
-	        /// <param name="y">Y Origin of central chunk<</param>
-	        /// <param name="chunkSize">size of chunks to load</param>
-	        public void UpdateChunks(int x, int y, int chunkSize)
-	        {
-	            System.Drawing.RectangleF chunkBounds;
-	            List<Vector> newChunks = new List<Vector>();
+
+                /// <summary>
+		/// Loads Moore Neighborhood of chunks around central chunk specified by X/Y paramters.
+		/// </summary>
+		/// <param name="x">X Origin of central chunk</param>
+		/// <param name="y">Y Origin of central chunk<</param>
+		/// <param name="chunkSize">size of chunks to load</param>
+		public void UpdateChunks(int x, int y, int chunkSize)
+		{
+			System.Drawing.RectangleF chunkBounds;
+			List<Vector> newChunks = new List<Vector>();
 	            
-	            // Calculate Coordinates
-	            int chunkX = (int)Numbers.ConvertCoordinate(x, chunkSize);
-	            int chunkY = (int)Numbers.ConvertCoordinate(y, chunkSize);
+			// Calculate Coordinates
+			int chunkX = (int)Numbers.ConvertCoordinate(x, chunkSize);
+			int chunkY = (int)Numbers.ConvertCoordinate(y, chunkSize);
 	
-	            // Calculate Moore neighborhood.
-	            for(int offsetY = chunkY - 1; offsetY <= chunkY + 1; offsetY++)
-	            {
-	                for(int offsetX = chunkX - 1; offsetX <= chunkX + 1; offsetX++)
-	                {
-	                    newChunks.Add(new Vector(offsetX, offsetY, 0));
-	                }
-	            }
+			// Calculate Moore neighborhood.
+			for(int offsetY = chunkY - 1; offsetY <= chunkY + 1; offsetY++)
+			{
+				for(int offsetX = chunkX - 1; offsetX <= chunkX + 1; offsetX++)
+				{
+					newChunks.Add(new Vector(offsetX, offsetY, 0));
+				}
+			}
 	
-	            // Get all the loaded Chunks.
-	            List<TerrainChunk> AllChunks = GetChunks();
+	 		// Get all the loaded Chunks.
+			List<TerrainChunk> AllChunks = GetChunks();
 	
-	            // Cull Chunks outside of neighbor range.
-	            foreach (TerrainChunk chunk in AllChunks)
-	            {
-	                if (!newChunks.Contains(new Vector((int)chunk.Bounds.X, (int)chunk.Bounds.Y, 0)))
-	                {
-	                    chunkBounds = new System.Drawing.RectangleF(chunk.Bounds.X, chunk.Bounds.Y, chunkSize, chunkSize);
+			// Cull Chunks outside of neighbor range.
+			foreach (TerrainChunk chunk in AllChunks)
+			{
+				if (!newChunks.Contains(new Vector((int)chunk.Bounds.X, (int)chunk.Bounds.Y, 0)))
+			        {
+			            chunkBounds = new System.Drawing.RectangleF(chunk.Bounds.X, chunk.Bounds.Y, 
+			            						chunkSize, 	chunkSize);
+			
+			            UnloadChunk(chunkBounds);
+			        }
+			    }
 	
-	                    UnloadChunk(chunkBounds);
-	                }
-	            }
-	
-	            // Load Neighbor Chunks
-	            foreach (Vector chunk in newChunks)
-	            {
-	                chunkBounds = new System.Drawing.RectangleF(chunk.X * chunkSize, chunk.Y * chunkSize, chunkSize, chunkSize);
-	
-	                LoadChunk(chunkBounds);
-	            }
-	        }
+		            // Load Neighbor Chunks
+		            foreach (Vector chunk in newChunks)
+		            {
+		                chunkBounds = new System.Drawing.RectangleF(chunk.X * chunkSize, chunk.Y * chunkSize, 
+		                					    chunkSize, 		 chunkSize);
+		
+		                LoadChunk(chunkBounds);
+		            }
+		        }
 
 		
 #### XNA
