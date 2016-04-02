@@ -7,7 +7,7 @@ Azmyth is a generic game framework used to create flexible RPG and adventure sty
 - Terrain noise generation using strategy pattern.
 - Flexible Stat/Attribute system.
 - Markov Chain name/text generator.
-- Chunk loading using QuadTrees.
+- Dynamic Chunk loading using QuadTrees.
 
 #### Planned Features:
 - Biomes.
@@ -15,7 +15,6 @@ Azmyth is a generic game framework used to create flexible RPG and adventure sty
 - Races and Classes.
 - Additional Noise generators (Worley/Voronoi, Wavelet, etc).
 - Procedurally generated NPCS, Items, Quests.
-- Dynamic Chunk Loading.
 
 #### Code Samples
 
@@ -109,6 +108,55 @@ Azmyth is a generic game framework used to create flexible RPG and adventure sty
 		    m_spriteBatch.End();
 		}
 
+- Dynamic Chunk Loading
+		/// <summary>
+	        /// Loads Moore Neighborhood of chunks around central chunk specified by X/Y paramters.
+	        /// </summary>
+	        /// <param name="x">X Origin of central chunk</param>
+	        /// <param name="y">Y Origin of central chunk<</param>
+	        /// <param name="chunkSize">size of chunks to load</param>
+	        public void UpdateChunks(int x, int y, int chunkSize)
+	        {
+	            System.Drawing.RectangleF chunkBounds;
+	            List<Vector> newChunks = new List<Vector>();
+	            
+	            // Calculate Coordinates
+	            int chunkX = (int)Numbers.ConvertCoordinate(x, chunkSize);
+	            int chunkY = (int)Numbers.ConvertCoordinate(y, chunkSize);
+	
+	            // Calculate Moore neighborhood.
+	            for(int offsetY = chunkY - 1; offsetY <= chunkY + 1; offsetY++)
+	            {
+	                for(int offsetX = chunkX - 1; offsetX <= chunkX + 1; offsetX++)
+	                {
+	                    newChunks.Add(new Vector(offsetX, offsetY, 0));
+	                }
+	            }
+	
+	            // Get all the loaded Chunks.
+	            List<TerrainChunk> AllChunks = GetChunks();
+	
+	            // Cull Chunks outside of neighbor range.
+	            foreach (TerrainChunk chunk in AllChunks)
+	            {
+	                if (!newChunks.Contains(new Vector((int)chunk.Bounds.X, (int)chunk.Bounds.Y, 0)))
+	                {
+	                    chunkBounds = new System.Drawing.RectangleF(chunk.Bounds.X, chunk.Bounds.Y, chunkSize, chunkSize);
+	
+	                    UnloadChunk(chunkBounds);
+	                }
+	            }
+	
+	            // Load Neighbor Chunks
+	            foreach (Vector chunk in newChunks)
+	            {
+	                chunkBounds = new System.Drawing.RectangleF(chunk.X * chunkSize, chunk.Y * chunkSize, chunkSize, chunkSize);
+	
+	                LoadChunk(chunkBounds);
+	            }
+	        }
+
+		
 #### XNA
 - Intro
 ![ScreenShot](http://i.imgur.com/4jJVU4e.png)
