@@ -292,7 +292,13 @@ namespace Azmyth.XNA
 
         public void UpdateChunks(Vector2 position)
         {
-            int chunkX = (int)Numbers.ConvertCoordinate(position.X, ChunkSize);
+            if(m_world != null)
+            {
+                m_world.UpdateChunks((int)position.X, (int)position.Y, ChunkSize);
+
+            }
+            
+            /*int chunkX = (int)Numbers.ConvertCoordinate(position.X, ChunkSize);
             int chunkY = (int)Numbers.ConvertCoordinate(position.Y, ChunkSize);
 
             List<Vector2> newChunks = new List<Vector2>()
@@ -321,12 +327,11 @@ namespace Azmyth.XNA
                     }
                 }
 
-
                 foreach (Vector2 chunk in newChunks)
                 {
                     LoadChunk(chunk.X, chunk.Y);
                 }
-            }
+            }*/
             
         }
     }

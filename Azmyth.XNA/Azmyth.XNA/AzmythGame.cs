@@ -72,6 +72,11 @@ namespace Azmyth.XNA
 
         private RandomNoise m_randomNoise = new RandomNoise(1);
 
+        public SpriteBatch SpriteBatch
+        {
+            get { return m_spriteBatch; }
+        }
+
         public World World
         {
             get
@@ -351,21 +356,21 @@ namespace Azmyth.XNA
 
             m_terrainManager.Draw(gameTime);
 
+            m_spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Matrix.CreateTranslation(0, 0, 0));
+
             switch (m_stateManager.State)
             {
                 case GameStates.Playing:
                     m_playerManager.Draw(gameTime);
                     break;
             }
-
-            m_spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, null, Matrix.CreateTranslation(0, 0, 0));
 #if DEBUG
             string debug = "";
             debug = string.Format("fps: {0}, Nodes: {1}, Chunks: {2}, Tiles: {3}", m_frameRate, m_terrainManager.GetNodeCount(), m_terrainManager.GetChunkCount(), m_terrainManager.GetChunkCount() * m_terrainManager.ChunkSize * m_terrainManager.ChunkSize);
             m_spriteBatch.DrawString(m_spriteFont, debug, new Vector2(1, 1), Color.Black);
             m_spriteBatch.DrawString(m_spriteFont, debug, new Vector2(2, 0), Color.White);
 
-            debug = string.Format("X: {0}, Y: {1}, Chunk X: {2}, Chunk Y: {3}", m_playerManager.Position.X, m_playerManager.Position.Y, m_playerManager.GetChunkX(m_terrainManager.ChunkSize).ToString(), m_playerManager.GetChunkY(m_terrainManager.ChunkSize).ToString());
+            debug = string.Format("Seed: {0}, X: {1}, Y: {2}, Chunk X: {3}, Chunk Y: {4}", m_world.Seed, m_playerManager.Position.X, m_playerManager.Position.Y, m_playerManager.GetChunkX(m_terrainManager.ChunkSize).ToString(), m_playerManager.GetChunkY(m_terrainManager.ChunkSize).ToString());
             m_spriteBatch.DrawString(m_spriteFont, debug, new Vector2(1, GraphicsDevice.Viewport.Height - 24), Color.Black);
             m_spriteBatch.DrawString(m_spriteFont, debug, new Vector2(2, GraphicsDevice.Viewport.Height - 25), Color.White);
 #endif

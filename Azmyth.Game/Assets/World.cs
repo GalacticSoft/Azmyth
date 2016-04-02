@@ -75,7 +75,7 @@ namespace Azmyth.Assets
             set 
             { 
                 m_continentSize = value; 
-                Update(); 
+                UpdateNoise(); 
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azmyth.Assets
             set 
             { 
                 m_terrainHeight = value; 
-                Update(); 
+                UpdateNoise(); 
             }
         }
 
@@ -149,7 +149,7 @@ namespace Azmyth.Assets
             set 
             { 
                 m_seed = value; 
-                Update(); 
+                UpdateNoise(); 
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azmyth.Assets
             set 
             { 
                 m_terrainNoise = value;
-                Update();
+                UpdateNoise();
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azmyth.Assets
             set 
             { 
                 m_riverNoise = value;
-                Update();
+                UpdateNoise();
             }
         }
 
@@ -197,7 +197,7 @@ namespace Azmyth.Assets
             AssetID = vectorID;
             m_seed = seed;
 
-            Update();
+            UpdateNoise();
         }
 
         #endregion
@@ -243,7 +243,6 @@ namespace Azmyth.Assets
 
             return terrain;
         }
-
 
         public TerrainTile LoadTile(int x, int y, TerrainChunk chunk = null)
         {
@@ -318,13 +317,7 @@ namespace Azmyth.Assets
             if (chunks.Count > 0)
             {
                 m_terrainChunks.Remove(chunks[0]);
-
-                //chunks[0].Dispose();
             }
-
-           
-            
-            
         }
 
         public int GetNodeCount()
@@ -366,7 +359,7 @@ namespace Azmyth.Assets
 
         #endregion
 
-        private void Update()
+        private void UpdateNoise()
         {
             m_random = new Random((int)m_seed);
 
@@ -391,6 +384,47 @@ namespace Azmyth.Assets
             }
 
             m_tempurature = new PerlinNoise(m_persistance, m_continentSize, 40, m_octaves, (m_seed / 9) * 5);
+        }
+
+        public void UpdateChunks(int x, int y, int chunkSize)
+        {
+            System.Drawing.RectangleF chunkBounds;
+            List<Vector> newChunks = new List<Vector>();
+            
+            // Calculate Coordinates
+            int chunkX = (int)Numbers.ConvertCoordinate(x, chunkSize);
+            int chunkY = (int)Numbers.ConvertCoordinate(y, chunkSize);
+
+            // Calculate Moore neighborhood.
+            for(int offsetY = chunkY - 1; offsetY <= chunkY + 1; offsetY++)
+            {
+                for(int offsetX = chunkX - 1; offsetX <= chunkX + 1; offsetX++)
+                {
+                    newChunks.Add(new Vector(offsetX, offsetY, 0));
+                }
+            }
+
+            // Get all the loaded Chunks.
+            List<TerrainChunk> AllChunks = GetChunks();
+
+            // Cull Chunks outside of neighbor range.
+            foreach (TerrainChunk chunk in AllChunks)
+            {
+                if (!newChunks.Contains(new Vector((int)chunk.Bounds.X, (int)chunk.Bounds.Y, 0)))
+                {
+                    chunkBounds = new System.Drawing.RectangleF(chunk.Bounds.X, chunk.Bounds.Y, chunkSize, chunkSize);
+
+                    UnloadChunk(chunkBounds);
+                }
+            }
+
+            // Load Neighbor Chunks
+            foreach (Vector chunk in newChunks)
+            {
+                chunkBounds = new System.Drawing.RectangleF(chunk.X * chunkSize, chunk.Y * chunkSize, chunkSize, chunkSize);
+
+                LoadChunk(chunkBounds);
+            }
         }
     }
 }

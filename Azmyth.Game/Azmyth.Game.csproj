@@ -80,6 +80,8 @@
     <Compile Include="Assets\Area.cs" />
     <Compile Include="Assets\Assets.cs" />
     <Compile Include="Assets\City.cs" />
+    <Compile Include="Assets\Item.cs" />
+    <Compile Include="Assets\Material.cs" />
     <Compile Include="Assets\Mobile.cs" />
     <Compile Include="Assets\Player.cs" />
     <Compile Include="Assets\Stat.cs" />

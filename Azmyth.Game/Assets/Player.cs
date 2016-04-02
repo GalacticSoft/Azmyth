@@ -8,6 +8,14 @@ namespace Azmyth.Assets
 {
     public class Player : Asset, IHasStats
     {
+        public float Range
+        {
+            get
+            {
+                return 1.5f;
+            }
+        }
+
         private Dictionary<VectorID, IStat> m_stats = new Dictionary<VectorID, IStat>();
 
         public Player()

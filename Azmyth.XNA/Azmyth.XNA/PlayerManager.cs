@@ -41,7 +41,7 @@ namespace Azmyth.XNA
         public override void Initialize()
         {
             m_graphicsDevice = m_game.GraphicsDevice;
-            m_spriteBatch = new SpriteBatch(m_graphicsDevice);
+            //m_spriteBatch = new SpriteBatch(m_graphicsDevice);
 
             base.Initialize();
         }
@@ -153,18 +153,24 @@ namespace Azmyth.XNA
         /// <param name="gameTime"></param>
         public void Draw(GameTime gameTime)
         {
-            int centerX = 0;
-            int centerY = 0;
+            float radius = m_player.Range;
+            float cellSize = m_game.TileSize;
+            float cellRadius = radius * cellSize;
+            float centerX = (m_graphicsDevice.Viewport.Width / m_game.TileSize) / 2;
+            float centerY = (m_graphicsDevice.Viewport.Height / m_game.TileSize) / 2;
+           
+            //m_spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Matrix.CreateTranslation(0, 0, 0));
 
-            centerX = (m_graphicsDevice.Viewport.Width / m_game.TileSize) / 2;
-            centerY = (m_graphicsDevice.Viewport.Height / m_game.TileSize) / 2;
+            m_game.SpriteBatch.Draw(createCircleText((int)(m_game.TileSize * (radius * 2))), 
+                new Rectangle(
+                    (int)(((centerX * cellSize) - ((cellRadius))) + (cellSize / 2)),
+                    (int)(((centerY * cellSize) - ((cellRadius))) + (cellSize / 2)),
+                    (int)((radius * 2) * cellSize),
+                    (int)((radius * 2) * cellSize)), 
+                 null, Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 1);
 
-            m_spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Matrix.CreateTranslation(0, 0, 0));
-
-            m_spriteBatch.Draw(createCircleText(2 * m_game.TileSize), new Rectangle((centerX) * (m_game.TileSize), (centerY) * (m_game.TileSize), 2*m_game.TileSize, 2*m_game.TileSize), null, Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 1);
-
-            m_spriteBatch.Draw(m_characterTexture, new Rectangle((centerX) * m_game.TileSize, (centerY) * m_game.TileSize, m_game.TileSize, m_game.TileSize), null, Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 1);
-            m_spriteBatch.End();
+            m_game.SpriteBatch.Draw(m_characterTexture, new Rectangle(((int)centerX) * m_game.TileSize, ((int)centerY) * m_game.TileSize, m_game.TileSize, m_game.TileSize), null, Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 1);
+            //m_spriteBatch.End();
         }
 
         /// <summary>

@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azmyth.XNAContent", "Azmyth
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azmyth.Mono", "Azmyth.Mono\Azmyth.Mono.csproj", "{0F90F86B-CB2F-42E9-BA77-C255D0880CAB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzmythTest", "AzmythTest\AzmythTest.csproj", "{5F3E6EBD-7D13-4DC5-8C81-C5642C2EE6A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -153,6 +155,24 @@ Global
 		{0F90F86B-CB2F-42E9-BA77-C255D0880CAB}.Release|x64.ActiveCfg = Release|x86
 		{0F90F86B-CB2F-42E9-BA77-C255D0880CAB}.Release|x86.ActiveCfg = Release|x86
 		{0F90F86B-CB2F-42E9-BA77-C255D0880CAB}.Release|x86.Build.0 = Release|x86
+		{5F3E6EBD-7D13-4DC5-8C81-C5642C2EE6A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F3E6EBD-7D13-4DC5-8C81-C5642C2EE6A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F3E6EBD-7D13-4DC5-8C81-C5642C2EE6A8}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{5F3E6EBD-7D13-4DC5-8C81-C5642C2EE6A8}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{5F3E6EBD-7D13-4DC5-8C81-C5642C2EE6A8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5F3E6EBD-7D13-4DC5-8C81-C5642C2EE6A8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5F3E6EBD-7D13-4DC5-8C81-C5642C2EE6A8}.Release x64|Any CPU.ActiveCfg = Release|Any CPU
+		{5F3E6EBD-7D13-4DC5-8C81-C5642C2EE6A8}.Release x64|Any CPU.Build.0 = Release|Any CPU
+		{5F3E6EBD-7D13-4DC5-8C81-C5642C2EE6A8}.Release x64|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{5F3E6EBD-7D13-4DC5-8C81-C5642C2EE6A8}.Release x64|Mixed Platforms.Build.0 = Release|Any CPU
+		{5F3E6EBD-7D13-4DC5-8C81-C5642C2EE6A8}.Release x64|x64.ActiveCfg = Release|Any CPU
+		{5F3E6EBD-7D13-4DC5-8C81-C5642C2EE6A8}.Release x64|x86.ActiveCfg = Release|Any CPU
+		{5F3E6EBD-7D13-4DC5-8C81-C5642C2EE6A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F3E6EBD-7D13-4DC5-8C81-C5642C2EE6A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F3E6EBD-7D13-4DC5-8C81-C5642C2EE6A8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{5F3E6EBD-7D13-4DC5-8C81-C5642C2EE6A8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{5F3E6EBD-7D13-4DC5-8C81-C5642C2EE6A8}.Release|x64.ActiveCfg = Release|Any CPU
+		{5F3E6EBD-7D13-4DC5-8C81-C5642C2EE6A8}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

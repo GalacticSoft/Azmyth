@@ -16,6 +16,10 @@ namespace Azmyth.Assets
 
         public static VectorID Wisdom = new VectorID(0, 5);
         public static VectorID Intelligence = new VectorID(0, 6);
+        
+        public static VectorID Luck = new VectorID(0, 7);
+        public static VectorID Charisma = new VectorID(0, 8);
+
 
         public static Dictionary<VectorID, Stat> Prototypes = new Dictionary<VectorID, Stat>()
         {
@@ -101,6 +105,36 @@ namespace Azmyth.Assets
                     Abbreviation = "WIS", 
                     Name = "Wisdom", 
                     Description = "Intellengence affects how many abilities you can learn and how well you can use them.", 
+                    BaseValue = 0,  
+                    Modifier = 0,
+                    MaxBase = 100,  
+                    MaxMod = 100, 
+                    MinBase = 0, 
+                    MinMod = 0
+                }
+            },
+            {
+                Luck, new Stat() 
+                {   
+                    ID = Luck, 
+                    Abbreviation = "LUK", 
+                    Name = "LUCK", 
+                    Description = "Luck affects your loot and gold drops and bonuses to skill checks.", 
+                    BaseValue = 0,  
+                    Modifier = 0,
+                    MaxBase = 100,  
+                    MaxMod = 100, 
+                    MinBase = 0, 
+                    MinMod = 0
+                }
+            },
+            {
+                Charisma, new Stat() 
+                {   
+                    ID = Charisma, 
+                    Abbreviation = "CHA", 
+                    Name = "Charisma", 
+                    Description = "Charisma determines how well you barter and communicate with others.", 
                     BaseValue = 0,  
                     Modifier = 0,
                     MaxBase = 100,  

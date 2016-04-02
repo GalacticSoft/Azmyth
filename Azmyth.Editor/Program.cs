@@ -19,8 +19,8 @@ namespace Azmyth.Editor
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new frmEditorMain());
-            Application.Run(new frmPGM());
+            Application.Run(new frmEditorMain());
+            //Application.Run(new frmPGM());
         }
     }
 }
