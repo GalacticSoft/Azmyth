@@ -165,54 +165,54 @@ TerrainChunk chunk3 <span style='color:#d2cd86; '>=</span> world<span style='col
 <span style='color:#b060b0; '>}</span></pre>
 </li>
 <li>
-<p>Chunk Rendering</p>
+<p>Dynamic Chunk Loading</p>
 <pre >
-        <span style='color:#9999a9; '>/// &lt;summary></span>
-        <span style='color:#9999a9; '>/// Loads Moore Neighborhood of chunks around central chunk specified by X/Y paramters.</span>
-        <span style='color:#9999a9; '>/// &lt;/summary></span>
-        <span style='color:#9999a9; '>/// &lt;param name="x">X Origin of central chunk&lt;/param></span>
-        <span style='color:#9999a9; '>/// &lt;param name="y">Y Origin of central chunk&lt;&lt;/param></span>
-        <span style='color:#9999a9; '>/// &lt;param name="chunkSize">size of chunks to load&lt;/param></span>
-        <span style='color:#e66170; font-weight:bold; '>public</span> <span style='color:#e66170; font-weight:bold; '>void</span> UpdateChunks<span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>int</span> x<span style='color:#d2cd86; '>,</span> <span style='color:#e66170; font-weight:bold; '>int</span> y<span style='color:#d2cd86; '>,</span> <span style='color:#e66170; font-weight:bold; '>int</span> chunkSize<span style='color:#d2cd86; '>)</span>
-        <span style='color:#b060b0; '>{</span>
-            System<span style='color:#d2cd86; '>.</span>Drawing<span style='color:#d2cd86; '>.</span>RectangleF chunkBounds<span style='color:#b060b0; '>;</span>
-            List<span style='color:#d2cd86; '>&lt;</span>Vector<span style='color:#d2cd86; '>></span> newChunks <span style='color:#d2cd86; '>=</span> <span style='color:#e66170; font-weight:bold; '>new</span> List<span style='color:#d2cd86; '>&lt;</span>Vector<span style='color:#d2cd86; '>></span><span style='color:#d2cd86; '>(</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
-            
-            <span style='color:#9999a9; '>// Calculate Coordinates</span>
-            <span style='color:#e66170; font-weight:bold; '>int</span> chunkX <span style='color:#d2cd86; '>=</span> <span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>int</span><span style='color:#d2cd86; '>)</span>Numbers<span style='color:#d2cd86; '>.</span>ConvertCoordinate<span style='color:#d2cd86; '>(</span>x<span style='color:#d2cd86; '>,</span> chunkSize<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
-            <span style='color:#e66170; font-weight:bold; '>int</span> chunkY <span style='color:#d2cd86; '>=</span> <span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>int</span><span style='color:#d2cd86; '>)</span>Numbers<span style='color:#d2cd86; '>.</span>ConvertCoordinate<span style='color:#d2cd86; '>(</span>y<span style='color:#d2cd86; '>,</span> chunkSize<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+      <span style='color:#9999a9; '>/// &lt;summary></span>
+      <span style='color:#9999a9; '>/// Loads Moore Neighborhood of chunks around central chunk specified by X/Y paramters.</span>
+      <span style='color:#9999a9; '>/// &lt;/summary></span>
+      <span style='color:#9999a9; '>/// &lt;param name="x">X Origin of central chunk&lt;/param></span>
+      <span style='color:#9999a9; '>/// &lt;param name="y">Y Origin of central chunk&lt;&lt;/param></span>
+      <span style='color:#9999a9; '>/// &lt;param name="chunkSize">size of chunks to load&lt;/param></span>
+      <span style='color:#e66170; font-weight:bold; '>public</span> <span style='color:#e66170; font-weight:bold; '>void</span> UpdateChunks<span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>int</span> x<span style='color:#d2cd86; '>,</span> <span style='color:#e66170; font-weight:bold; '>int</span> y<span style='color:#d2cd86; '>,</span> <span style='color:#e66170; font-weight:bold; '>int</span> chunkSize<span style='color:#d2cd86; '>)</span>
+      <span style='color:#b060b0; '>{</span>
+          System<span style='color:#d2cd86; '>.</span>Drawing<span style='color:#d2cd86; '>.</span>RectangleF chunkBounds<span style='color:#b060b0; '>;</span>
+          List<span style='color:#d2cd86; '>&lt;</span>Vector<span style='color:#d2cd86; '>></span> newChunks <span style='color:#d2cd86; '>=</span> <span style='color:#e66170; font-weight:bold; '>new</span> List<span style='color:#d2cd86; '>&lt;</span>Vector<span style='color:#d2cd86; '>></span><span style='color:#d2cd86; '>(</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+          
+          <span style='color:#9999a9; '>// Calculate Coordinates</span>
+          <span style='color:#e66170; font-weight:bold; '>int</span> chunkX <span style='color:#d2cd86; '>=</span> <span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>int</span><span style='color:#d2cd86; '>)</span>Numbers<span style='color:#d2cd86; '>.</span>ConvertCoordinate<span style='color:#d2cd86; '>(</span>x<span style='color:#d2cd86; '>,</span> chunkSize<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+          <span style='color:#e66170; font-weight:bold; '>int</span> chunkY <span style='color:#d2cd86; '>=</span> <span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>int</span><span style='color:#d2cd86; '>)</span>Numbers<span style='color:#d2cd86; '>.</span>ConvertCoordinate<span style='color:#d2cd86; '>(</span>y<span style='color:#d2cd86; '>,</span> chunkSize<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
 
-            <span style='color:#9999a9; '>// Calculate Moore neighborhood.</span>
-            <span style='color:#e66170; font-weight:bold; '>for</span><span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>int</span> offsetY <span style='color:#d2cd86; '>=</span> chunkY <span style='color:#d2cd86; '>-</span> <span style='color:#008c00; '>1</span><span style='color:#b060b0; '>;</span> offsetY <span style='color:#d2cd86; '>&lt;</span><span style='color:#d2cd86; '>=</span> chunkY <span style='color:#d2cd86; '>+</span> <span style='color:#008c00; '>1</span><span style='color:#b060b0; '>;</span> offsetY<span style='color:#d2cd86; '>+</span><span style='color:#d2cd86; '>+</span><span style='color:#d2cd86; '>)</span>
-            <span style='color:#b060b0; '>{</span>
-                <span style='color:#e66170; font-weight:bold; '>for</span><span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>int</span> offsetX <span style='color:#d2cd86; '>=</span> chunkX <span style='color:#d2cd86; '>-</span> <span style='color:#008c00; '>1</span><span style='color:#b060b0; '>;</span> offsetX <span style='color:#d2cd86; '>&lt;</span><span style='color:#d2cd86; '>=</span> chunkX <span style='color:#d2cd86; '>+</span> <span style='color:#008c00; '>1</span><span style='color:#b060b0; '>;</span> offsetX<span style='color:#d2cd86; '>+</span><span style='color:#d2cd86; '>+</span><span style='color:#d2cd86; '>)</span>
-                <span style='color:#b060b0; '>{</span>
-                    newChunks<span style='color:#d2cd86; '>.</span>Add<span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>new</span> Vector<span style='color:#d2cd86; '>(</span>offsetX<span style='color:#d2cd86; '>,</span> offsetY<span style='color:#d2cd86; '>,</span> <span style='color:#008c00; '>0</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
-                <span style='color:#b060b0; '>}</span>
-            <span style='color:#b060b0; '>}</span>
+          <span style='color:#9999a9; '>// Calculate Moore neighborhood.</span>
+          <span style='color:#e66170; font-weight:bold; '>for</span><span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>int</span> offsetY <span style='color:#d2cd86; '>=</span> chunkY <span style='color:#d2cd86; '>-</span> <span style='color:#008c00; '>1</span><span style='color:#b060b0; '>;</span> offsetY <span style='color:#d2cd86; '>&lt;</span><span style='color:#d2cd86; '>=</span> chunkY <span style='color:#d2cd86; '>+</span> <span style='color:#008c00; '>1</span><span style='color:#b060b0; '>;</span> offsetY<span style='color:#d2cd86; '>+</span><span style='color:#d2cd86; '>+</span><span style='color:#d2cd86; '>)</span>
+          <span style='color:#b060b0; '>{</span>
+              <span style='color:#e66170; font-weight:bold; '>for</span><span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>int</span> offsetX <span style='color:#d2cd86; '>=</span> chunkX <span style='color:#d2cd86; '>-</span> <span style='color:#008c00; '>1</span><span style='color:#b060b0; '>;</span> offsetX <span style='color:#d2cd86; '>&lt;</span><span style='color:#d2cd86; '>=</span> chunkX <span style='color:#d2cd86; '>+</span> <span style='color:#008c00; '>1</span><span style='color:#b060b0; '>;</span> offsetX<span style='color:#d2cd86; '>+</span><span style='color:#d2cd86; '>+</span><span style='color:#d2cd86; '>)</span>
+              <span style='color:#b060b0; '>{</span>
+                  newChunks<span style='color:#d2cd86; '>.</span>Add<span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>new</span> Vector<span style='color:#d2cd86; '>(</span>offsetX<span style='color:#d2cd86; '>,</span> offsetY<span style='color:#d2cd86; '>,</span> <span style='color:#008c00; '>0</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+              <span style='color:#b060b0; '>}</span>
+          <span style='color:#b060b0; '>}</span>
 
-            <span style='color:#9999a9; '>// Get all the loaded Chunks.</span>
-            List<span style='color:#d2cd86; '>&lt;</span>TerrainChunk<span style='color:#d2cd86; '>></span> AllChunks <span style='color:#d2cd86; '>=</span> GetChunks<span style='color:#d2cd86; '>(</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+          <span style='color:#9999a9; '>// Get all the loaded Chunks.</span>
+          List<span style='color:#d2cd86; '>&lt;</span>TerrainChunk<span style='color:#d2cd86; '>></span> AllChunks <span style='color:#d2cd86; '>=</span> GetChunks<span style='color:#d2cd86; '>(</span><span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
 
-            <span style='color:#9999a9; '>// Cull Chunks outside of neighbor range.</span>
-            <span style='color:#e66170; font-weight:bold; '>foreach</span> <span style='color:#d2cd86; '>(</span>TerrainChunk chunk <span style='color:#e66170; font-weight:bold; '>in</span> AllChunks<span style='color:#d2cd86; '>)</span>
-            <span style='color:#b060b0; '>{</span>
-                <span style='color:#e66170; font-weight:bold; '>if</span> <span style='color:#d2cd86; '>(</span><span style='color:#d2cd86; '>!</span>newChunks<span style='color:#d2cd86; '>.</span>Contains<span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>new</span> Vector<span style='color:#d2cd86; '>(</span><span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>int</span><span style='color:#d2cd86; '>)</span>chunk<span style='color:#d2cd86; '>.</span>Bounds<span style='color:#d2cd86; '>.</span>X<span style='color:#d2cd86; '>,</span> <span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>int</span><span style='color:#d2cd86; '>)</span>chunk<span style='color:#d2cd86; '>.</span>Bounds<span style='color:#d2cd86; '>.</span>Y<span style='color:#d2cd86; '>,</span> <span style='color:#008c00; '>0</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>)</span>
-                <span style='color:#b060b0; '>{</span>
-                    chunkBounds <span style='color:#d2cd86; '>=</span> <span style='color:#e66170; font-weight:bold; '>new</span> System<span style='color:#d2cd86; '>.</span>Drawing<span style='color:#d2cd86; '>.</span>RectangleF<span style='color:#d2cd86; '>(</span>chunk<span style='color:#d2cd86; '>.</span>Bounds<span style='color:#d2cd86; '>.</span>X<span style='color:#d2cd86; '>,</span> chunk<span style='color:#d2cd86; '>.</span>Bounds<span style='color:#d2cd86; '>.</span>Y<span style='color:#d2cd86; '>,</span> chunkSize<span style='color:#d2cd86; '>,</span> chunkSize<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+          <span style='color:#9999a9; '>// Cull Chunks outside of neighbor range.</span>
+          <span style='color:#e66170; font-weight:bold; '>foreach</span> <span style='color:#d2cd86; '>(</span>TerrainChunk chunk <span style='color:#e66170; font-weight:bold; '>in</span> AllChunks<span style='color:#d2cd86; '>)</span>
+          <span style='color:#b060b0; '>{</span>
+              <span style='color:#e66170; font-weight:bold; '>if</span> <span style='color:#d2cd86; '>(</span><span style='color:#d2cd86; '>!</span>newChunks<span style='color:#d2cd86; '>.</span>Contains<span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>new</span> Vector<span style='color:#d2cd86; '>(</span><span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>int</span><span style='color:#d2cd86; '>)</span>chunk<span style='color:#d2cd86; '>.</span>Bounds<span style='color:#d2cd86; '>.</span>X<span style='color:#d2cd86; '>,</span> <span style='color:#d2cd86; '>(</span><span style='color:#e66170; font-weight:bold; '>int</span><span style='color:#d2cd86; '>)</span>chunk<span style='color:#d2cd86; '>.</span>Bounds<span style='color:#d2cd86; '>.</span>Y<span style='color:#d2cd86; '>,</span> <span style='color:#008c00; '>0</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>)</span><span style='color:#d2cd86; '>)</span>
+              <span style='color:#b060b0; '>{</span>
+                  chunkBounds <span style='color:#d2cd86; '>=</span> <span style='color:#e66170; font-weight:bold; '>new</span> System<span style='color:#d2cd86; '>.</span>Drawing<span style='color:#d2cd86; '>.</span>RectangleF<span style='color:#d2cd86; '>(</span>chunk<span style='color:#d2cd86; '>.</span>Bounds<span style='color:#d2cd86; '>.</span>X<span style='color:#d2cd86; '>,</span> chunk<span style='color:#d2cd86; '>.</span>Bounds<span style='color:#d2cd86; '>.</span>Y<span style='color:#d2cd86; '>,</span> chunkSize<span style='color:#d2cd86; '>,</span> chunkSize<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
 
-                    UnloadChunk<span style='color:#d2cd86; '>(</span>chunkBounds<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
-                <span style='color:#b060b0; '>}</span>
-            <span style='color:#b060b0; '>}</span>
+                  UnloadChunk<span style='color:#d2cd86; '>(</span>chunkBounds<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+              <span style='color:#b060b0; '>}</span>
+          <span style='color:#b060b0; '>}</span>
 
-            <span style='color:#9999a9; '>// Load Neighbor Chunks</span>
-            <span style='color:#e66170; font-weight:bold; '>foreach</span> <span style='color:#d2cd86; '>(</span>Vector chunk <span style='color:#e66170; font-weight:bold; '>in</span> newChunks<span style='color:#d2cd86; '>)</span>
-            <span style='color:#b060b0; '>{</span>
-                chunkBounds <span style='color:#d2cd86; '>=</span> <span style='color:#e66170; font-weight:bold; '>new</span> System<span style='color:#d2cd86; '>.</span>Drawing<span style='color:#d2cd86; '>.</span>RectangleF<span style='color:#d2cd86; '>(</span>chunk<span style='color:#d2cd86; '>.</span>X <span style='color:#d2cd86; '>*</span> chunkSize<span style='color:#d2cd86; '>,</span> chunk<span style='color:#d2cd86; '>.</span>Y <span style='color:#d2cd86; '>*</span> chunkSize<span style='color:#d2cd86; '>,</span> chunkSize<span style='color:#d2cd86; '>,</span> chunkSize<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+          <span style='color:#9999a9; '>// Load Neighbor Chunks</span>
+          <span style='color:#e66170; font-weight:bold; '>foreach</span> <span style='color:#d2cd86; '>(</span>Vector chunk <span style='color:#e66170; font-weight:bold; '>in</span> newChunks<span style='color:#d2cd86; '>)</span>
+          <span style='color:#b060b0; '>{</span>
+              chunkBounds <span style='color:#d2cd86; '>=</span> <span style='color:#e66170; font-weight:bold; '>new</span> System<span style='color:#d2cd86; '>.</span>Drawing<span style='color:#d2cd86; '>.</span>RectangleF<span style='color:#d2cd86; '>(</span>chunk<span style='color:#d2cd86; '>.</span>X <span style='color:#d2cd86; '>*</span> chunkSize<span style='color:#d2cd86; '>,</span> chunk<span style='color:#d2cd86; '>.</span>Y <span style='color:#d2cd86; '>*</span> chunkSize<span style='color:#d2cd86; '>,</span> chunkSize<span style='color:#d2cd86; '>,</span> chunkSize<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
 
-                LoadChunk<span style='color:#d2cd86; '>(</span>chunkBounds<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
-            <span style='color:#b060b0; '>}</span>
-        <span style='color:#b060b0; '>}</span>
+              LoadChunk<span style='color:#d2cd86; '>(</span>chunkBounds<span style='color:#d2cd86; '>)</span><span style='color:#b060b0; '>;</span>
+          <span style='color:#b060b0; '>}</span>
+      <span style='color:#b060b0; '>}</span>
 </pre>
 </li>
 </ul>
