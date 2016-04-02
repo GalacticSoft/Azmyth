@@ -146,19 +146,19 @@ Azmyth is a generic game framework used to create flexible RPG and adventure sty
 			            						chunkSize, 	chunkSize);
 			
 			            UnloadChunk(chunkBounds);
-			        }
-			    }
+				}
+			}
 	
-		            // Load Neighbor Chunks
-		            foreach (Vector chunk in newChunks)
-		            {
-		                chunkBounds = new System.Drawing.RectangleF(chunk.X * chunkSize, chunk.Y * chunkSize, 
-		                					    chunkSize, 		 chunkSize);
-		
-		                LoadChunk(chunkBounds);
-		            }
-		        }
+			// Load Neighbor Chunks
+			foreach (Vector chunk in newChunks)
+			{
+	                	chunkBounds = new System.Drawing.RectangleF(chunk.X * chunkSize, chunk.Y * chunkSize, 
+	                					            chunkSize, 		 chunkSize);
+	
+	                	LoadChunk(chunkBounds);
+			}
 		}
+		
 
 		
 #### XNA
