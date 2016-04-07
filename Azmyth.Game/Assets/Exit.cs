@@ -15,7 +15,7 @@ namespace Azmyth.Assets
         {
             AssetID = exitID;
 
-            //Pulse[] stats = new Pulse[]
+            //Stat[] stats = new Stat[]
             //{
             //    new Pulse() { Vector=new VectorID(StatVector.Point, 1), Abbreviation="VIS",  Name="Visibility" },
             //    new Pulse() { Vector=new VectorID(StatVector.Point, 2), Abbreviation="LOCK", Name="Lock Level" },

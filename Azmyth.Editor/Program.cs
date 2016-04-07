@@ -19,8 +19,16 @@ namespace Azmyth.Editor
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmEditorMain());
-            //Application.Run(new frmPGM());
+            //Application.Run(new frmEditorMain());
+            Application.Run(new frmPGM());
+
+            frmPGM pgmForm = new frmPGM();
+
+            pgmForm.Show();
+
+            frmMarkov markov = new frmMarkov();
+
+            markov.Show();
         }
     }
 }

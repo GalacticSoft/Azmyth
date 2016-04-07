@@ -127,7 +127,7 @@ namespace Azmyth.Editor
 
         private void grid1_SelectionMade(Rectangle obj)
         {
-            grid1.SetCell(obj.X, obj.Y, Color.FromArgb(colorTool1.SelectedColor,colorTool1.SelectedColor,colorTool1.SelectedColor));
+            grid1.SetCell(obj.X, obj.Y, Color.FromArgb(colorTool1.SelectedColor, colorTool1.SelectedColor, colorTool1.SelectedColor));
         }
     }
 }

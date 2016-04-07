@@ -253,7 +253,7 @@ namespace Azmyth.Assets
             tile.X = x;
             tile.Y = y;
 
-            tile.Height =  (float)Math.Round(m_terrain.GetHeight(x, y));
+            tile.Height = (float)Math.Round(m_terrain.GetHeight(x, y));
             tile.m_value = (float)m_terrain.GetValue(x, y);
 
             tile.Bounds = new RectangleF(x, y, 1, 1);
@@ -351,7 +351,6 @@ namespace Azmyth.Assets
                 {
                     chunks.Add(node.Objects[0]);
                 }
-                
             }
 
             return chunks;
@@ -386,6 +385,12 @@ namespace Azmyth.Assets
             m_tempurature = new PerlinNoise(m_persistance, m_continentSize, 40, m_octaves, (m_seed / 9) * 5);
         }
 
+        /// <summary>
+        /// Loads Moore Neighborhood of chunks around central chunk specified by X/Y paramters.
+        /// </summary>
+        /// <param name="x">X Origin of central chunk</param>
+        /// <param name="y">Y Origin of central chunk<</param>
+        /// <param name="chunkSize">size of chunks to load</param>
         public void UpdateChunks(int x, int y, int chunkSize)
         {
             System.Drawing.RectangleF chunkBounds;
