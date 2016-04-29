@@ -107,6 +107,7 @@ namespace Azmyth.Assets
         {
             TerrainTile neighbor = null;
 
+            
             if (Neighbors.ContainsKey(direction))
             {
                 neighbor = Neighbors[direction];

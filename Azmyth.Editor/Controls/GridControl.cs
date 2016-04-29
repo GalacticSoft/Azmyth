@@ -290,7 +290,35 @@ namespace Azmyth.Editor
                     }
                     else
                     {
-                        g.FillRectangle(new SolidBrush(cellColor), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                        g.FillRectangle(new SolidBrush(cellColor), new RectangleF((cellX * m_cellWidth) + 1, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                    }
+
+                    if(m_world.GetTerrainType(cellX -1, cellY) == TerrainTypes.Ocean && room.Terrain != TerrainTypes.Ocean)
+                    {
+                        g.DrawLine(new Pen(Color.White, 2), 
+                            new PointF((cellX * m_cellWidth), (cellY * m_cellHeight)), 
+                            new PointF((cellX * m_cellWidth), ((cellY * m_cellHeight) + m_cellHeight)));
+                    }
+
+                    if (m_world.GetTerrainType(cellX + 1, cellY) == TerrainTypes.Ocean && room.Terrain != TerrainTypes.Ocean)
+                    {
+                        g.DrawLine(new Pen(Color.White, 2), 
+                            new PointF((cellX * m_cellWidth + m_cellWidth), (cellY * m_cellHeight)), 
+                            new PointF(((cellX * m_cellWidth) + m_cellWidth), ((cellY * m_cellHeight) + m_cellHeight)));
+                    }
+
+                    if (m_world.GetTerrainType(cellX, cellY - 1) == TerrainTypes.Ocean && room.Terrain != TerrainTypes.Ocean)
+                    {
+                        g.DrawLine(new Pen(Color.White, 2), 
+                            new PointF((cellX * m_cellWidth), (cellY * m_cellHeight)), 
+                            new PointF((cellX * m_cellWidth) + m_cellWidth , (cellY * m_cellHeight)));
+                    }
+
+                    if (m_world.GetTerrainType(cellX, cellY + 1) == TerrainTypes.Ocean && room.Terrain != TerrainTypes.Ocean)
+                    {
+                        g.DrawLine(new Pen(Color.White, 2), 
+                            new PointF((cellX * m_cellWidth), ((cellY * m_cellHeight) + m_cellHeight)-1), 
+                            new PointF((cellX * m_cellWidth) + m_cellWidth, ((cellY * m_cellHeight) + m_cellHeight)-1));
                     }
 
                     cellX++;
