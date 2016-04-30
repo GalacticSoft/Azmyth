@@ -70,12 +70,15 @@ namespace Azmyth.Assets
         Arms        = 6,
         Wrists      = 7,
         Hands       = 8,
-        Fingers     = 9,
-        Waist       = 10,
-        Back        = 11,
-        Legs        = 12,
-        Feet        = 13,
-        Max         = 14
+        Held        = 9,
+        Wielded     = 10,
+        TwoHanded   = 11,
+        Fingers     = 12,
+        Waist       = 13,
+        Back        = 14,
+        Legs        = 15,
+        Feet        = 16,
+        Max         = 17
 
     }
     public enum MaterialType

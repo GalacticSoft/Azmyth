@@ -11,10 +11,9 @@ namespace Azmyth.Assets
 
         public string Names;
 
-        public bool Wearable;
         public WearLocation WearLocation;
-        public bool Holdable;
-        public bool TwoHanded;
         public bool Ranged;
+
+        public MaterialClass [] Materials;
     }
 }

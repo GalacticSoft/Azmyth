@@ -13,11 +13,13 @@ namespace Azmyth.Assets
 
         private Quality m_quality;
 
-        private ItemClass m_itemType;
+        private ItemClass m_itemClass;
 
         private MaterialType m_material;
 
         private MaterialClass m_materialType;
+
+        private ItemType m_itemType;
 
         public Rarity Rarity
         {
@@ -32,8 +34,8 @@ namespace Azmyth.Assets
             
         public ItemClass ItemClass
         {
-            get { return m_itemType; }
-            set { m_itemType = value; }
+            get { return m_itemClass; }
+            set { m_itemClass = value; }
         }
 
         public MaterialType MaterialType
@@ -46,6 +48,12 @@ namespace Azmyth.Assets
         {
             get { return m_materialType; }
             set { m_materialType = value; }
+        }
+
+        public ItemType ItemType
+        {
+            get { return m_itemType; }
+            set { m_itemType = value; }
         }
 
         public static Item Generate(ItemClass itemClass = ItemClass.Any, Rarity rarity = Rarity.Any, Quality quality = Quality.Any, MaterialClass materialClass = MaterialClass.Any, MaterialType materialType = MaterialType.Any)
@@ -137,7 +145,28 @@ namespace Azmyth.Assets
 
             item.ItemClass = itemClass;
 
-            item.Name = quality + " " + materialType + " " + itemClass;
+            var itemTypes = ItemTables.ItemTypes.Where(i => i.ItemClass == item.ItemClass);
+
+            int num = Numbers.NumberRange(0, itemTypes.Count<ItemType>()-1);
+            int count = 0;
+
+            foreach(ItemType t in itemTypes)
+            {
+                if(count == num)
+                {
+                    item.ItemType = t;
+                    break;
+                }
+
+                count++;
+            }
+
+            string[] names = item.ItemType.Names.Split('|');
+
+            num = Numbers.NumberRange(0, names.Count<string>()-1);
+
+
+            item.Name = quality + " quality " + rarity +" " + materialType + " " + names[num];
 
             item.Name = Azmyth.Strings.Article(item.Name) + " " + item.Name;
 

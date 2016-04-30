@@ -42,7 +42,7 @@ namespace AzmythTest
                 qualityCount[(int)item.Quality]++;
                 rarityCount[(int)item.Rarity]++;
 
-                Console.WriteLine("[{0,-11}] [{1,-11}] [{2,-11}] [{3, -11}] {4}", item.Rarity, item.Quality, item.MaterialClass, item.MaterialType, item.Name);
+                Console.WriteLine("[{0,-11}] [{1,-11}] [{2,-11}] [{3, -11}] [{4, -11}] {5}", item.Rarity, item.Quality, item.MaterialClass, item.MaterialType, item.ItemClass, item.Name);
             }
             
             Console.WriteLine("Common {0}, Uncommon {1}, Rare  {2}, Legendary {3}, Epic     {4}, Mythic    {5}", rarityCount[1] / 10, rarityCount[2] / 10, rarityCount[3] / 10, rarityCount[4] / 10, rarityCount[5] / 10, rarityCount[6] / 10);
