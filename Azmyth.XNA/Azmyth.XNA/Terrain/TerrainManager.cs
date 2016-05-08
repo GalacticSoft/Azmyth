@@ -295,44 +295,7 @@ namespace Azmyth.XNA
             if(m_world != null)
             {
                 m_world.UpdateChunks((int)position.X, (int)position.Y, ChunkSize);
-
             }
-            
-            /*int chunkX = (int)Numbers.ConvertCoordinate(position.X, ChunkSize);
-            int chunkY = (int)Numbers.ConvertCoordinate(position.Y, ChunkSize);
-
-            List<Vector2> newChunks = new List<Vector2>()
-            {
-                new Vector2(chunkX - 1,  chunkY - 1),
-                new Vector2(chunkX,      chunkY - 1),
-                new Vector2(chunkX + 1,  chunkY - 1),
-                new Vector2(chunkX - 1,  chunkY),
-                new Vector2(chunkX,      chunkY),
-                new Vector2(chunkX + 1,  chunkY),
-                new Vector2(chunkX - 1,  chunkY + 1),
-                new Vector2(chunkX,      chunkY + 1),
-                new Vector2(chunkX + 1,  chunkY + 1)
-
-            };
-
-            if (m_world != null)
-            {
-                List<TerrainChunk> AllChunks = m_world.GetChunks();
-
-                foreach (TerrainChunk chunk in AllChunks)
-                {
-                    if (!newChunks.Contains(new Vector2(chunk.Bounds.X, chunk.Bounds.Y)))
-                    {
-                        m_world.UnloadChunk(new System.Drawing.RectangleF(chunk.Bounds.X, chunk.Bounds.Y, m_chunkSize, m_chunkSize));
-                    }
-                }
-
-                foreach (Vector2 chunk in newChunks)
-                {
-                    LoadChunk(chunk.X, chunk.Y);
-                }
-            }*/
-            
         }
     }
 }

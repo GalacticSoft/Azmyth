@@ -17,18 +17,12 @@ namespace Azmyth.Editor
         [STAThread]
         static void Main()
         {
+           
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new frmEditorMain());
+            Application.Run(new frmEditorMain());
             Application.Run(new frmPGM());
-
-            frmPGM pgmForm = new frmPGM();
-
-            pgmForm.Show();
-
-            frmMarkov markov = new frmMarkov();
-
-            markov.Show();
+            Application.Run(new frmMarkov());
         }
     }
 }

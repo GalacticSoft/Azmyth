@@ -8,6 +8,7 @@ namespace Azmyth
     public enum NoiseTypes
     {
         None,
+        Azmyth,
         Perlin,
         Simplex,
     }

@@ -89,6 +89,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Directions.cs" />
     <Compile Include="Maths\Dice.cs" />
+    <Compile Include="Procedural\AzmythNoise.cs" />
     <Compile Include="Procedural\INoise.cs" />
     <Compile Include="Procedural\Markov.cs" />
     <Compile Include="Procedural\Noise.cs" />

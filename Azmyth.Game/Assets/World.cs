@@ -18,14 +18,13 @@ namespace Azmyth.Assets
         private INoise m_terrain;
 
         // The noise generation algorithm to use for base terrain.
-        private NoiseTypes m_terrainNoise = NoiseTypes.Perlin;
+        private NoiseTypes m_terrainNoise = NoiseTypes.Azmyth;
 
         // The noise generation algorithm to use for rivers.
-        // Noise Interface for the terrain.
         private INoise m_rivers;
 
         // The noise generation algorithm to use for rivers.
-        private NoiseTypes m_riverNoise = NoiseTypes.Perlin;
+        private NoiseTypes m_riverNoise = NoiseTypes.Azmyth;
 
         private INoise m_tempurature;
 
@@ -244,6 +243,29 @@ namespace Azmyth.Assets
             return terrain;
         }
 
+        public TerrainTile LoadVoxel(int x, int y, int z, TerrainChunk chunk = null)
+        {
+            TerrainTile tile = null;
+
+            tile = new TerrainTile(chunk);
+
+            tile.X = x;
+            tile.Y = y;
+            tile.Z = z;
+
+            tile.Height = (float)Math.Round(m_terrain.GetHeight(x, y));
+            tile.m_value = (float)m_terrain.GetValue(x, y);
+
+            tile.Bounds = new RectangleF(x, y, 1, 1);
+
+            tile.Terrain = GetTerrainType(x, y);
+
+            tile.m_temp = Math.Abs(Math.Round(m_tempurature.GetHeight(x, y), 0));
+            tile.m_tempVal = m_tempurature.GetValue(x, y, z);
+
+            return tile;
+        }
+
         public TerrainTile LoadTile(int x, int y, TerrainChunk chunk = null)
         {
             TerrainTile tile = null;
@@ -364,6 +386,9 @@ namespace Azmyth.Assets
 
             switch(m_terrainNoise)
             { 
+                case NoiseTypes.Azmyth:
+                    m_terrain = new AzmythNoise(m_persistance, m_continentSize, m_terrainHeight, m_octaves, m_seed);
+                    break;
                 case NoiseTypes.Perlin:
                     m_terrain = new PerlinNoise(m_persistance, m_continentSize, m_terrainHeight, m_octaves, m_seed);
                     break;
@@ -374,6 +399,9 @@ namespace Azmyth.Assets
 
             switch (m_riverNoise)
             {
+                case NoiseTypes.Azmyth:
+                    m_rivers = new AzmythNoise(m_persistance, m_continentSize, m_terrainHeight, m_octaves, m_seed);
+                    break;
                 case NoiseTypes.Perlin:
                     m_rivers = new PerlinNoise(m_persistance, .02, m_terrainHeight, 2, new Random((int)m_seed).Next(1000, 9999));
                     break;

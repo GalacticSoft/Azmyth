@@ -24,8 +24,8 @@ namespace Azmyth.Editor
         private float m_continentSize = 2;
         private float m_terrainHeight = 1024;
 
-        private NoiseTypes m_terrainNoise = NoiseTypes.Perlin;
-        private NoiseTypes m_riverNoise = NoiseTypes.Perlin;
+        private NoiseTypes m_terrainNoise = NoiseTypes.Azmyth;
+        private NoiseTypes m_riverNoise = NoiseTypes.Azmyth;
 
         [Browsable(false)]
         public MapViewer Map {get; set;}

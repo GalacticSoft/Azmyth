@@ -7,7 +7,7 @@ namespace Azmyth.Procedural
 {
     public abstract class Noise : INoise
     {
-        protected double     m_persistence = 0;
+        protected double m_persistence = 0;
         protected double m_frequency = 0;
         protected double m_amplitude = 0;
         protected double m_octaves = 0;

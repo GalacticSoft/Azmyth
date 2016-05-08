@@ -69,6 +69,7 @@ namespace Azmyth.XNA
 
         private MarkovNameGenerator nameGenerator;
 
+        private XGListBoxItem liAzmyth = new XGListBoxItem("Azmyth Noise", NoiseTypes.Azmyth);
         private XGListBoxItem liPerlin = new XGListBoxItem("Perlin Noise", NoiseTypes.Perlin);
         private XGListBoxItem liSimplex = new XGListBoxItem("Simplex Noise", NoiseTypes.Simplex);
 
@@ -121,11 +122,13 @@ namespace Azmyth.XNA
             lblTitle.Alignment = GUIAlignment.HCenter | GUIAlignment.VCenter;
             txtWorldName.Text = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(nameGenerator.Next());
 
+            lstTerrainNoise.Items.Add(liAzmyth);
             lstTerrainNoise.Items.Add(liPerlin);
             lstTerrainNoise.Items.Add(liSimplex);
 
             lstTerrainNoise.SelectedIndex = 0;
 
+            lstRiverNoise.Items.Add(liAzmyth);
             lstRiverNoise.Items.Add(liPerlin);
             lstRiverNoise.Items.Add(liSimplex);
 

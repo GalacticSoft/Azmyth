@@ -205,5 +205,7 @@ namespace Azmyth.Assets
         //        return base[(long)EntityVector.Exit, (long)direction] as Exit;
         //    }
         //}
+
+        public int Z { get; set; }
     }
 }
